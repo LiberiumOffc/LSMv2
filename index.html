@@ -45,7 +45,6 @@
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font-family:'JetBrains Mono',monospace;}
 #app{display:flex;flex-direction:column;height:100dvh;overflow:hidden;}
 
-/* ═══ ANIMATED WAVE ACCENT ═══ */
 .wave-bg{
   background: linear-gradient(270deg,#1a0533,#3b0764,#6d28d9,#a855f7,#c084fc,#7c3aed,#4c1d95,#1a0533);
   background-size: 400% 400%;
@@ -60,11 +59,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
   background-clip: text;
 }
 
-/* ═══ SCREENS ═══ */
 .screen{display:none;flex:1;flex-direction:column;overflow:hidden;}
 .screen.active{display:flex;}
 
-/* ═══ MAIN MENU ═══ */
 #menu-screen{background:var(--bg);}
 .mm-top{
   background:var(--bg2);
@@ -105,10 +102,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .proj-card-del:active{background:rgba(239,68,68,.15);}
 .mm-empty{text-align:center;padding:30px 20px;color:var(--txt2);font-size:12px;line-height:1.8;}
 
-/* ═══ EDITOR ═══ */
 #editor-screen{background:var(--bg);}
-
-/* TOPBAR */
 #topbar{height:46px;flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--brd);display:flex;align-items:center;gap:6px;padding:0 10px;position:relative;}
 #topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
   background:linear-gradient(270deg,#4c1d95,#7c3aed,#a855f7,#c084fc,#e879f9,#a855f7,#7c3aed,#4c1d95);
@@ -123,7 +117,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .tbtn.ac{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-color:var(--acc);}
 .tbtn-home{color:var(--txt2);font-size:18px;}
 
-/* PROJECT TABS */
 #proj-tabs{height:34px;flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--brd);display:flex;align-items:flex-end;padding:0 6px;gap:3px;overflow-x:auto;}
 #proj-tabs::-webkit-scrollbar{display:none;}
 .ptab{height:28px;padding:0 10px;display:flex;align-items:center;gap:5px;border-radius:7px 7px 0 0;border:1px solid var(--glass-brd);border-bottom:none;background:var(--glass-bg);color:var(--txt2);font-size:10px;cursor:pointer;transition:all .15s;max-width:120px;white-space:nowrap;overflow:hidden;flex-shrink:0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
@@ -133,12 +126,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .ptab-add{width:24px;height:24px;border-radius:5px;border:1px dashed var(--glass-brd);background:transparent;color:var(--txt2);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;align-self:center;margin-left:2px;}
 .ptab-add:active{color:var(--acc);border-color:var(--acc);}
 
-/* CANVAS */
 #canvas-area{flex:1;position:relative;overflow:auto;background:var(--bg);touch-action:pan-x pan-y;}
 #canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:transparent;}
 #canvas::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,#2d1f4a 1px,transparent 1px);background-size:20px 20px;pointer-events:none;opacity:.5;}
 
-/* ELEMENTS */
 .el{position:absolute;touch-action:none;box-sizing:border-box;}
 .el.sel::after{content:'';position:absolute;inset:-3px;border:2px solid var(--acc);border-radius:inherit;pointer-events:none;z-index:20;
   box-shadow:0 0 10px rgba(168,85,247,.4);}
@@ -171,7 +162,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .neon-green{box-shadow:0 0 8px #10b981,0 0 22px rgba(16,185,129,.25)!important;border-color:#10b981!important;}
 .neon-pink{box-shadow:0 0 8px #e879f9,0 0 22px rgba(232,121,249,.35)!important;border-color:#e879f9!important;}
 
-/* BOTTOM NAV */
 #bottom-nav{height:50px;flex-shrink:0;background:var(--bg2);border-top:1px solid var(--brd);display:flex;align-items:center;padding:0 5px;gap:2px;overflow-x:auto;}
 #bottom-nav::-webkit-scrollbar{display:none;}
 .nb{flex-shrink:0;min-width:42px;height:38px;border-radius:7px;border:1px solid var(--brd);background:var(--bg3);color:var(--txt2);font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;padding:0 5px;transition:all .12s;}
@@ -180,7 +170,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .nb-l{font-size:7px;letter-spacing:.5px;font-family:'Rajdhani',sans-serif;font-weight:700;}
 .nbs{width:1px;height:22px;background:var(--brd);flex-shrink:0;margin:0 1px;}
 
-/* DRAWER */
 #drawer{position:fixed;left:0;top:80px;bottom:0;width:200px;background:var(--bg2);border-right:1px solid var(--brd);z-index:90;transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
 #drawer.open{transform:translateX(0);}
 #dov{position:fixed;inset:0;top:80px;background:rgba(0,0,0,.45);z-index:89;display:none;}
@@ -196,7 +185,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .pi-ic{font-size:14px;}
 .pi-nm{font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:.5px;}
 
-/* PROPS SHEET */
 #psheet{position:fixed;left:0;right:0;bottom:0;background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--glass-brd);z-index:80;border-radius:16px 16px 0 0;transform:translateY(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);max-height:72vh;display:flex;flex-direction:column;overflow:hidden;}
 #psheet.open{transform:translateY(0);}
 #psh-handle{width:36px;height:4px;background:var(--acc);border-radius:2px;margin:10px auto 0;cursor:pointer;flex-shrink:0;opacity:.5;}
@@ -219,7 +207,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .nnb{padding:5px 9px;font-size:10px;border:1px solid;background:transparent;cursor:pointer;border-radius:5px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;transition:all .1s;}
 .nnb:active{filter:brightness(1.4);transform:scale(.95);}
 
-/* MODALS */
 .mbg{position:fixed;inset:0;background:transparent;z-index:200;display:none;align-items:flex-end;pointer-events:none;}
 .mbg.open{display:flex;pointer-events:auto;}
 .mbg.open::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
@@ -238,7 +225,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .btnd{background:transparent;color:var(--red);border-color:var(--red);}
 .btn2{background:linear-gradient(135deg,#4c1d95,#7c3aed);color:#fff;border-color:var(--acc2);}
 
-/* SCRIPT EDITOR */
 #se-wrap{position:relative;margin-bottom:8px;}
 #se-hl{position:absolute;inset:0;background:rgba(8,5,16,.92);border:1px solid var(--glass-brd);border-radius:8px;padding:10px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;white-space:pre-wrap;word-wrap:break-word;overflow:hidden;pointer-events:none;z-index:1;color:transparent;}
 #se{position:relative;z-index:2;width:100%;height:200px;background:transparent;border:1px solid var(--glass-brd);border-radius:8px;color:#ede8f8;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;padding:10px;outline:none;resize:none;caret-color:var(--acc);}
@@ -247,7 +233,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .snb{padding:5px 9px;font-size:10px;background:rgba(168,85,247,.08);border:1px solid var(--glass-brd);color:var(--txt2);border-radius:6px;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:all .1s;}
 .snb:active{background:rgba(168,85,247,.2);color:var(--acc);}
 
-/* SNIPPET */
 .sfield{margin-bottom:10px;}
 .sfield label{display:block;font-size:9px;color:var(--txt2);margin-bottom:4px;letter-spacing:1px;text-transform:uppercase;font-family:'Rajdhani',sans-serif;}
 .sfin,.sfta{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--glass-brd);color:var(--txt);font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 9px;border-radius:6px;outline:none;}
@@ -255,22 +240,17 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .sfta{resize:none;height:70px;line-height:1.5;}
 .sprev{background:rgba(8,5,16,.92);border:1px solid var(--glass-brd);border-radius:6px;padding:9px 11px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#c084fc;line-height:1.7;white-space:pre-wrap;max-height:90px;overflow-y:auto;margin-top:4px;}
 
-/* CODE DISPLAY */
 #cdisplay{background:rgba(8,5,16,.92);border:1px solid var(--glass-brd);border-radius:8px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#c084fc;line-height:1.7;white-space:pre;overflow:auto;max-height:40vh;-webkit-overflow-scrolling:touch;}
 
-/* DRAG GHOST */
 #ghost{position:fixed;z-index:500;pointer-events:none;background:var(--glass-bg);border:1.5px solid var(--acc);border-radius:8px;padding:7px 14px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;color:var(--acc);letter-spacing:1px;box-shadow:0 4px 20px rgba(168,85,247,.4);display:none;align-items:center;white-space:nowrap;transform:translate(-50%,-50%);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
 #ghost.on{display:flex;}
 
-/* FAB */
 #fab{position:fixed;right:14px;bottom:60px;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a855f7,#c084fc);box-shadow:0 4px 16px rgba(168,85,247,.5);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;z-index:150;border:none;color:#fff;transition:transform .18s;}
 #fab:active{transform:scale(.87);}
 
-/* TOAST */
 #toast{position:fixed;bottom:64px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--glass-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--glass-brd);color:var(--txt2);padding:7px 16px;border-radius:20px;font-size:11px;z-index:300;opacity:0;transition:all .22s;white-space:nowrap;pointer-events:none;}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
 
-/* CONFIRM */
 #conf-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:250;display:none;align-items:center;justify-content:center;}
 #conf-bg.open{display:flex;}
 .ccard{background:var(--bg3);border:1px solid var(--brd);border-radius:14px;padding:22px 18px;width:270px;text-align:center;}
@@ -278,7 +258,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .cmsg{font-size:11px;color:var(--txt2);margin-bottom:16px;line-height:1.6;}
 .cbtns{display:flex;gap:9px;}
 
-/* INPUT MODAL */
 #inp-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:260;display:none;align-items:center;justify-content:center;}
 #inp-bg.open{display:flex;}
 .inp-card{background:var(--bg3);border:1px solid var(--brd);border-radius:14px;padding:22px 18px;width:280px;}
@@ -291,12 +270,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 ::-webkit-scrollbar-track{background:var(--bg2);}
 ::-webkit-scrollbar-thumb{background:var(--brd);border-radius:2px;}
 
-/* ═══ MENU TABS ═══ */
 .mtab{padding:9px 14px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;color:var(--txt2);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
 .mtab.active{color:var(--acc);border-bottom-color:var(--acc);}
 .mtab:active{color:var(--acc3);}
 
-/* ═══ ANIMATION PLATFORM CARD ═══ */
 .anim-plat-card{display:flex;align-items:center;gap:12px;padding:14px;background:var(--bg2);border:1px solid var(--brd);border-radius:12px;cursor:pointer;transition:all .15s;}
 .anim-plat-card.active-plat{background:rgba(168,85,247,.1);border-color:var(--acc);box-shadow:0 0 16px rgba(168,85,247,.15);}
 .anim-plat-card:active{transform:scale(.98);}
@@ -306,12 +283,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .anim-plat-check{margin-left:auto;width:22px;height:22px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;opacity:0;transition:opacity .2s;}
 .anim-plat-card.active-plat .anim-plat-check{opacity:1;}
 
-/* ═══ ANIM PRIORITY BUTTONS ═══ */
 .anim-pri-btn{padding:5px 9px;font-size:10px;border:1px solid var(--brd);background:var(--bg3);color:var(--txt2);border-radius:6px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.5px;transition:all .12s;}
 .anim-pri-btn.active-pri{background:rgba(168,85,247,.15);border-color:var(--acc);color:var(--acc);}
 .anim-pri-btn:active{transform:scale(.95);}
 
-/* ═══ KEYFRAME CARD ═══ */
 .kf-card{background:var(--bg2);border:1px solid var(--brd);border-radius:10px;margin-bottom:8px;overflow:hidden;}
 .kf-head{display:flex;align-items:center;padding:8px 10px;gap:8px;cursor:pointer;}
 .kf-head:active{background:var(--bg3);}
@@ -327,8 +302,14 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .kf-inp:focus{border-color:var(--acc);}
 .kf-del{color:var(--red);font-size:16px;cursor:pointer;padding:2px 4px;flex-shrink:0;}
 
-/* ═══ ANIM CODE MODAL ═══ */
-#anim-code-modal .mc{max-height:90vh;}
+/* GW info badge */
+.gw-info-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 8px;border-radius:10px;font-size:9px;
+  font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;
+  background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);
+  color:#10b981;margin-top:6px;
+}
 </style>
 </head>
 <body>
@@ -340,14 +321,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
     <div>
       <div class="mm-logo"><span class="mm-logo-txt">LSM</span><small>Lua Script Maker</small></div>
     </div>
-    <div style="font-size:10px;color:var(--txt2)">v2.1</div>
+    <div style="font-size:10px;color:var(--txt2)">v2.2</div>
   </div>
-  <!-- MENU TABS -->
   <div id="menu-tabs" style="display:flex;background:var(--bg2);border-bottom:1px solid var(--brd);padding:0 10px;gap:4px;">
     <div class="mtab active" id="mtab-projects" onclick="switchMenuTab('projects')">📁 Projects</div>
     <div class="mtab" id="mtab-animations" onclick="switchMenuTab('animations')">🎬 Animations</div>
   </div>
-  <!-- PROJECTS TAB -->
   <div id="menu-tab-projects" class="mm-body" style="display:flex;flex-direction:column;">
     <div class="mm-section">
       <div class="mm-sec-title">Quick Actions</div>
@@ -365,9 +344,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
       </div>
     </div>
   </div>
-  <!-- ANIMATIONS TAB -->
   <div id="menu-tab-animations" class="mm-body" style="display:none;flex-direction:column;padding:0;">
-    <!-- platform selector -->
     <div id="anim-platform-sel" style="padding:14px 16px;">
       <div class="mm-sec-title" style="margin-bottom:12px;">Select Platform</div>
       <div id="anim-plat-roblox" class="anim-plat-card active-plat" onclick="selectAnimPlatform('roblox')">
@@ -382,56 +359,35 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
         More platforms coming soon…
       </div>
     </div>
-    <!-- roblox editor -->
     <div id="anim-roblox-editor" style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
-      <!-- character preview -->
       <div style="background:var(--bg2);border-bottom:1px solid var(--brd);padding:10px;display:flex;align-items:center;gap:10px;">
         <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;background:linear-gradient(90deg,#a855f7,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ROBLOX CHARACTER</div>
         <div style="margin-left:auto;font-size:10px;color:var(--txt2)" id="anim-preview-label">Idle</div>
       </div>
-      <!-- character stage -->
       <div id="anim-stage" style="height:200px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 80%,rgba(168,85,247,.12) 0%,transparent 70%);position:relative;overflow:hidden;">
-        <!-- ground -->
         <div style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:80px;height:4px;background:rgba(168,85,247,.2);border-radius:50%;filter:blur(2px);"></div>
-        <!-- SVG Roblox character -->
         <svg id="roblox-char" width="90" height="150" viewBox="0 0 90 150" style="position:relative;z-index:2;filter:drop-shadow(0 8px 20px rgba(168,85,247,.4));">
-          <!-- Head -->
           <rect id="rb-head" x="27" y="2" width="36" height="36" rx="4" fill="#FFD700" stroke="#c4a000" stroke-width="1.5"/>
-          <!-- Eyes -->
           <rect x="34" y="12" width="8" height="8" rx="2" fill="#1a1a2e"/>
           <rect x="48" y="12" width="8" height="8" rx="2" fill="#1a1a2e"/>
-          <!-- Eye shine -->
           <rect x="36" y="13" width="3" height="3" rx="1" fill="white" opacity="0.8"/>
           <rect x="50" y="13" width="3" height="3" rx="1" fill="white" opacity="0.8"/>
-          <!-- Mouth -->
           <path d="M37 26 Q45 31 53 26" stroke="#c4a000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <!-- Neck -->
           <rect x="38" y="38" width="14" height="6" fill="#e8b800"/>
-          <!-- Torso -->
           <rect id="rb-torso" x="22" y="44" width="46" height="44" rx="3" fill="#a855f7" stroke="#7c3aed" stroke-width="1.5"/>
-          <!-- Torso detail -->
           <rect x="28" y="52" width="34" height="2" rx="1" fill="rgba(255,255,255,.2)"/>
           <rect x="28" y="58" width="34" height="2" rx="1" fill="rgba(255,255,255,.15)"/>
           <rect x="28" y="64" width="20" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
-          <!-- Left Arm -->
           <rect id="rb-larm" x="6" y="44" width="14" height="36" rx="3" fill="#c084fc" stroke="#a855f7" stroke-width="1"/>
-          <!-- Right Arm -->
           <rect id="rb-rarm" x="70" y="44" width="14" height="36" rx="3" fill="#c084fc" stroke="#a855f7" stroke-width="1"/>
-          <!-- Left Leg -->
           <rect id="rb-lleg" x="22" y="90" width="19" height="40" rx="3" fill="#7c3aed" stroke="#6d28d9" stroke-width="1"/>
-          <!-- Right Leg -->
           <rect id="rb-rleg" x="49" y="90" width="19" height="40" rx="3" fill="#7c3aed" stroke="#6d28d9" stroke-width="1"/>
-          <!-- Left Shoe -->
           <rect x="20" y="128" width="22" height="10" rx="3" fill="#1a0533"/>
-          <!-- Right Shoe -->
           <rect x="47" y="128" width="22" height="10" rx="3" fill="#1a0533"/>
         </svg>
-        <!-- play indicator -->
         <div id="anim-playing-badge" style="position:absolute;top:8px;right:10px;font-size:9px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:10px;background:rgba(168,85,247,.2);border:1px solid var(--acc);color:var(--acc);display:none;">▶ PLAYING</div>
       </div>
-      <!-- keyframes scroll area -->
       <div style="flex:1;overflow-y:auto;padding:10px 14px 4px;">
-        <!-- animation meta -->
         <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center;">
           <div style="flex:1;">
             <div style="font-size:9px;color:var(--txt2);margin-bottom:3px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">ANIM NAME</div>
@@ -449,7 +405,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
             </select>
           </div>
         </div>
-        <!-- priority -->
         <div style="margin-bottom:10px;">
           <div style="font-size:9px;color:var(--txt2);margin-bottom:5px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">PRIORITY</div>
           <div style="display:flex;gap:5px;">
@@ -460,12 +415,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
             <div class="anim-pri-btn" id="pri-action3" onclick="setAnimPri('Action3')">Action3</div>
           </div>
         </div>
-        <!-- bone keyframes -->
         <div style="font-size:9px;color:var(--txt2);margin-bottom:6px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">KEYFRAMES — BONE ROTATIONS</div>
         <div id="anim-keyframes-list"></div>
         <div class="btn btn2" onclick="addKeyframe()" style="width:100%;padding:8px;margin-top:4px;cursor:pointer;font-size:11px;">+ Add Keyframe</div>
       </div>
-      <!-- bottom action bar -->
       <div style="padding:10px 14px;border-top:1px solid var(--brd);background:var(--bg2);display:flex;gap:8px;flex-shrink:0;">
         <div class="btn btns" onclick="previewAnim()" style="flex:1;cursor:pointer;">▶ Preview</div>
         <div class="btn btn2" onclick="copyAnimCode()" style="flex:1;cursor:pointer;">📋 Copy</div>
@@ -488,11 +441,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
       <div class="tbtn ac" onclick="saveProject()">💾</div>
     </div>
   </div>
-
   <div id="proj-tabs"></div>
   <div id="dov" onclick="closeDrawer()"></div>
-
-  <!-- DRAWER -->
   <div id="drawer">
     <div class="dh">🧩 COMPONENTS</div>
     <div class="ds">
@@ -515,12 +465,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
       <div class="pi" onclick="openSnipEd('remote');closeDrawer()"><span class="pi-ic">📡</span><span class="pi-nm">RemoteEvent</span></div>
     </div>
   </div>
-
   <div id="main" style="flex:1;display:flex;overflow:hidden;">
     <div id="canvas-area"><div id="canvas"></div></div>
   </div>
-
-  <!-- BOTTOM NAV -->
   <div id="bottom-nav">
     <div class="nb" onclick="toggleDrawer()"><span class="nb-i">🧩</span><span class="nb-l">ADD</span></div>
     <div class="nbs"></div>
@@ -542,7 +489,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
   </div>
 </div>
 
-</div><!-- end #app -->
+</div>
 
 <!-- PROPS SHEET -->
 <div id="psheet">
@@ -681,7 +628,6 @@ function els(){ return proj().elements; }
 function getEl(id){ return els().find(e=>e.id===id); }
 function getDom(id){ return document.getElementById('el-'+proj().id+'-'+id); }
 
-// ═══ PROMPT / CONFIRM HELPERS ═══
 function promptInp(title, def){
   return new Promise(res=>{
     inpResolve = res;
@@ -711,7 +657,6 @@ function confirm2(msg, btnTxt, cb){
 document.getElementById('conf-ok').onclick = ()=>{ if(confResolve) confResolve(true); };
 document.getElementById('conf-cancel').onclick = ()=>{ if(confResolve) confResolve(false); };
 
-// ═══ TOAST ═══
 let toastTmr;
 function toast(msg){
   const t=document.getElementById('toast');
@@ -720,7 +665,6 @@ function toast(msg){
   toastTmr=setTimeout(()=>t.classList.remove('on'),2000);
 }
 
-// ═══ STORAGE ═══
 function storageSave(){
   try{
     const data=projects.map(p=>({
@@ -744,7 +688,6 @@ function storageLoad(){
   }catch(e){}
 }
 
-// ═══ SCREENS ═══
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -763,7 +706,6 @@ function goEditor(){
   updateFab();
 }
 
-// ═══ MAIN MENU ═══
 function renderProjList(){
   const list=document.getElementById('proj-list');
   if(!projects.length){
@@ -831,7 +773,6 @@ function onFileLoad(e){
   e.target.value='';
 }
 
-// ═══ CANVAS ═══
 function initCanvas(){
   CW=Math.min(360,window.innerWidth-16);
   CH=Math.round(CW*1.25);
@@ -839,7 +780,6 @@ function initCanvas(){
   canvas.style.height=CH+'px';
 }
 
-// ═══ TABS ═══
 function renderTabs(){
   const bar=document.getElementById('proj-tabs');
   bar.innerHTML='';
@@ -903,9 +843,7 @@ function closeTabAt(i){
   });
 }
 
-// ═══ RENDER ALL ═══
 function renderAllEls(){
-  // hide all doms not in current project
   document.querySelectorAll('.el').forEach(d=>{
     if(!d.id.startsWith('el-'+proj().id+'-'))d.style.display='none';
   });
@@ -918,7 +856,6 @@ function renderAllEls(){
   if(proj().sel){const d=getDom(proj().sel);if(d)d.classList.add('sel');}
 }
 
-// ═══ ADD ELEMENT ═══
 function addElAndClose(type){ addEl(type); closeDrawer(); }
 
 function addEl(type,x,y){
@@ -926,15 +863,15 @@ function addEl(type,x,y){
   const p=proj();
   const id=p.idCnt++;
   const D={
-    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',rbw:false,collapsed:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',txs:14,txf:'GothamMedium',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',txs:14,txf:'GothamMedium',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',txs:13,txf:'GothamMedium',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',txs:14,txf:'GothamMedium',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',txs:14,txf:'GothamMedium',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',txs:14,txf:'GothamMedium',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',txs:13,txf:'GothamMedium',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',txs:14,txf:'GothamMedium',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',txs:13,txf:'GothamBold',txalign:'Left',rbw:false,collapsed:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
   };
   const d=D[type]||D.frame;
   const lbl=type.charAt(0).toUpperCase()+type.slice(1)+'_'+id;
@@ -947,7 +884,6 @@ function addEl(type,x,y){
   updateFab();
 }
 
-// ═══ BUILD DOM ═══
 function buildDom(el){
   const p=proj();
   let dom=document.getElementById('el-'+p.id+'-'+el.id);
@@ -985,7 +921,6 @@ function applyStyle(el){
   const fh=dom.querySelector('.el-rh');
   const ins=n=>{ if(fh) dom.insertBefore(n,fh); else dom.appendChild(n); };
 
-  // Helper: build gradient wave CSS string
   function gwGrad(c1,c2,dir){
     const d=dir||'horizontal';
     const gd=d==='vertical'?'to bottom':d==='diagonal'?'135deg':'to right';
@@ -996,7 +931,6 @@ function applyStyle(el){
     return `${a} ${spd||3}s ease infinite`;
   }
 
-  // mkspan: supports gradient wave text
   const mkspan=(txt,rbw,color,gwav,gwc1,gwc2,gwdir,gwspd)=>{
     const s=document.createElement('span');
     s.textContent=txt;
@@ -1010,14 +944,13 @@ function applyStyle(el){
     return s;
   };
 
-  // Helper: apply gradient wave border via outline trick (pseudo-border with gradient)
   function applyGWBorder(domEl,c1,c2,dir,spd,rad){
-    // Use a ::before-style div overlay for animated border
     const brd=document.createElement('div');
     brd.className='gw-border-overlay';
     brd.style.cssText=`position:absolute;inset:-2px;border-radius:${(rad||0)+2}px;padding:2px;background:${gwGrad(c1,c2,dir)};background-size:400% 400%;animation:${gwAnim(dir,spd)};-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude;pointer-events:none;z-index:19;`;
     domEl.appendChild(brd);
   }
+
   if(el.type==='frame'){
     dom.style.background=el.bg.startsWith('t')?'transparent':el.bg;
     dom.style.borderColor=el.border.startsWith('t')?'transparent':el.border;
@@ -1070,7 +1003,6 @@ function applyStyle(el){
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';
     if(el.sh&&el.neon==='none')dom.style.boxShadow=`0 ${el.sh}px ${el.sh*3}px rgba(0,0,0,.6)`;
     const tb=document.createElement('div');tb.className='pan-tb';
-    // panel title text — supports gwav text
     const tt=document.createElement('span');
     if(el.gwav&&el.gwtxt){
       tt.className='pan-ttxt';
@@ -1090,7 +1022,6 @@ function applyStyle(el){
   }
 }
 
-// ═══ TOUCH EVENTS ═══
 function attachTouch(dom,id){
   let sx,sy,ex0,ey0,dist=0,lt=0;
   dom.addEventListener('touchstart',e=>{
@@ -1126,7 +1057,6 @@ function attachTouch(dom,id){
     }
     dist=0;e.stopPropagation();
   });
-  // mouse support for desktop
   dom.addEventListener('click',e=>{
     if(e.target.classList.contains('el-rh'))return;
     const el=getEl(id);if(el)openSheet(el);
@@ -1152,7 +1082,6 @@ function attachResize(rh,id,dx,dy,ax,ay){
   rh.addEventListener('touchstart',e=>{onStart(e.touches[0].clientX,e.touches[0].clientY);e.stopPropagation();e.preventDefault();},{passive:false});
   rh.addEventListener('touchmove',e=>{onMove(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();},{passive:false});
   rh.addEventListener('touchend',e=>{const el=getEl(id);if(el&&document.getElementById('psheet').classList.contains('open'))buildSheet(el);e.stopPropagation();});
-  // Mouse resize
   rh.addEventListener('mousedown',e=>{
     onStart(e.clientX,e.clientY);
     e.stopPropagation();e.preventDefault();
@@ -1195,7 +1124,6 @@ document.getElementById('canvas-area').addEventListener('click',e=>{
   if(e.target===document.getElementById('canvas-area')||e.target===canvas)selectEl(null);
 });
 
-// ═══ SELECTION & PROPERTIES ═══
 function selectEl(id,openP){
   document.querySelectorAll('.el').forEach(d=>d.classList.remove('sel'));
   proj().sel=id;
@@ -1252,7 +1180,20 @@ function buildSheet(el){
   </div>
   ${hT?`<div class="ss"><div class="ss-hd">Text</div>
     <div class="sr"><span class="sl">Content</span><input class="si" value="${escAttr(el.txt.replace(/\n/g,'↵'))}" onchange="sp(${el.id},'txt',this.value.replace(/↵/g,'\\n'))"></div>
-    <div class="sr"><span class="sl">Color</span><input class="sc" type="color" value="${el.txc}" onchange="sp(${el.id},'txc',this.value)"></div>
+    <div class="sr"><span class="sl">Color</span><input class="sc" type="color" value="${el.txc}" onchange="sp(${el.id},'txc',this.value)">
+      <span class="sl" style="width:28px;text-align:center">Size</span>
+      <input class="si" type="number" min="6" max="96" value="${el.txs||14}" oninput="sp(${el.id},'txs',+this.value)" style="width:52px;">
+    </div>
+    <div class="sr"><span class="sl">Font</span>
+      <select class="si" onchange="sp(${el.id},'txf',this.value)">
+        ${['GothamMedium','GothamBold','Gotham','Arial','ArialBold','Ubuntu','UbuntuBold','Roboto','RobotoMono','SourceSansPro','SourceSansProBold','Bodoni','Bangers','PatrickHand','Sarpanch','FredokaOne','Kalam','TitilliumWeb','Nunito','Oswald','Creepster','DenkOne','Fondamento','Antique'].map(f=>`<option value="${f}" ${(el.txf||'GothamMedium')===f?'selected':''}>${f}</option>`).join('')}
+      </select>
+    </div>
+    <div class="sr"><span class="sl">Align</span>
+      <div style="display:flex;gap:4px;flex:1;">
+        ${['Left','Center','Right'].map(a=>`<div onclick="sp(${el.id},'txalign','${a}')" style="flex:1;padding:4px;border-radius:5px;border:1px solid ${(el.txalign||'Center')===a?'var(--acc)':'var(--brd)'};background:${(el.txalign||'Center')===a?'rgba(168,85,247,.15)':'var(--bg3)'};cursor:pointer;text-align:center;font-size:10px;color:${(el.txalign||'Center')===a?'var(--acc)':'var(--txt2)'};">${a==='Left'?'⬅':a==='Center'?'↔':'➡'} ${a}</div>`).join('')}
+      </div>
+    </div>
     <div class="sr"><span class="sl">🌈 Rainbow</span><input class="sx" type="checkbox" ${el.rbw?'checked':''} onchange="sp(${el.id},'rbw',this.checked)"></div>
   </div>`:''}
   <div class="ss"><div class="ss-hd">✨ Gradient Wave</div>
@@ -1289,6 +1230,7 @@ function buildSheet(el){
       </div>
     </div>
     <div style="font-size:9px;color:var(--txt2);margin-top:6px;line-height:1.6;">Tap a button to toggle. Both can be active at once.</div>
+    <div class="gw-info-badge">✓ Roblox-compatible: UIGradient + Heartbeat lerp</div>
   </div>
   ${el.type==='panel'?`<div class="ss"><div class="ss-hd">Panel</div>
     <div class="btn" onclick="togglePanel(${el.id})" style="width:100%;padding:9px;background:${el.collapsed?'var(--grn)':'var(--warn)'};color:#000;border-color:transparent;margin-bottom:4px;cursor:pointer;">
@@ -1310,7 +1252,6 @@ function escAttr(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&q
 
 function spToggleGW(id, key){
   const el=getEl(id);if(!el)return;
-  // if either gwtxt or gwbrd is being turned on, set gwav=true
   const newVal=!(el[key]);
   el[key]=newVal;
   if(newVal) el.gwav=true;
@@ -1331,11 +1272,9 @@ function sp(id,key,val){
   else if(key==='op')dom.style.opacity=val;
   else if(key==='rad')dom.style.borderRadius=val+'px';
   else applyStyle(el);
-  // rebuild sheet if gwav params changed
   if(['gwc1','gwc2','gwspd','gwdir'].includes(key)) buildSheet(el);
 }
 
-// ═══ UNDO / REDO ═══
 function saveUndo(){
   const p=proj();
   p.undoStack.push(JSON.stringify(p.elements));
@@ -1363,7 +1302,6 @@ function restoreState(newEls){
   updateFab();
 }
 
-// ═══ ACTIONS ═══
 function deleteSelected(){
   const p=proj();if(!p.sel)return;
   saveUndo();
@@ -1410,7 +1348,6 @@ function updateFab(){
   fab.textContent=panels.length?panels.some(e=>!e.collapsed)?'🔼':'🔽':'🗂️';
 }
 
-// ═══ DRAWER ═══
 function toggleDrawer(){
   document.getElementById('drawer').classList.toggle('open');
   document.getElementById('dov').classList.toggle('open');
@@ -1420,7 +1357,6 @@ function closeDrawer(){
   document.getElementById('dov').classList.remove('open');
 }
 
-// ═══ SCRIPT EDITOR ═══
 function openSc(id){
   const el=getEl(id);if(!el)return;
   scTarget=id;
@@ -1472,7 +1408,6 @@ function luaHL(code){
     .replace(/\b(\d+\.?\d*)\b/g,'<span style="color:#f78c6c">$1</span>');
 }
 
-// ═══ SNIPPETS ═══
 const SNIPS={
   notify:{title:'🔔 Notify',fields:[
     {id:'nf-t',label:'Title',type:'input',def:'LSM'},
@@ -1540,21 +1475,33 @@ function insertSnip(){
 function copySnip(){copyText(getSnipCode(),()=>toast('Snippet copied ✓'));}
 function closeSnip(){document.getElementById('snip-modal').classList.remove('open');snipType=null;}
 
-// ═══ LUA GENERATOR ═══
+// ═══ HEX → RGB STRING ═══
 function h2r(hex){
   if(!hex||hex.startsWith('t'))return null;
   hex=hex.replace('#','');
   if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
   return `${parseInt(hex.slice(0,2),16)}, ${parseInt(hex.slice(2,4),16)}, ${parseInt(hex.slice(4,6),16)}`;
 }
+// HEX → [r,g,b] numbers (0-255)
+function h2rgb(hex){
+  if(!hex||hex.startsWith('t'))return [168,85,247];
+  hex=hex.replace('#','');
+  if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  return [parseInt(hex.slice(0,2),16),parseInt(hex.slice(2,4),16),parseInt(hex.slice(4,6),16)];
+}
 
+// ═══════════════════════════════════════════════════
+//  LUA GENERATOR  (Gradient Wave — Roblox-correct)
+// ═══════════════════════════════════════════════════
 function generateLua(){
   const p=proj();
   let c='-- ============================================================\n';
-  c+=`-- Generated by LSM (Lua Script Maker) v2.1\n`;
+  c+=`-- Generated by LSM (Lua Script Maker) v2.2\n`;
   c+=`-- Project: ${p.name}.lua  |  Elements: ${p.elements.length}\n`;
+  c+=`-- Gradient Wave: UIGradient+Offset (BG) / TextColor3 lerp (text) / UIStroke lerp (border)\n`;
   c+='-- ============================================================\n\n';
   c+=`local Players = game:GetService("Players")\n`;
+  c+=`local RunService = game:GetService("RunService")\n`;
   c+=`local LocalPlayer = Players.LocalPlayer\n\n`;
   if(p.globalScript&&p.globalScript.trim()&&!p.globalScript.trim().startsWith('--'))c+=p.globalScript+'\n\n';
   c+=`local ScreenGui = Instance.new("ScreenGui")\n`;
@@ -1562,7 +1509,9 @@ function generateLua(){
   c+=`ScreenGui.ResetOnSpawn = false\n`;
   c+=`ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling\n`;
   c+=`ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")\n\n`;
+
   const tmap={frame:'Frame',button:'TextButton',textbox:'TextBox',label:'TextLabel',checkbox:'TextButton',slider:'Frame',dropdown:'Frame',separator:'Frame',panel:'Frame'};
+
   p.elements.forEach(el=>{
     const n=el.label.replace(/[^A-Za-z0-9_]/g,'_');
     const inst=tmap[el.type]||'Frame';
@@ -1572,12 +1521,15 @@ function generateLua(){
     c+=`${n}.Size = UDim2.new(0, ${Math.round(el.w)}, 0, ${Math.round(el.h)})\n`;
     c+=`${n}.Position = UDim2.new(0, ${Math.round(el.x)}, 0, ${Math.round(el.y)})\n`;
     c+=`${n}.ZIndex = ${el.z||1}\n`;
-    if(!el.bg||el.bg.startsWith('t')){c+=`${n}.BackgroundTransparency = 1\n`;}
-    else{
+
+    if(!el.bg||el.bg.startsWith('t')){
+      c+=`${n}.BackgroundTransparency = 1\n`;
+    } else {
       const rgb=h2r(el.bg);
       if(rgb)c+=`${n}.BackgroundColor3 = Color3.fromRGB(${rgb})\n`;
       if(el.op<1)c+=`${n}.BackgroundTransparency = ${(1-el.op).toFixed(2)}\n`;
     }
+
     if(['button','label','textbox'].includes(el.type)){
       const t=(el.txt||'').replace(/\\/g,'\\\\').replace(/"/g,'\\"');
       c+=`${n}.Text = "${t}"\n`;
@@ -1589,11 +1541,13 @@ function generateLua(){
     if(el.type==='checkbox'){
       const t=(el.txt||'').replace(/"/g,'\\"');
       c+=`${n}.Text = "☐  ${t}"\n`;
-      const tc=h2r(el.txc)||'226, 226, 236';c+=`${n}.TextColor3 = Color3.fromRGB(${tc})\n`;
+      const tc2=h2r(el.txc)||'226, 226, 236';c+=`${n}.TextColor3 = Color3.fromRGB(${tc2})\n`;
       c+=`${n}.TextSize = 14\n${n}.Font = Enum.Font.GothamMedium\n${n}.AutoButtonColor = false\n`;
     }
     if(el.rad>0){c+=`local Corner_${n}=Instance.new("UICorner")\nCorner_${n}.CornerRadius=UDim.new(0,${el.rad})\nCorner_${n}.Parent=${n}\n`;}
-    if(el.border&&!el.border.startsWith('t')){
+
+    // Normal border stroke (only if NOT using gwbrd, to avoid double stroke)
+    if(el.border&&!el.border.startsWith('t')&&!(el.gwav&&el.gwbrd)){
       const bc=h2r(el.border);
       if(bc)c+=`local Stroke_${n}=Instance.new("UIStroke")\nStroke_${n}.Color=Color3.fromRGB(${bc})\nStroke_${n}.Thickness=1\nStroke_${n}.ApplyStrokeMode=Enum.ApplyStrokeMode.Border\nStroke_${n}.Parent=${n}\n`;
     }
@@ -1604,42 +1558,83 @@ function generateLua(){
     if(el.sh>0&&el.neon==='none'){
       c+=`local Shadow_${n}=Instance.new("ImageLabel")\nShadow_${n}.AnchorPoint=Vector2.new(0.5,0.5)\nShadow_${n}.BackgroundTransparency=1\nShadow_${n}.Position=UDim2.new(0.5,0,0.5,${el.sh})\nShadow_${n}.Size=UDim2.new(1,${el.sh*4},1,${el.sh*4})\nShadow_${n}.ZIndex=${(el.z||1)-1}\nShadow_${n}.Image="rbxassetid://5028857084"\nShadow_${n}.ImageColor3=Color3.fromRGB(0,0,0)\nShadow_${n}.ImageTransparency=0.6\nShadow_${n}.ScaleType=Enum.ScaleType.Slice\nShadow_${n}.SliceCenter=Rect.new(24,24,276,276)\nShadow_${n}.Parent=${n}\n`;
     }
-    // Gradient Wave
+
+    // ══════════════════════════════════════════════════════
+    //  GRADIENT WAVE — ROBLOX-CORRECT IMPLEMENTATION
+    // ══════════════════════════════════════════════════════
     if(el.gwav){
-      const c1=h2r(el.gwc1||'#a855f7')||'168, 85, 247';
-      const c2=h2r(el.gwc2||'#e879f9')||'232, 121, 249';
-      const spd=el.gwspd||3;
-      const dir=el.gwdir||'horizontal';
-      const enumDir=dir==='vertical'?'Enum.UIGradientDirection.Vertical':dir==='diagonal'?'Enum.UIGradientDirection.Custom':'Enum.UIGradientDirection.Horizontal';
-      c+=`-- Gradient Wave for ${n}\n`;
-      c+=`local Grad_${n}=Instance.new("UIGradient")\n`;
-      c+=`Grad_${n}.Color=ColorSequence.new({\n`;
-      c+=`  ColorSequenceKeypoint.new(0,   Color3.fromRGB(${c1})),\n`;
-      c+=`  ColorSequenceKeypoint.new(0.5, Color3.fromRGB(${c2})),\n`;
-      c+=`  ColorSequenceKeypoint.new(1,   Color3.fromRGB(${c1}))\n`;
-      c+=`})\n`;
-      if(dir==='vertical') c+=`Grad_${n}.Rotation=90\n`;
-      else if(dir==='diagonal') c+=`Grad_${n}.Rotation=45\n`;
-      c+=`Grad_${n}.Parent=${n}\n`;
-      c+=`-- Animate gradient wave\n`;
-      c+=`local _gw_${n}=0\n`;
-      c+=`game:GetService("RunService").Heartbeat:Connect(function(dt)\n`;
-      c+=`  _gw_${n}=(_gw_${n}+dt/${spd})%1\n`;
-      c+=`  local t=_gw_${n}\n`;
-      c+=`  local function lerp(a,b,x) return a+(b-a)*x end\n`;
-      c+=`  local function hsvWave(phase)\n`;
-      c+=`    local r1,g1,b1=Color3.fromRGB(${c1}).R,Color3.fromRGB(${c1}).G,Color3.fromRGB(${c1}).B\n`;
-      c+=`    local r2,g2,b2=Color3.fromRGB(${c2}).R,Color3.fromRGB(${c2}).G,Color3.fromRGB(${c2}).B\n`;
-      c+=`    local f=math.abs(math.sin(math.pi*phase))\n`;
-      c+=`    return Color3.new(lerp(r1,r2,f),lerp(g1,g2,f),lerp(b1,b2,f))\n`;
-      c+=`  end\n`;
-      c+=`  Grad_${n}.Color=ColorSequence.new({\n`;
-      c+=`    ColorSequenceKeypoint.new(0,   hsvWave(t)),\n`;
-      c+=`    ColorSequenceKeypoint.new(0.5, hsvWave(t+0.5)),\n`;
-      c+=`    ColorSequenceKeypoint.new(1,   hsvWave(t+1))\n`;
-      c+=`  })\n`;
-      c+=`end)\n`;
+      const c1rgb = h2r(el.gwc1||'#a855f7') || '168, 85, 247';
+      const c2rgb = h2r(el.gwc2||'#e879f9') || '232, 121, 249';
+      const [r1,g1,b1] = h2rgb(el.gwc1||'#a855f7');
+      const [r2,g2,b2] = h2rgb(el.gwc2||'#e879f9');
+      const spd = el.gwspd || 3;
+      const dir = el.gwdir || 'horizontal';
+      const rot = dir==='vertical' ? 90 : dir==='diagonal' ? 45 : 0;
+
+      // Offset animation axis based on direction
+      let offsetLine;
+      if(dir==='vertical')      offsetLine = `Vector2.new(0, math.sin(_gwt_${n} * math.pi * 2) * 0.35)`;
+      else if(dir==='diagonal') offsetLine = `Vector2.new(math.sin(_gwt_${n} * math.pi * 2) * 0.35, math.sin(_gwt_${n} * math.pi * 2) * 0.35)`;
+      else                      offsetLine = `Vector2.new(math.sin(_gwt_${n} * math.pi * 2) * 0.35, 0)`;
+
+      // ── BG gradient: UIGradient + animated Offset (works on Frame/Button bg) ──
+      if(!el.bg.startsWith('t')){
+        c+=`\n-- ✨ GradientWave BG: ${n}\n`;
+        c+=`local Grad_${n} = Instance.new("UIGradient")\n`;
+        c+=`Grad_${n}.Color = ColorSequence.new({\n`;
+        c+=`  ColorSequenceKeypoint.new(0,    Color3.fromRGB(${c1rgb})),\n`;
+        c+=`  ColorSequenceKeypoint.new(0.33, Color3.fromRGB(${c2rgb})),\n`;
+        c+=`  ColorSequenceKeypoint.new(0.66, Color3.fromRGB(${c1rgb})),\n`;
+        c+=`  ColorSequenceKeypoint.new(1,    Color3.fromRGB(${c2rgb}))\n`;
+        c+=`})\n`;
+        c+=`Grad_${n}.Rotation = ${rot}\n`;
+        c+=`Grad_${n}.Parent = ${n}\n`;
+        c+=`local _gwt_${n} = 0\n`;
+        c+=`RunService.Heartbeat:Connect(function(dt)\n`;
+        c+=`  _gwt_${n} = (_gwt_${n} + dt / ${spd}) % 1\n`;
+        c+=`  Grad_${n}.Offset = ${offsetLine}\n`;
+        c+=`end)\n`;
+      }
+
+      // ── Text wave: lerp TextColor3 in Heartbeat ──
+      // (UIGradient does NOT affect text color — must use TextColor3 directly)
+      if(el.gwtxt && ['button','label','textbox','checkbox'].includes(el.type)){
+        c+=`\n-- ✨ GradientWave TEXT: ${n}\n`;
+        c+=`local _gwtt_${n} = 0\n`;
+        c+=`RunService.Heartbeat:Connect(function(dt)\n`;
+        c+=`  _gwtt_${n} = (_gwtt_${n} + dt / ${spd}) % 1\n`;
+        c+=`  local f = (math.sin(_gwtt_${n} * math.pi * 2) + 1) / 2\n`;
+        c+=`  ${n}.TextColor3 = Color3.new(\n`;
+        c+=`    (${r1} + (${r2} - ${r1}) * f) / 255,\n`;
+        c+=`    (${g1} + (${g2} - ${g1}) * f) / 255,\n`;
+        c+=`    (${b1} + (${b2} - ${b1}) * f) / 255\n`;
+        c+=`  )\n`;
+        c+=`end)\n`;
+      }
+
+      // ── Border wave: animated UIStroke.Color lerp ──
+      // (UIStroke does NOT support UIGradient — must lerp Color in Heartbeat)
+      if(el.gwbrd){
+        c+=`\n-- ✨ GradientWave BORDER: ${n}\n`;
+        c+=`local GWStroke_${n} = Instance.new("UIStroke")\n`;
+        c+=`GWStroke_${n}.Thickness = 2\n`;
+        c+=`GWStroke_${n}.ApplyStrokeMode = Enum.ApplyStrokeMode.Border\n`;
+        c+=`GWStroke_${n}.Color = Color3.fromRGB(${c1rgb})\n`;
+        c+=`GWStroke_${n}.Parent = ${n}\n`;
+        c+=`local _gwbt_${n} = 0\n`;
+        c+=`RunService.Heartbeat:Connect(function(dt)\n`;
+        c+=`  _gwbt_${n} = (_gwbt_${n} + dt / ${spd}) % 1\n`;
+        c+=`  local f = (math.sin(_gwbt_${n} * math.pi * 2) + 1) / 2\n`;
+        c+=`  GWStroke_${n}.Color = Color3.new(\n`;
+        c+=`    (${r1} + (${r2} - ${r1}) * f) / 255,\n`;
+        c+=`    (${g1} + (${g2} - ${g1}) * f) / 255,\n`;
+        c+=`    (${b1} + (${b2} - ${b1}) * f) / 255\n`;
+        c+=`  )\n`;
+        c+=`end)\n`;
+      }
     }
+    // ── END GRADIENT WAVE ──
+
     if(el.type==='panel'){
       const pt=(el.txt||'Panel').replace(/"/g,'\\"');const ptc=h2r(el.txc)||'168, 85, 247';
       c+=`local PTitle_${n}=Instance.new("TextLabel")\nPTitle_${n}.Size=UDim2.new(1,0,0,28)\nPTitle_${n}.BackgroundTransparency=1\nPTitle_${n}.Text="${pt}"\nPTitle_${n}.TextColor3=Color3.fromRGB(${ptc})\nPTitle_${n}.TextSize=13\nPTitle_${n}.Font=Enum.Font.GothamBold\nPTitle_${n}.Parent=${n}\n`;
@@ -1655,9 +1650,11 @@ function generateLua(){
       c+=`local ${n}_val=50\nlocal ${n}_bar=Instance.new("Frame")\n${n}_bar.Size=UDim2.new(1,-16,0,4)\n${n}_bar.Position=UDim2.new(0,8,0.5,-2)\n${n}_bar.BackgroundColor3=Color3.fromRGB(50,30,80)\n${n}_bar.BorderSizePixel=0\nInstance.new("UICorner",${n}_bar).CornerRadius=UDim.new(1,0)\n${n}_bar.Parent=${n}\n`;
       c+=`local ${n}_fill=Instance.new("Frame")\n${n}_fill.Size=UDim2.new(0.5,0,1,0)\n${n}_fill.BackgroundColor3=Color3.fromRGB(168,85,247)\n${n}_fill.BorderSizePixel=0\nInstance.new("UICorner",${n}_fill).CornerRadius=UDim.new(1,0)\n${n}_fill.Parent=${n}_bar\n`;
       c+=`local ${n}_knob=Instance.new("TextButton")\n${n}_knob.Size=UDim2.new(0,16,0,16)\n${n}_knob.AnchorPoint=Vector2.new(0.5,0.5)\n${n}_knob.Position=UDim2.new(0.5,0,0.5,0)\n${n}_knob.BackgroundColor3=Color3.fromRGB(192,132,252)\n${n}_knob.Text=""\n${n}_knob.AutoButtonColor=false\nInstance.new("UICorner",${n}_knob).CornerRadius=UDim.new(1,0)\n${n}_knob.Parent=${n}_bar\n`;
-      c+=`local UIS_${n}=game:GetService("UserInputService")\nlocal drag_${n}=false\n${n}_knob.MouseButton1Down:Connect(function()drag_${n}=true end)\nUIS_${n}.InputEnded:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then drag_${n}=false end end)\ngame:GetService("RunService").Heartbeat:Connect(function()\nif not drag_${n} then return end\nlocal mp=UIS_${n}:GetMouseLocation()\nlocal abs=${n}_bar.AbsolutePosition\nlocal sz=${n}_bar.AbsoluteSize\nlocal pct=math.clamp((mp.X-abs.X)/sz.X,0,1)\n${n}_val=math.floor(pct*100)\n${n}_fill.Size=UDim2.new(pct,0,1,0)\n${n}_knob.Position=UDim2.new(pct,0,0.5,0)\nend)\n`;
+      c+=`local UIS_${n}=game:GetService("UserInputService")\nlocal drag_${n}=false\n${n}_knob.MouseButton1Down:Connect(function()drag_${n}=true end)\nUIS_${n}.InputEnded:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then drag_${n}=false end end)\nRunService.Heartbeat:Connect(function()\nif not drag_${n} then return end\nlocal mp=UIS_${n}:GetMouseLocation()\nlocal abs=${n}_bar.AbsolutePosition\nlocal sz=${n}_bar.AbsoluteSize\nlocal pct=math.clamp((mp.X-abs.X)/sz.X,0,1)\n${n}_val=math.floor(pct*100)\n${n}_fill.Size=UDim2.new(pct,0,1,0)\n${n}_knob.Position=UDim2.new(pct,0,0.5,0)\nend)\n`;
     }
+
     c+=`${n}.Parent = ScreenGui\n`;
+
     const scriptLines=(el.script||'').split('\n').filter(l=>l.trim()&&!l.trim().startsWith('--'));
     if(scriptLines.length>0){
       if(el.type==='button'){
@@ -1679,15 +1676,15 @@ function generateLua(){
         scriptLines.forEach(l=>c+=`${l}\n`);
       }
     }
+
     if(el.rbw&&['button','label','textbox'].includes(el.type)){
-      c+=`\nlocal _t_${n}=0\ngame:GetService("RunService").Heartbeat:Connect(function(dt)\n  _t_${n}=(_t_${n}+dt*0.4)%1\n  ${n}.TextColor3=Color3.fromHSV(_t_${n},1,1)\nend)\n`;
+      c+=`\nlocal _t_${n}=0\nRunService.Heartbeat:Connect(function(dt)\n  _t_${n}=(_t_${n}+dt*0.4)%1\n  ${n}.TextColor3=Color3.fromHSV(_t_${n},1,1)\nend)\n`;
     }
     c+='\n';
   });
   return c;
 }
 
-// ═══ SAVE / EXPORT ═══
 function saveProject(){
   const p=proj();p.savedCode=generateLua();storageSave();toast('Saved '+p.name+'.lua ✓');
 }
@@ -1728,19 +1725,17 @@ function fallbackCopy(text,cb){
   document.body.removeChild(ta);
 }
 
-// ═══ INIT ═══
 storageLoad();
 showScreen('menu-screen');
 renderProjList();
 
-// ═══════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 //  ANIMATIONS TAB
-// ═══════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 let animPlatform = 'roblox';
 let animPriority = 'Idle';
-let animKeyframes = []; // [{time, bones:{head,torso,larm,rarm,lleg,rleg} each {x,y,z}}]
+let animKeyframes = [];
 let animPreviewTimer = null;
-let animPreviewFrame = 0;
 
 function switchMenuTab(tab) {
   document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
@@ -1763,12 +1758,12 @@ function setAnimPri(pri) {
 }
 
 const BONES = [
-  { id: 'head',   label: 'Head' },
-  { id: 'torso',  label: 'Torso' },
-  { id: 'larm',   label: 'L.Arm' },
-  { id: 'rarm',   label: 'R.Arm' },
-  { id: 'lleg',   label: 'L.Leg' },
-  { id: 'rleg',   label: 'R.Leg' },
+  { id: 'head',  label: 'Head' },
+  { id: 'torso', label: 'Torso' },
+  { id: 'larm',  label: 'L.Arm' },
+  { id: 'rarm',  label: 'R.Arm' },
+  { id: 'lleg',  label: 'L.Leg' },
+  { id: 'rleg',  label: 'R.Leg' },
 ];
 
 function defaultBones() {
@@ -1778,12 +1773,9 @@ function defaultBones() {
 }
 
 function addKeyframe() {
-  const maxT = animKeyframes.length > 0
-    ? Math.max(...animKeyframes.map(k => k.time)) + 0.1
-    : 0;
+  const maxT = animKeyframes.length > 0 ? Math.max(...animKeyframes.map(k => k.time)) + 0.1 : 0;
   animKeyframes.push({ time: parseFloat(maxT.toFixed(2)), bones: defaultBones(), open: true });
   renderKeyframeList();
-  // scroll to bottom
   setTimeout(() => {
     const list = document.getElementById('anim-keyframes-list');
     if (list) list.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -1815,10 +1807,7 @@ function renderKeyframeList() {
       <div class="kf-head" onclick="toggleKF(${i})">
         <div style="font-size:14px">🔑</div>
         <div class="kf-time">t = <input
-          class="si"
-          type="number"
-          value="${kf.time}"
-          min="0" max="60" step="0.05"
+          class="si" type="number" value="${kf.time}" min="0" max="60" step="0.05"
           style="width:56px;display:inline-block;padding:3px 6px;font-size:12px;"
           onclick="event.stopPropagation()"
           oninput="animKeyframes[${i}].time=parseFloat(this.value)||0"
@@ -1848,31 +1837,19 @@ function renderKeyframeList() {
     </div>`).join('');
 }
 
-// Apply pose to SVG for preview
 function previewPose(kfIdx) {
   const kf = animKeyframes[kfIdx];
   if (!kf) return;
   const bones = kf.bones;
-  const char = document.getElementById('roblox-char');
-  if (!char) return;
   document.getElementById('anim-preview-label').textContent = `KF ${kfIdx} @ t=${kf.time}s`;
-
-  // head
   const head = document.getElementById('rb-head');
-  if (head) head.style.transform = `rotate(${(bones.head.z||0)}deg)`;
-  head.style.transformOrigin = '45px 20px';
-
-  // torso
+  if (head) { head.style.transform = `rotate(${bones.head.z||0}deg)`; head.style.transformOrigin = '45px 20px'; }
   const torso = document.getElementById('rb-torso');
   if (torso) { torso.style.transform = `rotate(${(bones.torso.z||0)*0.5}deg)`; torso.style.transformOrigin = '45px 66px'; }
-
-  // arms
   const la = document.getElementById('rb-larm');
   const ra = document.getElementById('rb-rarm');
   if (la) { la.style.transform = `rotate(${-(bones.larm.z||0)}deg)`; la.style.transformOrigin = '13px 44px'; }
-  if (ra) { ra.style.transform = `rotate(${(bones.rarm.z||0)}deg)`; ra.style.transformOrigin = '77px 44px'; }
-
-  // legs
+  if (ra) { ra.style.transform = `rotate(${bones.rarm.z||0}deg)`; ra.style.transformOrigin = '77px 44px'; }
   const ll = document.getElementById('rb-lleg');
   const rl = document.getElementById('rb-rleg');
   if (ll) { ll.style.transform = `rotate(${(bones.lleg.z||0)*0.7}deg)`; ll.style.transformOrigin = '31px 90px'; }
@@ -1891,7 +1868,8 @@ function previewAnim() {
       i = 0;
       if (document.getElementById('anim-loop').value === 'false') { stopAnimPreview(); return; }
     }
-    previewPose(animKeyframes.indexOf(sorted[i]) >= 0 ? animKeyframes.indexOf(sorted[i]) : i);
+    const kfIdx = animKeyframes.indexOf(sorted[i]);
+    previewPose(kfIdx >= 0 ? kfIdx : i);
     document.getElementById('anim-preview-label').textContent = `▶ t=${sorted[i].time}s`;
     const nextTime = sorted[i + 1] ? (sorted[i + 1].time - sorted[i].time) * 1000 / parseFloat(document.getElementById('anim-speed').value || 1) : 600;
     i++;
@@ -1904,7 +1882,6 @@ function stopAnimPreview() {
   if (animPreviewTimer) { clearTimeout(animPreviewTimer); animPreviewTimer = null; }
   const badge = document.getElementById('anim-playing-badge');
   if (badge) badge.style.display = 'none';
-  // reset pose
   ['rb-head','rb-torso','rb-larm','rb-rarm','rb-lleg','rb-rleg'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.transform = '';
@@ -1920,7 +1897,7 @@ function generateAnimLua() {
 
   let c = '-- ============================================================\n';
   c += `-- Animation: ${name}.lua\n`;
-  c += `-- Generated by LSM (Lua Script Maker) v2.1\n`;
+  c += `-- Generated by LSM (Lua Script Maker) v2.2\n`;
   c += `-- Priority: ${animPriority}  |  Loop: ${loop}  |  Speed: ${speed}\n`;
   c += `-- Keyframes: ${sorted.length}\n`;
   c += '-- ============================================================\n\n';
@@ -1931,30 +1908,20 @@ function generateAnimLua() {
   c += `local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()\n`;
   c += `local humanoid = character:WaitForChild("Humanoid")\n`;
   c += `local humanoidRootPart = character:WaitForChild("HumanoidRootPart")\n\n`;
-  c += `-- Get motor joints\n`;
-  c += `local function getMotor(parent, name)\n`;
-  c += `  return parent and parent:FindFirstChild(name)\n`;
-  c += `end\n\n`;
+  c += `local function getMotor(parent, name)\n  return parent and parent:FindFirstChild(name)\nend\n\n`;
   c += `local torso = character:WaitForChild("Torso", 5) or character:WaitForChild("UpperTorso", 5)\n`;
   c += `local head = character:WaitForChild("Head", 5)\n\n`;
   c += `local joints = {\n`;
-  c += `  Neck      = torso and getMotor(torso, "Neck"),\n`;
+  c += `  Neck          = torso and getMotor(torso, "Neck"),\n`;
   c += `  RightShoulder = torso and getMotor(torso, "Right Shoulder"),\n`;
   c += `  LeftShoulder  = torso and getMotor(torso, "Left Shoulder"),\n`;
-  c += `  RightHip  = torso and getMotor(torso, "Right Hip"),\n`;
-  c += `  LeftHip   = torso and getMotor(torso, "Left Hip"),\n`;
+  c += `  RightHip      = torso and getMotor(torso, "Right Hip"),\n`;
+  c += `  LeftHip       = torso and getMotor(torso, "Left Hip"),\n`;
   c += `}\n\n`;
-  c += `-- Default C0 positions (backup)\n`;
-  c += `local defaultC0 = {}\n`;
-  c += `for name, joint in pairs(joints) do\n`;
-  c += `  if joint then defaultC0[name] = joint.C0 end\n`;
-  c += `end\n\n`;
-  c += `-- ── Keyframe data ──\n`;
+  c += `local defaultC0 = {}\nfor name, joint in pairs(joints) do\n  if joint then defaultC0[name] = joint.C0 end\nend\n\n`;
   c += `local keyframes = {\n`;
   sorted.forEach((kf, i) => {
-    c += `  -- Keyframe ${i + 1} at t=${kf.time}s\n`;
-    c += `  [${i + 1}] = {\n`;
-    c += `    time = ${kf.time},\n`;
+    c += `  [${i + 1}] = {\n    time = ${kf.time},\n`;
     c += `    Neck          = CFrame.Angles(math.rad(${kf.bones.head.x||0}), math.rad(${kf.bones.head.y||0}), math.rad(${kf.bones.head.z||0})),\n`;
     c += `    RightShoulder = CFrame.Angles(math.rad(${kf.bones.rarm.x||0}), math.rad(${kf.bones.rarm.y||0}), math.rad(${kf.bones.rarm.z||0})),\n`;
     c += `    LeftShoulder  = CFrame.Angles(math.rad(${kf.bones.larm.x||0}), math.rad(${kf.bones.larm.y||0}), math.rad(${kf.bones.larm.z||0})),\n`;
@@ -1963,46 +1930,9 @@ function generateAnimLua() {
     c += `  },\n`;
   });
   c += `}\n\n`;
-  c += `-- ── Animation player ──\n`;
-  c += `local animSpeed = ${speed}\n`;
-  c += `local shouldLoop = ${loop}\n`;
-  c += `local isPlaying = false\n\n`;
-  c += `local function playAnimation()\n`;
-  c += `  if isPlaying then return end\n`;
-  c += `  isPlaying = true\n`;
-  c += `  repeat\n`;
-  c += `    for i, kf in ipairs(keyframes) do\n`;
-  c += `      local nextKF = keyframes[i + 1]\n`;
-  c += `      local duration = nextKF and (nextKF.time - kf.time) / animSpeed or 0.2 / animSpeed\n`;
-  c += `      duration = math.max(0.05, duration)\n`;
-  c += `      local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)\n`;
-  c += `      for jointName, rotation in pairs(kf) do\n`;
-  c += `        if jointName ~= "time" and joints[jointName] and defaultC0[jointName] then\n`;
-  c += `          local goal = { C0 = defaultC0[jointName] * rotation }\n`;
-  c += `          TweenService:Create(joints[jointName], tweenInfo, goal):Play()\n`;
-  c += `        end\n`;
-  c += `      end\n`;
-  c += `      task.wait(duration)\n`;
-  c += `    end\n`;
-  c += `  until not shouldLoop or not isPlaying\n`;
-  c += `  -- Reset to default\n`;
-  c += `  for name, joint in pairs(joints) do\n`;
-  c += `    if joint and defaultC0[name] then\n`;
-  c += `      TweenService:Create(joint, TweenInfo.new(0.15), {C0 = defaultC0[name]}):Play()\n`;
-  c += `    end\n`;
-  c += `  end\n`;
-  c += `  isPlaying = false\n`;
-  c += `end\n\n`;
-  c += `local function stopAnimation()\n`;
-  c += `  isPlaying = false\n`;
-  c += `end\n\n`;
-  c += `-- ── Start animation ──\n`;
-  c += `task.spawn(playAnimation)\n\n`;
-  c += `-- Optional: bind to humanoid state\n`;
-  c += `-- humanoid.StateChanged:Connect(function(old, new)\n`;
-  c += `--   if new == Enum.HumanoidStateType.Running then playAnimation()\n`;
-  c += `--   else stopAnimation() end\n`;
-  c += `-- end)\n`;
+  c += `local animSpeed = ${speed}\nlocal shouldLoop = ${loop}\nlocal isPlaying = false\n\n`;
+  c += `local function playAnimation()\n  if isPlaying then return end\n  isPlaying = true\n  repeat\n    for i, kf in ipairs(keyframes) do\n      local nextKF = keyframes[i + 1]\n      local duration = nextKF and (nextKF.time - kf.time) / animSpeed or 0.2 / animSpeed\n      duration = math.max(0.05, duration)\n      local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)\n      for jointName, rotation in pairs(kf) do\n        if jointName ~= "time" and joints[jointName] and defaultC0[jointName] then\n          TweenService:Create(joints[jointName], tweenInfo, { C0 = defaultC0[jointName] * rotation }):Play()\n        end\n      end\n      task.wait(duration)\n    end\n  until not shouldLoop or not isPlaying\n  for name, joint in pairs(joints) do\n    if joint and defaultC0[name] then\n      TweenService:Create(joint, TweenInfo.new(0.15), {C0 = defaultC0[name]}):Play()\n    end\n  end\n  isPlaying = false\nend\n\n`;
+  c += `local function stopAnimation() isPlaying = false end\n\ntask.spawn(playAnimation)\n`;
   return c;
 }
 
