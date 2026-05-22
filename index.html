@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>LSM – Lua Script Maker</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Rajdhani:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Rajdhani:wght@600;700&family=Bangers&family=Oswald:wght@400;700&family=Nunito:wght@400;700&family=Fredoka+One&family=Kalam&family=Patrick+Hand&family=Permanent+Marker&family=Creepster&family=Roboto:wght@400;700&family=Roboto+Mono&family=Ubuntu:wght@400;700&family=Titillium+Web:wght@400;700&family=Amatic+SC&family=DM+Sans:wght@400;700&family=Montserrat:wght@400;600;700;900&display=swap');
 
 @keyframes waveGrad {
   0%   { background-position: 0% 50%; }
@@ -301,6 +301,35 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .kf-inp{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--glass-brd);color:var(--txt);font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 6px;border-radius:5px;outline:none;min-width:0;}
 .kf-inp:focus{border-color:var(--acc);}
 .kf-del{color:var(--red);font-size:16px;cursor:pointer;padding:2px 4px;flex-shrink:0;}
+
+/* Font preview in dropdown options */
+.font-select option[value="SourceSans"]         { font-family: "DM Sans", sans-serif; }
+.font-select option[value="SourceSansBold"]     { font-family: "DM Sans", sans-serif; font-weight:700; }
+.font-select option[value="SourceSansSemibold"] { font-family: "DM Sans", sans-serif; font-weight:600; }
+.font-select option[value="SourceSansLight"]    { font-family: "DM Sans", sans-serif; font-weight:300; }
+.font-select option[value="SourceSansItalic"]   { font-family: "DM Sans", sans-serif; font-style:italic; }
+.font-select option[value="Gotham"],
+.font-select option[value="GothamMedium"],
+.font-select option[value="GothamBold"],
+.font-select option[value="GothamBlack"]        { font-family: "Montserrat", sans-serif; }
+.font-select option[value="Roboto"]             { font-family: "Roboto", sans-serif; }
+.font-select option[value="RobotoMono"]         { font-family: "Roboto Mono", monospace; }
+.font-select option[value="Ubuntu"]             { font-family: "Ubuntu", sans-serif; }
+.font-select option[value="Nunito"]             { font-family: "Nunito", sans-serif; }
+.font-select option[value="TitilliumWeb"]       { font-family: "Titillium Web", sans-serif; }
+.font-select option[value="Bangers"]            { font-family: "Bangers", cursive; }
+.font-select option[value="AmaticSC"]           { font-family: "Amatic SC", cursive; }
+.font-select option[value="FredokaOne"]         { font-family: "Fredoka One", cursive; }
+.font-select option[value="Oswald"]             { font-family: "Oswald", sans-serif; }
+.font-select option[value="Kalam"]              { font-family: "Kalam", cursive; }
+.font-select option[value="PatrickHand"]        { font-family: "Patrick Hand", cursive; }
+.font-select option[value="PermanentMarker"]    { font-family: "Permanent Marker", cursive; }
+.font-select option[value="Creepster"]          { font-family: "Creepster", cursive; }
+.font-select option[value="Bodoni"]             { font-family: Georgia, serif; font-style:italic; }
+.font-select option[value="Garamond"]           { font-family: Georgia, serif; }
+.font-select option[value="Code"],
+.font-select option[value="SciFi"],
+.font-select option[value="Arcade"]             { font-family: monospace; }
 
 /* GW info badge */
 .gw-info-badge{
@@ -863,14 +892,14 @@ function addEl(type,x,y){
   const p=proj();
   const id=p.idCnt++;
   const D={
-    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',txs:14,txf:'GothamMedium',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',txs:14,txf:'GothamMedium',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',txs:13,txf:'GothamMedium',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',txs:14,txf:'GothamMedium',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',txs:14,txf:'GothamMedium',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',txs:14,txf:'GothamMedium',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',txs:13,txf:'GothamMedium',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',txs:14,txf:'GothamMedium',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',txs:14,txf:'SourceSans',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',txs:14,txf:'SourceSans',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
     panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',txs:13,txf:'GothamBold',txalign:'Left',rbw:false,collapsed:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
   };
   const d=D[type]||D.frame;
@@ -906,6 +935,63 @@ function buildDom(el){
   applyStyle(el);
 }
 
+// Roblox Enum.Font → CSS font-family mapping for canvas preview
+const RBLX_FONT_MAP = {
+  'SourceSans':        '"DM Sans", sans-serif',
+  'SourceSansBold':    '"DM Sans", sans-serif',
+  'SourceSansSemibold':'"DM Sans", sans-serif',
+  'SourceSansLight':   '"DM Sans", sans-serif',
+  'SourceSansItalic':  '"DM Sans", sans-serif',
+  'Gotham':            '"Montserrat", sans-serif',
+  'GothamMedium':      '"Montserrat", sans-serif',
+  'GothamBold':        '"Montserrat", sans-serif',
+  'GothamBlack':       '"Montserrat", sans-serif',
+  'Roboto':            '"Roboto", sans-serif',
+  'RobotoMono':        '"Roboto Mono", monospace',
+  'Ubuntu':            '"Ubuntu", sans-serif',
+  'Nunito':            '"Nunito", sans-serif',
+  'TitilliumWeb':      '"Titillium Web", sans-serif',
+  'Bangers':           '"Bangers", cursive',
+  'AmaticSC':          '"Amatic SC", cursive',
+  'FredokaOne':        '"Fredoka One", cursive',
+  'Oswald':            '"Oswald", sans-serif',
+  'Kalam':             '"Kalam", cursive',
+  'PatrickHand':       '"Patrick Hand", cursive',
+  'PermanentMarker':   '"Permanent Marker", cursive',
+  'Creepster':         '"Creepster", cursive',
+  'DenkOne':           'sans-serif',
+  'Fondamento':        'cursive',
+  'Garamond':          'Georgia, serif',
+  'Bodoni':            'Georgia, serif',
+  'Antique':           'Georgia, serif',
+  'Cartoon':           'cursive',
+  'Arcade':            'monospace',
+  'Fantasy':           'fantasy',
+  'Code':              'monospace',
+  'Highway':           'sans-serif',
+  'SciFi':             'monospace',
+  'Legacy':            'serif',
+};
+function applyFontPreview(sel){
+  const v=sel.value;
+  const ff=rblxFont(v);
+  const fw=rblxWeight(v);
+  const fi=rblxStyle(v);
+  sel.style.fontFamily=ff;
+  sel.style.fontWeight=fw;
+  sel.style.fontStyle=fi;
+}
+function rblxFont(txf){ return RBLX_FONT_MAP[txf] || 'sans-serif'; }
+// Roblox font → CSS font-weight
+const RBLX_WEIGHT_MAP = {
+  'GothamBold':'700','GothamBlack':'900','SourceSansBold':'700',
+  'SourceSansSemibold':'600','SourceSansLight':'300','UbuntuBold':'700',
+  'MontserratBold':'700','MontserratBlack':'900',
+};
+function rblxWeight(txf){ return RBLX_WEIGHT_MAP[txf]||'400'; }
+// Roblox font → CSS font-style
+function rblxStyle(txf){ return txf==='SourceSansItalic'?'italic':'normal'; }
+
 function applyStyle(el){
   const p=proj();
   const dom=document.getElementById('el-'+p.id+'-'+el.id);
@@ -934,11 +1020,16 @@ function applyStyle(el){
   const mkspan=(txt,rbw,color,gwav,gwc1,gwc2,gwdir,gwspd)=>{
     const s=document.createElement('span');
     s.textContent=txt;
+    const ff=rblxFont(el.txf);
+    const fw=rblxWeight(el.txf);
+    const fi=rblxStyle(el.txf);
+    const fs=(el.txs||14)+'px';
+    const ta=el.txalign==='Right'?'right':el.txalign==='Center'?'center':'left';
     if(gwav&&(gwc1||gwc2)){
       const c1=gwc1||'#a855f7',c2=gwc2||'#e879f9';
-      s.style.cssText=`background:${gwGrad(c1,c2,gwdir)};background-size:400% 400%;animation:${gwAnim(gwdir,gwspd)};-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'JetBrains Mono',monospace;font-size:12px;pointer-events:none;display:inline-block;`;
+      s.style.cssText=`background:${gwGrad(c1,c2,gwdir)};background-size:400% 400%;animation:${gwAnim(gwdir,gwspd)};-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:${ff};font-size:${fs};font-weight:${fw};font-style:${fi};text-align:${ta};pointer-events:none;display:inline-block;width:100%;`;
     } else {
-      s.style.cssText=`color:${color};font-family:'JetBrains Mono',monospace;font-size:12px;pointer-events:none;`;
+      s.style.cssText=`color:${color};font-family:${ff};font-size:${fs};font-weight:${fw};font-style:${fi};text-align:${ta};pointer-events:none;width:100%;display:block;`;
       if(rbw)s.classList.add('rbw');
     }
     return s;
@@ -967,7 +1058,7 @@ function applyStyle(el){
     dom.style.background=el.bg;dom.style.borderColor=el.border;
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';
     const ta=document.createElement('textarea');
-    ta.style.cssText=`width:100%;height:100%;background:transparent;border:none;outline:none;resize:none;color:${el.txc};font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 6px;box-sizing:border-box;`;
+    ta.style.cssText=`width:100%;height:100%;background:transparent;border:none;outline:none;resize:none;color:${el.txc};font-family:${rblxFont(el.txf)};font-size:${el.txs||13}px;font-weight:${rblxWeight(el.txf)};font-style:${rblxStyle(el.txf)};padding:4px 6px;box-sizing:border-box;`;
     ta.placeholder='TextBox...';ins(ta);
     if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
   } else if(el.type==='label'){
@@ -986,7 +1077,7 @@ function applyStyle(el){
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';
     const sel=document.createElement('select');
     el.txt.split('\n').filter(Boolean).forEach(o=>{const opt=document.createElement('option');opt.value=o;opt.textContent=o;sel.appendChild(opt);});
-    sel.style.cssText=`width:100%;height:100%;background:transparent;border:none;color:${el.txc};font-family:'JetBrains Mono',monospace;font-size:11px;outline:none;padding:2px 6px;`;ins(sel);
+    sel.style.cssText=`width:100%;height:100%;background:transparent;border:none;color:${el.txc};font-family:${rblxFont(el.txf)};font-size:${el.txs||13}px;font-weight:${rblxWeight(el.txf)};outline:none;padding:2px 6px;`;ins(sel);
     if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
   } else if(el.type==='separator'){
     if(el.gwav&&el.gwbrd){
@@ -1007,9 +1098,9 @@ function applyStyle(el){
     if(el.gwav&&el.gwtxt){
       tt.className='pan-ttxt';
       tt.textContent=el.txt;
-      tt.style.cssText=`background:${gwGrad(el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir)};background-size:400% 400%;animation:${gwAnim(el.gwdir,el.gwspd)};-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'JetBrains Mono',monospace;font-size:11px;flex:1;pointer-events:none;display:inline-block;`;
+      tt.style.cssText=`background:${gwGrad(el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir)};background-size:400% 400%;animation:${gwAnim(el.gwdir,el.gwspd)};-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:${rblxFont(el.txf)};font-size:${el.txs||13}px;font-weight:${rblxWeight(el.txf)};flex:1;pointer-events:none;display:inline-block;`;
     } else {
-      tt.className='pan-ttxt'+(el.rbw?' rbw':'');tt.textContent=el.txt;tt.style.color=el.txc;
+      tt.className='pan-ttxt'+(el.rbw?' rbw':'');tt.textContent=el.txt;tt.style.color=el.txc;tt.style.fontFamily=rblxFont(el.txf);tt.style.fontSize=(el.txs||13)+'px';tt.style.fontWeight=rblxWeight(el.txf);
     }
     const dot=document.createElement('span');dot.className='pan-dot';dot.textContent=el.collapsed?'▶':'▼';dot.style.background=el.txc;
     dot.addEventListener('touchstart',e=>{e.stopPropagation();togglePanel(el.id);},{passive:true});
@@ -1182,11 +1273,25 @@ function buildSheet(el){
     <div class="sr"><span class="sl">Content</span><input class="si" value="${escAttr(el.txt.replace(/\n/g,'↵'))}" onchange="sp(${el.id},'txt',this.value.replace(/↵/g,'\\n'))"></div>
     <div class="sr"><span class="sl">Color</span><input class="sc" type="color" value="${el.txc}" onchange="sp(${el.id},'txc',this.value)">
       <span class="sl" style="width:28px;text-align:center">Size</span>
-      <input class="si" type="number" min="6" max="96" value="${el.txs||14}" oninput="sp(${el.id},'txs',+this.value)" style="width:52px;">
+      <input class="si" type="number" min="8" max="100" value="${el.txs||14}" oninput="sp(${el.id},'txs',+this.value)" style="width:52px;">
     </div>
     <div class="sr"><span class="sl">Font</span>
-      <select class="si" onchange="sp(${el.id},'txf',this.value)">
-        ${['GothamMedium','GothamBold','Gotham','Arial','ArialBold','Ubuntu','UbuntuBold','Roboto','RobotoMono','SourceSansPro','SourceSansProBold','Bodoni','Bangers','PatrickHand','Sarpanch','FredokaOne','Kalam','TitilliumWeb','Nunito','Oswald','Creepster','DenkOne','Fondamento','Antique'].map(f=>`<option value="${f}" ${(el.txf||'GothamMedium')===f?'selected':''}>${f}</option>`).join('')}
+      <select class="si" onchange="sp(${el.id},'txf',this.value);applyFontPreview(this)" class="si font-select">
+        <optgroup label="── Source Sans ──">
+          ${[['SourceSans','Source Sans'],['SourceSansBold','Source Sans Bold'],['SourceSansSemibold','Source Sans Semibold'],['SourceSansLight','Source Sans Light'],['SourceSansItalic','Source Sans Italic']].map(([v,l])=>`<option value="${v}" ${(el.txf||'SourceSans')===v?'selected':''}>${l}</option>`).join('')}
+        </optgroup>
+        <optgroup label="── Montserrat (ex-Gotham) ──">
+          ${[['GothamMedium','Montserrat SemiBold'],['GothamBold','Montserrat Bold'],['Gotham','Montserrat Regular'],['GothamBlack','Montserrat Black']].map(([v,l])=>`<option value="${v}" ${(el.txf||'SourceSans')===v?'selected':''}>${l}</option>`).join('')}
+        </optgroup>
+        <optgroup label="── Roboto / Ubuntu ──">
+          ${[['Roboto','Roboto'],['RobotoMono','Roboto Mono'],['Ubuntu','Ubuntu'],['Nunito','Nunito'],['TitilliumWeb','Titillium Web']].map(([v,l])=>`<option value="${v}" ${(el.txf||'SourceSans')===v?'selected':''}>${l}</option>`).join('')}
+        </optgroup>
+        <optgroup label="── Display / Декор ──">
+          ${[['Bangers','Bangers'],['AmaticSC','Amatic SC'],['FredokaOne','Fredoka One'],['Oswald','Oswald'],['Sarpanch','Sarpanch'],['PatrickHand','Patrick Hand'],['Kalam','Kalam'],['Creepster','Creepster'],['DenkOne','Denk One'],['PermanentMarker','Permanent Marker'],['Fondamento','Fondamento'],['Garamond','Garamond'],['Bodoni','Bodoni'],['Antique','Antique'],['Cartoon','Cartoon'],['Arcade','Arcade'],['Fantasy','Fantasy']].map(([v,l])=>`<option value="${v}" ${(el.txf||'SourceSans')===v?'selected':''}>${l}</option>`).join('')}
+        </optgroup>
+        <optgroup label="── Моно / Спец ──">
+          ${[['Code','Code'],['Highway','Highway'],['SciFi','Sci-Fi'],['Legacy','Legacy']].map(([v,l])=>`<option value="${v}" ${(el.txf||'SourceSans')===v?'selected':''}>${l}</option>`).join('')}
+        </optgroup>
       </select>
     </div>
     <div class="sr"><span class="sl">Align</span>
@@ -1246,6 +1351,8 @@ function buildSheet(el){
       <div class="btn btnd" style="flex:1;cursor:pointer;" onclick="confirmDel()">Delete</div>
     </div>
   </div>`;
+  // Apply font preview to select after render
+  setTimeout(()=>{const fs=document.querySelector('.font-select');if(fs)applyFontPreview(fs);},10);
 }
 
 function escAttr(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
@@ -1272,7 +1379,12 @@ function sp(id,key,val){
   else if(key==='op')dom.style.opacity=val;
   else if(key==='rad')dom.style.borderRadius=val+'px';
   else applyStyle(el);
-  if(['gwc1','gwc2','gwspd','gwdir'].includes(key)) buildSheet(el);
+  if(['gwc1','gwc2','gwspd','gwdir','txf','txs','txalign'].includes(key)) buildSheet(el);
+  // Update font-select preview immediately
+  if(key==='txf'){
+    const fsel=document.querySelector('.font-select');
+    if(fsel)applyFontPreview(fsel);
+  }
 }
 
 function saveUndo(){
@@ -1498,7 +1610,9 @@ function generateLua(){
   let c='-- ============================================================\n';
   c+=`-- Generated by LSM (Lua Script Maker) v2.2\n`;
   c+=`-- Project: ${p.name}.lua  |  Elements: ${p.elements.length}\n`;
-  c+=`-- Gradient Wave: UIGradient+Offset (BG) / TextColor3 lerp (text) / UIStroke lerp (border)\n`;
+  c+=`-- Gradient Wave: UIGradient+Offset (BG) / TextColor3 lerp (text) / UIStroke lerp (border)
+-- Fonts: GothamMedium/Bold/Black auto-map to Montserrat via Enum.Font (still valid)
+-- Use SourceSans / SourceSansBold for safest compatibility\n`;
   c+='-- ============================================================\n\n';
   c+=`local Players = game:GetService("Players")\n`;
   c+=`local RunService = game:GetService("RunService")\n`;
@@ -1534,7 +1648,9 @@ function generateLua(){
       const t=(el.txt||'').replace(/\\/g,'\\\\').replace(/"/g,'\\"');
       c+=`${n}.Text = "${t}"\n`;
       const tc=h2r(el.txc);if(tc)c+=`${n}.TextColor3 = Color3.fromRGB(${tc})\n`;
-      c+=`${n}.TextSize = 14\n${n}.Font = Enum.Font.GothamMedium\n`;
+      c+=`${n}.TextSize = ${el.txs||14}\n`;
+      c+=`${n}.Font = Enum.Font.${el.txf||'SourceSans'}\n`;
+      c+=`${n}.TextXAlignment = Enum.TextXAlignment.${el.txalign||'Center'}\n`;
       if(el.type==='button')c+=`${n}.AutoButtonColor = false\n`;
       if(el.type==='textbox'){c+=`${n}.PlaceholderText = "Enter text..."\n${n}.ClearTextOnFocus = false\n`;}
     }
@@ -1542,7 +1658,10 @@ function generateLua(){
       const t=(el.txt||'').replace(/"/g,'\\"');
       c+=`${n}.Text = "☐  ${t}"\n`;
       const tc2=h2r(el.txc)||'226, 226, 236';c+=`${n}.TextColor3 = Color3.fromRGB(${tc2})\n`;
-      c+=`${n}.TextSize = 14\n${n}.Font = Enum.Font.GothamMedium\n${n}.AutoButtonColor = false\n`;
+      c+=`${n}.TextSize = ${el.txs||14}\n`;
+      c+=`${n}.Font = Enum.Font.${el.txf||'SourceSans'}\n`;
+      c+=`${n}.TextXAlignment = Enum.TextXAlignment.${el.txalign||'Left'}\n`;
+      c+=`${n}.AutoButtonColor = false\n`;
     }
     if(el.rad>0){c+=`local Corner_${n}=Instance.new("UICorner")\nCorner_${n}.CornerRadius=UDim.new(0,${el.rad})\nCorner_${n}.Parent=${n}\n`;}
 
@@ -1637,14 +1756,14 @@ function generateLua(){
 
     if(el.type==='panel'){
       const pt=(el.txt||'Panel').replace(/"/g,'\\"');const ptc=h2r(el.txc)||'168, 85, 247';
-      c+=`local PTitle_${n}=Instance.new("TextLabel")\nPTitle_${n}.Size=UDim2.new(1,0,0,28)\nPTitle_${n}.BackgroundTransparency=1\nPTitle_${n}.Text="${pt}"\nPTitle_${n}.TextColor3=Color3.fromRGB(${ptc})\nPTitle_${n}.TextSize=13\nPTitle_${n}.Font=Enum.Font.GothamBold\nPTitle_${n}.Parent=${n}\n`;
+      c+=`local PTitle_${n}=Instance.new("TextLabel")\nPTitle_${n}.Size=UDim2.new(1,0,0,28)\nPTitle_${n}.BackgroundTransparency=1\nPTitle_${n}.Text="${pt}"\nPTitle_${n}.TextColor3=Color3.fromRGB(${ptc})\nPTitle_${n}.TextSize=${el.txs||13}\nPTitle_${n}.Font=Enum.Font.${el.txf||'GothamBold'}\nPTitle_${n}.TextXAlignment=Enum.TextXAlignment.${el.txalign||'Left'}\nPTitle_${n}.Parent=${n}\n`;
       c+=`${n}.ClipsDescendants=true\n`;
       if(el.collapsed)c+=`${n}.Size=UDim2.new(0,${Math.round(el.w)},0,28)\n`;
     }
     if(el.type==='dropdown'){
       c+=`local ${n}_items={${el.txt.split('\n').filter(Boolean).map(s=>'"'+s.replace(/"/g,'\\"')+'"').join(',')}}\nlocal ${n}_sel=1\n`;
       c+=`local ${n}_lbl=Instance.new("TextLabel")\n${n}_lbl.Size=UDim2.new(1,-10,1,0)\n${n}_lbl.Position=UDim2.new(0,5,0,0)\n${n}_lbl.BackgroundTransparency=1\n${n}_lbl.Text=${n}_items[1]\n`;
-      const tc2=h2r(el.txc)||'192,132,252';c+=`${n}_lbl.TextColor3=Color3.fromRGB(${tc2})\n${n}_lbl.TextSize=13\n${n}_lbl.Font=Enum.Font.GothamMedium\n${n}_lbl.Parent=${n}\n`;
+      const tc2=h2r(el.txc)||'192,132,252';c+=`${n}_lbl.TextColor3=Color3.fromRGB(${tc2})\n${n}_lbl.TextSize=${el.txs||13}\n${n}_lbl.Font=Enum.Font.${el.txf||'SourceSans'}\n${n}_lbl.TextXAlignment=Enum.TextXAlignment.${el.txalign||'Left'}\n${n}_lbl.Parent=${n}\n`;
     }
     if(el.type==='slider'){
       c+=`local ${n}_val=50\nlocal ${n}_bar=Instance.new("Frame")\n${n}_bar.Size=UDim2.new(1,-16,0,4)\n${n}_bar.Position=UDim2.new(0,8,0.5,-2)\n${n}_bar.BackgroundColor3=Color3.fromRGB(50,30,80)\n${n}_bar.BorderSizePixel=0\nInstance.new("UICorner",${n}_bar).CornerRadius=UDim.new(1,0)\n${n}_bar.Parent=${n}\n`;
