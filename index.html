@@ -892,15 +892,15 @@ function addEl(type,x,y){
   const p=proj();
   const id=p.idCnt++;
   const D={
-    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',txs:14,txf:'SourceSans',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',txs:14,txf:'SourceSans',txalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',txs:13,txf:'GothamBold',txalign:'Left',rbw:false,collapsed:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',txs:13,txf:'GothamBold',txalign:'Left',tyalign:'Center',rbw:false,collapsed:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
   };
   const d=D[type]||D.frame;
   const lbl=type.charAt(0).toUpperCase()+type.slice(1)+'_'+id;
@@ -1050,7 +1050,11 @@ function applyStyle(el){
     if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
   } else if(el.type==='button'){
     dom.style.background=el.bg;dom.style.borderColor=el.border;
-    dom.style.borderStyle='solid';dom.style.borderWidth='1px';dom.style.display='flex';dom.style.alignItems='center';dom.style.justifyContent='center';
+    dom.style.borderStyle='solid';dom.style.borderWidth='1px';dom.style.display='flex';
+    dom.style.flexDirection='column';
+    dom.style.alignItems=el.txalign==='Right'?'flex-end':el.txalign==='Left'?'flex-start':'center';
+    dom.style.justifyContent=(el.tyalign||'Center')==='Top'?'flex-start':(el.tyalign||'Center')==='Bottom'?'flex-end':'center';
+    dom.style.padding='2px 6px';dom.style.boxSizing='border-box';
     if(el.sh&&el.neon==='none')dom.style.boxShadow=`0 ${el.sh}px ${el.sh*2}px rgba(0,0,0,.5)`;
     ins(mkspan(el.txt,el.rbw,el.txc,el.gwav&&el.gwtxt,el.gwc1,el.gwc2,el.gwdir,el.gwspd));
     if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
@@ -1058,11 +1062,15 @@ function applyStyle(el){
     dom.style.background=el.bg;dom.style.borderColor=el.border;
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';
     const ta=document.createElement('textarea');
-    ta.style.cssText=`width:100%;height:100%;background:transparent;border:none;outline:none;resize:none;color:${el.txc};font-family:${rblxFont(el.txf)};font-size:${el.txs||13}px;font-weight:${rblxWeight(el.txf)};font-style:${rblxStyle(el.txf)};padding:4px 6px;box-sizing:border-box;`;
+    const taVA=(el.tyalign||'Center')==='Top'?'top':(el.tyalign||'Center')==='Bottom'?'bottom':'middle';
+    const taHA=el.txalign==='Right'?'right':el.txalign==='Left'?'left':'center';
+    ta.style.cssText=`width:100%;height:100%;background:transparent;border:none;outline:none;resize:none;color:${el.txc};font-family:${rblxFont(el.txf)};font-size:${el.txs||13}px;font-weight:${rblxWeight(el.txf)};font-style:${rblxStyle(el.txf)};text-align:${taHA};padding:4px 6px;box-sizing:border-box;vertical-align:${taVA};`;
     ta.placeholder='TextBox...';ins(ta);
     if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
   } else if(el.type==='label'){
-    dom.style.display='flex';dom.style.alignItems='center';
+    dom.style.display='flex';dom.style.flexDirection='column';
+    dom.style.alignItems=el.txalign==='Right'?'flex-end':el.txalign==='Left'?'flex-start':'center';
+    dom.style.justifyContent=(el.tyalign||'Center')==='Top'?'flex-start':(el.tyalign||'Center')==='Bottom'?'flex-end':'center';
     ins(mkspan(el.txt,el.rbw,el.txc,el.gwav&&el.gwtxt,el.gwc1,el.gwc2,el.gwdir,el.gwspd));
   } else if(el.type==='checkbox'){
     dom.style.cssText+=';display:flex;align-items:center;gap:8px;';
@@ -1294,9 +1302,14 @@ function buildSheet(el){
         </optgroup>
       </select>
     </div>
-    <div class="sr"><span class="sl">Align</span>
+    <div class="sr"><span class="sl">H Align</span>
       <div style="display:flex;gap:4px;flex:1;">
         ${['Left','Center','Right'].map(a=>`<div onclick="sp(${el.id},'txalign','${a}')" style="flex:1;padding:4px;border-radius:5px;border:1px solid ${(el.txalign||'Center')===a?'var(--acc)':'var(--brd)'};background:${(el.txalign||'Center')===a?'rgba(168,85,247,.15)':'var(--bg3)'};cursor:pointer;text-align:center;font-size:10px;color:${(el.txalign||'Center')===a?'var(--acc)':'var(--txt2)'};">${a==='Left'?'⬅':a==='Center'?'↔':'➡'} ${a}</div>`).join('')}
+      </div>
+    </div>
+    <div class="sr"><span class="sl">V Align</span>
+      <div style="display:flex;gap:4px;flex:1;">
+        ${['Top','Center','Bottom'].map(a=>`<div onclick="sp(${el.id},'tyalign','${a}')" style="flex:1;padding:4px;border-radius:5px;border:1px solid ${(el.tyalign||'Center')===a?'var(--acc)':'var(--brd)'};background:${(el.tyalign||'Center')===a?'rgba(168,85,247,.15)':'var(--bg3)'};cursor:pointer;text-align:center;font-size:10px;color:${(el.tyalign||'Center')===a?'var(--acc)':'var(--txt2)'};">${a==='Top'?'⬆':a==='Center'?'↕':'⬇'} ${a}</div>`).join('')}
       </div>
     </div>
     <div class="sr"><span class="sl">🌈 Rainbow</span><input class="sx" type="checkbox" ${el.rbw?'checked':''} onchange="sp(${el.id},'rbw',this.checked)"></div>
@@ -1651,6 +1664,7 @@ function generateLua(){
       c+=`${n}.TextSize = ${el.txs||14}\n`;
       c+=`${n}.Font = Enum.Font.${el.txf||'SourceSans'}\n`;
       c+=`${n}.TextXAlignment = Enum.TextXAlignment.${el.txalign||'Center'}\n`;
+      c+=`${n}.TextYAlignment = Enum.TextYAlignment.${el.tyalign||'Center'}\n`;
       if(el.type==='button')c+=`${n}.AutoButtonColor = false\n`;
       if(el.type==='textbox'){c+=`${n}.PlaceholderText = "Enter text..."\n${n}.ClearTextOnFocus = false\n`;}
     }
