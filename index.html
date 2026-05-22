@@ -17,6 +17,21 @@
   50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+@keyframes gwavH {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes gwavV {
+  0%   { background-position: 50% 0%; }
+  50%  { background-position: 50% 100%; }
+  100% { background-position: 50% 0%; }
+}
+@keyframes gwavD {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
 
 :root{
   --bg:#0a0812; --bg2:#100d1a; --bg3:#160f22; --bg4:#1c1530;
@@ -275,6 +290,45 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 ::-webkit-scrollbar{width:3px;height:3px;}
 ::-webkit-scrollbar-track{background:var(--bg2);}
 ::-webkit-scrollbar-thumb{background:var(--brd);border-radius:2px;}
+
+/* ═══ MENU TABS ═══ */
+.mtab{padding:9px 14px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;color:var(--txt2);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.mtab.active{color:var(--acc);border-bottom-color:var(--acc);}
+.mtab:active{color:var(--acc3);}
+
+/* ═══ ANIMATION PLATFORM CARD ═══ */
+.anim-plat-card{display:flex;align-items:center;gap:12px;padding:14px;background:var(--bg2);border:1px solid var(--brd);border-radius:12px;cursor:pointer;transition:all .15s;}
+.anim-plat-card.active-plat{background:rgba(168,85,247,.1);border-color:var(--acc);box-shadow:0 0 16px rgba(168,85,247,.15);}
+.anim-plat-card:active{transform:scale(.98);}
+.anim-plat-icon{font-size:28px;width:40px;text-align:center;}
+.anim-plat-name{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;color:var(--txt);letter-spacing:1px;}
+.anim-plat-desc{font-size:10px;color:var(--txt2);margin-top:2px;line-height:1.5;}
+.anim-plat-check{margin-left:auto;width:22px;height:22px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;opacity:0;transition:opacity .2s;}
+.anim-plat-card.active-plat .anim-plat-check{opacity:1;}
+
+/* ═══ ANIM PRIORITY BUTTONS ═══ */
+.anim-pri-btn{padding:5px 9px;font-size:10px;border:1px solid var(--brd);background:var(--bg3);color:var(--txt2);border-radius:6px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.5px;transition:all .12s;}
+.anim-pri-btn.active-pri{background:rgba(168,85,247,.15);border-color:var(--acc);color:var(--acc);}
+.anim-pri-btn:active{transform:scale(.95);}
+
+/* ═══ KEYFRAME CARD ═══ */
+.kf-card{background:var(--bg2);border:1px solid var(--brd);border-radius:10px;margin-bottom:8px;overflow:hidden;}
+.kf-head{display:flex;align-items:center;padding:8px 10px;gap:8px;cursor:pointer;}
+.kf-head:active{background:var(--bg3);}
+.kf-time{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;color:var(--acc);}
+.kf-toggle{margin-left:auto;color:var(--txt2);font-size:14px;transition:transform .2s;}
+.kf-toggle.open{transform:rotate(180deg);}
+.kf-body{padding:8px 10px 10px;border-top:1px solid var(--brd);display:none;}
+.kf-body.open{display:block;}
+.kf-bone-row{display:flex;align-items:center;gap:6px;margin-bottom:7px;}
+.kf-bone-lbl{font-size:10px;color:var(--txt2);width:52px;flex-shrink:0;font-family:'Rajdhani',sans-serif;font-weight:600;}
+.kf-axis{font-size:9px;color:var(--txt2);width:10px;text-align:center;flex-shrink:0;}
+.kf-inp{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--glass-brd);color:var(--txt);font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 6px;border-radius:5px;outline:none;min-width:0;}
+.kf-inp:focus{border-color:var(--acc);}
+.kf-del{color:var(--red);font-size:16px;cursor:pointer;padding:2px 4px;flex-shrink:0;}
+
+/* ═══ ANIM CODE MODAL ═══ */
+#anim-code-modal .mc{max-height:90vh;}
 </style>
 </head>
 <body>
@@ -288,7 +342,13 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
     </div>
     <div style="font-size:10px;color:var(--txt2)">v2.1</div>
   </div>
-  <div class="mm-body">
+  <!-- MENU TABS -->
+  <div id="menu-tabs" style="display:flex;background:var(--bg2);border-bottom:1px solid var(--brd);padding:0 10px;gap:4px;">
+    <div class="mtab active" id="mtab-projects" onclick="switchMenuTab('projects')">📁 Projects</div>
+    <div class="mtab" id="mtab-animations" onclick="switchMenuTab('animations')">🎬 Animations</div>
+  </div>
+  <!-- PROJECTS TAB -->
+  <div id="menu-tab-projects" class="mm-body" style="display:flex;flex-direction:column;">
     <div class="mm-section">
       <div class="mm-sec-title">Quick Actions</div>
       <div class="mm-btn accent" onclick="newProject()">
@@ -302,6 +362,114 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
       <div class="mm-sec-title">Projects</div>
       <div id="proj-list">
         <div class="mm-empty">No projects yet.<br>Tap <strong style="color:var(--acc)">New Project</strong> to start.</div>
+      </div>
+    </div>
+  </div>
+  <!-- ANIMATIONS TAB -->
+  <div id="menu-tab-animations" class="mm-body" style="display:none;flex-direction:column;padding:0;">
+    <!-- platform selector -->
+    <div id="anim-platform-sel" style="padding:14px 16px;">
+      <div class="mm-sec-title" style="margin-bottom:12px;">Select Platform</div>
+      <div id="anim-plat-roblox" class="anim-plat-card active-plat" onclick="selectAnimPlatform('roblox')">
+        <div class="anim-plat-icon">🎮</div>
+        <div>
+          <div class="anim-plat-name">ROBLOX</div>
+          <div class="anim-plat-desc">Generate Lua animation scripts for Roblox characters</div>
+        </div>
+        <div class="anim-plat-check" id="plat-check-roblox">✓</div>
+      </div>
+      <div style="margin-top:8px;padding:12px;background:var(--bg2);border:1px dashed var(--brd);border-radius:10px;text-align:center;color:var(--txt2);font-size:11px;opacity:.5;">
+        More platforms coming soon…
+      </div>
+    </div>
+    <!-- roblox editor -->
+    <div id="anim-roblox-editor" style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+      <!-- character preview -->
+      <div style="background:var(--bg2);border-bottom:1px solid var(--brd);padding:10px;display:flex;align-items:center;gap:10px;">
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;background:linear-gradient(90deg,#a855f7,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ROBLOX CHARACTER</div>
+        <div style="margin-left:auto;font-size:10px;color:var(--txt2)" id="anim-preview-label">Idle</div>
+      </div>
+      <!-- character stage -->
+      <div id="anim-stage" style="height:200px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 80%,rgba(168,85,247,.12) 0%,transparent 70%);position:relative;overflow:hidden;">
+        <!-- ground -->
+        <div style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:80px;height:4px;background:rgba(168,85,247,.2);border-radius:50%;filter:blur(2px);"></div>
+        <!-- SVG Roblox character -->
+        <svg id="roblox-char" width="90" height="150" viewBox="0 0 90 150" style="position:relative;z-index:2;filter:drop-shadow(0 8px 20px rgba(168,85,247,.4));">
+          <!-- Head -->
+          <rect id="rb-head" x="27" y="2" width="36" height="36" rx="4" fill="#FFD700" stroke="#c4a000" stroke-width="1.5"/>
+          <!-- Eyes -->
+          <rect x="34" y="12" width="8" height="8" rx="2" fill="#1a1a2e"/>
+          <rect x="48" y="12" width="8" height="8" rx="2" fill="#1a1a2e"/>
+          <!-- Eye shine -->
+          <rect x="36" y="13" width="3" height="3" rx="1" fill="white" opacity="0.8"/>
+          <rect x="50" y="13" width="3" height="3" rx="1" fill="white" opacity="0.8"/>
+          <!-- Mouth -->
+          <path d="M37 26 Q45 31 53 26" stroke="#c4a000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Neck -->
+          <rect x="38" y="38" width="14" height="6" fill="#e8b800"/>
+          <!-- Torso -->
+          <rect id="rb-torso" x="22" y="44" width="46" height="44" rx="3" fill="#a855f7" stroke="#7c3aed" stroke-width="1.5"/>
+          <!-- Torso detail -->
+          <rect x="28" y="52" width="34" height="2" rx="1" fill="rgba(255,255,255,.2)"/>
+          <rect x="28" y="58" width="34" height="2" rx="1" fill="rgba(255,255,255,.15)"/>
+          <rect x="28" y="64" width="20" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
+          <!-- Left Arm -->
+          <rect id="rb-larm" x="6" y="44" width="14" height="36" rx="3" fill="#c084fc" stroke="#a855f7" stroke-width="1"/>
+          <!-- Right Arm -->
+          <rect id="rb-rarm" x="70" y="44" width="14" height="36" rx="3" fill="#c084fc" stroke="#a855f7" stroke-width="1"/>
+          <!-- Left Leg -->
+          <rect id="rb-lleg" x="22" y="90" width="19" height="40" rx="3" fill="#7c3aed" stroke="#6d28d9" stroke-width="1"/>
+          <!-- Right Leg -->
+          <rect id="rb-rleg" x="49" y="90" width="19" height="40" rx="3" fill="#7c3aed" stroke="#6d28d9" stroke-width="1"/>
+          <!-- Left Shoe -->
+          <rect x="20" y="128" width="22" height="10" rx="3" fill="#1a0533"/>
+          <!-- Right Shoe -->
+          <rect x="47" y="128" width="22" height="10" rx="3" fill="#1a0533"/>
+        </svg>
+        <!-- play indicator -->
+        <div id="anim-playing-badge" style="position:absolute;top:8px;right:10px;font-size:9px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:10px;background:rgba(168,85,247,.2);border:1px solid var(--acc);color:var(--acc);display:none;">▶ PLAYING</div>
+      </div>
+      <!-- keyframes scroll area -->
+      <div style="flex:1;overflow-y:auto;padding:10px 14px 4px;">
+        <!-- animation meta -->
+        <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center;">
+          <div style="flex:1;">
+            <div style="font-size:9px;color:var(--txt2);margin-bottom:3px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">ANIM NAME</div>
+            <input id="anim-name" class="si" value="MyAnimation" placeholder="AnimationName" style="width:100%">
+          </div>
+          <div style="width:70px;">
+            <div style="font-size:9px;color:var(--txt2);margin-bottom:3px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">SPEED</div>
+            <input id="anim-speed" class="si" type="number" value="1" min="0.1" max="10" step="0.1" style="width:100%">
+          </div>
+          <div style="width:70px;">
+            <div style="font-size:9px;color:var(--txt2);margin-bottom:3px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">LOOP</div>
+            <select id="anim-loop" class="si" style="width:100%;padding:6px 4px;">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+        </div>
+        <!-- priority -->
+        <div style="margin-bottom:10px;">
+          <div style="font-size:9px;color:var(--txt2);margin-bottom:5px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">PRIORITY</div>
+          <div style="display:flex;gap:5px;">
+            <div class="anim-pri-btn active-pri" id="pri-idle" onclick="setAnimPri('Idle')">Idle</div>
+            <div class="anim-pri-btn" id="pri-movement" onclick="setAnimPri('Movement')">Movement</div>
+            <div class="anim-pri-btn" id="pri-action" onclick="setAnimPri('Action')">Action</div>
+            <div class="anim-pri-btn" id="pri-action2" onclick="setAnimPri('Action2')">Action2</div>
+            <div class="anim-pri-btn" id="pri-action3" onclick="setAnimPri('Action3')">Action3</div>
+          </div>
+        </div>
+        <!-- bone keyframes -->
+        <div style="font-size:9px;color:var(--txt2);margin-bottom:6px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">KEYFRAMES — BONE ROTATIONS</div>
+        <div id="anim-keyframes-list"></div>
+        <div class="btn btn2" onclick="addKeyframe()" style="width:100%;padding:8px;margin-top:4px;cursor:pointer;font-size:11px;">+ Add Keyframe</div>
+      </div>
+      <!-- bottom action bar -->
+      <div style="padding:10px 14px;border-top:1px solid var(--brd);background:var(--bg2);display:flex;gap:8px;flex-shrink:0;">
+        <div class="btn btns" onclick="previewAnim()" style="flex:1;cursor:pointer;">▶ Preview</div>
+        <div class="btn btn2" onclick="copyAnimCode()" style="flex:1;cursor:pointer;">📋 Copy</div>
+        <div class="btn btnp" onclick="generateAnimCode()" style="flex:1;cursor:pointer;">⚡ Generate</div>
       </div>
     </div>
   </div>
@@ -476,6 +644,26 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 <div id="ghost"></div>
 <div id="toast"></div>
 <input type="file" id="file-inp" accept=".lua" style="display:none" onchange="onFileLoad(event)">
+
+<!-- ANIM CODE MODAL -->
+<div class="mbg" id="anim-code-modal">
+  <div class="mc" style="max-height:90vh">
+    <div class="mbar"></div>
+    <div class="mhd">
+      <div class="mhd-t">⚡ <span id="anim-code-fn" style="color:#c084fc"></span></div>
+      <div class="mhd-x" onclick="document.getElementById('anim-code-modal').classList.remove('open')">×</div>
+    </div>
+    <div style="padding:4px 14px 6px;flex-shrink:0;border-bottom:1px solid var(--glass-brd);">
+      <div id="anim-code-stats" style="font-size:10px;color:var(--txt2);line-height:1.6;"></div>
+    </div>
+    <div class="mbody"><div id="anim-cdisplay" style="background:rgba(8,5,16,.92);border:1px solid var(--glass-brd);border-radius:8px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#c084fc;line-height:1.7;white-space:pre;overflow:auto;max-height:38vh;-webkit-overflow-scrolling:touch;"></div></div>
+    <div class="mft">
+      <div class="btn btns" onclick="document.getElementById('anim-code-modal').classList.remove('open')">✕</div>
+      <div class="btn btn2" onclick="copyAnimGenCode()" id="anim-copy-btn" style="flex:1">📋 Copy</div>
+      <div class="btn btnp" onclick="downloadAnimLua()" style="flex:1">⬇ .lua</div>
+    </div>
+  </div>
+</div>
 
 <script>
 // ═══ STATE ═══
@@ -738,15 +926,15 @@ function addEl(type,x,y){
   const p=proj();
   const id=p.idCnt++;
   const D={
-    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',rbw:false},
-    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',rbw:false},
-    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',rbw:false},
-    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',rbw:false},
-    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',rbw:false},
-    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',rbw:false},
-    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',rbw:false},
-    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',rbw:false},
-    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',rbw:false,collapsed:false},
+    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',rbw:false,collapsed:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
   };
   const d=D[type]||D.frame;
   const lbl=type.charAt(0).toUpperCase()+type.slice(1)+'_'+id;
@@ -796,36 +984,66 @@ function applyStyle(el){
   if(el.neon!=='none'&&nmap[el.neon])dom.classList.add(nmap[el.neon]);
   const fh=dom.querySelector('.el-rh');
   const ins=n=>{ if(fh) dom.insertBefore(n,fh); else dom.appendChild(n); };
-  const mkspan=(txt,rbw,color)=>{
+
+  // Helper: build gradient wave CSS string
+  function gwGrad(c1,c2,dir){
+    const d=dir||'horizontal';
+    const gd=d==='vertical'?'to bottom':d==='diagonal'?'135deg':'to right';
+    return `linear-gradient(${gd},${c1},${c2},${c1},${c2},${c1})`;
+  }
+  function gwAnim(dir,spd){
+    const a=(dir||'horizontal')==='vertical'?'gwavV':(dir==='diagonal'?'gwavD':'gwavH');
+    return `${a} ${spd||3}s ease infinite`;
+  }
+
+  // mkspan: supports gradient wave text
+  const mkspan=(txt,rbw,color,gwav,gwc1,gwc2,gwdir,gwspd)=>{
     const s=document.createElement('span');
     s.textContent=txt;
-    s.style.cssText=`color:${color};font-family:'JetBrains Mono',monospace;font-size:12px;pointer-events:none;`;
-    if(rbw)s.classList.add('rbw');
+    if(gwav&&(gwc1||gwc2)){
+      const c1=gwc1||'#a855f7',c2=gwc2||'#e879f9';
+      s.style.cssText=`background:${gwGrad(c1,c2,gwdir)};background-size:400% 400%;animation:${gwAnim(gwdir,gwspd)};-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'JetBrains Mono',monospace;font-size:12px;pointer-events:none;display:inline-block;`;
+    } else {
+      s.style.cssText=`color:${color};font-family:'JetBrains Mono',monospace;font-size:12px;pointer-events:none;`;
+      if(rbw)s.classList.add('rbw');
+    }
     return s;
   };
+
+  // Helper: apply gradient wave border via outline trick (pseudo-border with gradient)
+  function applyGWBorder(domEl,c1,c2,dir,spd,rad){
+    // Use a ::before-style div overlay for animated border
+    const brd=document.createElement('div');
+    brd.className='gw-border-overlay';
+    brd.style.cssText=`position:absolute;inset:-2px;border-radius:${(rad||0)+2}px;padding:2px;background:${gwGrad(c1,c2,dir)};background-size:400% 400%;animation:${gwAnim(dir,spd)};-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude;pointer-events:none;z-index:19;`;
+    domEl.appendChild(brd);
+  }
   if(el.type==='frame'){
     dom.style.background=el.bg.startsWith('t')?'transparent':el.bg;
     dom.style.borderColor=el.border.startsWith('t')?'transparent':el.border;
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';
     if(el.sh&&el.neon==='none')dom.style.boxShadow=`0 ${el.sh}px ${el.sh*3}px rgba(0,0,0,.6)`;
+    if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
   } else if(el.type==='button'){
     dom.style.background=el.bg;dom.style.borderColor=el.border;
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';dom.style.display='flex';dom.style.alignItems='center';dom.style.justifyContent='center';
     if(el.sh&&el.neon==='none')dom.style.boxShadow=`0 ${el.sh}px ${el.sh*2}px rgba(0,0,0,.5)`;
-    ins(mkspan(el.txt,el.rbw,el.txc));
+    ins(mkspan(el.txt,el.rbw,el.txc,el.gwav&&el.gwtxt,el.gwc1,el.gwc2,el.gwdir,el.gwspd));
+    if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
   } else if(el.type==='textbox'){
     dom.style.background=el.bg;dom.style.borderColor=el.border;
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';
     const ta=document.createElement('textarea');
     ta.style.cssText=`width:100%;height:100%;background:transparent;border:none;outline:none;resize:none;color:${el.txc};font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 6px;box-sizing:border-box;`;
     ta.placeholder='TextBox...';ins(ta);
+    if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
   } else if(el.type==='label'){
     dom.style.display='flex';dom.style.alignItems='center';
-    ins(mkspan(el.txt,el.rbw,el.txc));
+    ins(mkspan(el.txt,el.rbw,el.txc,el.gwav&&el.gwtxt,el.gwc1,el.gwc2,el.gwdir,el.gwspd));
   } else if(el.type==='checkbox'){
     dom.style.cssText+=';display:flex;align-items:center;gap:8px;';
     const cb=document.createElement('input');cb.type='checkbox';cb.style.cssText='accent-color:#a855f7;width:16px;height:16px;';
-    ins(cb);ins(mkspan(el.txt,el.rbw,el.txc));
+    ins(cb);ins(mkspan(el.txt,el.rbw,el.txc,el.gwav&&el.gwtxt,el.gwc1,el.gwc2,el.gwdir,el.gwspd));
   } else if(el.type==='slider'){
     dom.style.cssText+=';display:flex;align-items:center;';
     const inp=document.createElement('input');inp.type='range';inp.min=0;inp.max=100;inp.value=50;
@@ -836,15 +1054,31 @@ function applyStyle(el){
     const sel=document.createElement('select');
     el.txt.split('\n').filter(Boolean).forEach(o=>{const opt=document.createElement('option');opt.value=o;opt.textContent=o;sel.appendChild(opt);});
     sel.style.cssText=`width:100%;height:100%;background:transparent;border:none;color:${el.txc};font-family:'JetBrains Mono',monospace;font-size:11px;outline:none;padding:2px 6px;`;ins(sel);
+    if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
   } else if(el.type==='separator'){
-    dom.style.background=el.bg;dom.style.height='2px';
+    if(el.gwav&&el.gwbrd){
+      dom.style.height='2px';
+      dom.style.background=gwGrad(el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir);
+      dom.style.backgroundSize='400% 400%';
+      dom.style.animation=gwAnim(el.gwdir,el.gwspd);
+    } else {
+      dom.style.background=el.bg;dom.style.height='2px';
+    }
   } else if(el.type==='panel'){
     dom.style.background=el.bg.startsWith('t')?'transparent':el.bg;
     dom.style.borderColor=el.border.startsWith('t')?'transparent':el.border;
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';
     if(el.sh&&el.neon==='none')dom.style.boxShadow=`0 ${el.sh}px ${el.sh*3}px rgba(0,0,0,.6)`;
     const tb=document.createElement('div');tb.className='pan-tb';
-    const tt=document.createElement('span');tt.className='pan-ttxt'+(el.rbw?' rbw':'');tt.textContent=el.txt;tt.style.color=el.txc;
+    // panel title text — supports gwav text
+    const tt=document.createElement('span');
+    if(el.gwav&&el.gwtxt){
+      tt.className='pan-ttxt';
+      tt.textContent=el.txt;
+      tt.style.cssText=`background:${gwGrad(el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir)};background-size:400% 400%;animation:${gwAnim(el.gwdir,el.gwspd)};-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'JetBrains Mono',monospace;font-size:11px;flex:1;pointer-events:none;display:inline-block;`;
+    } else {
+      tt.className='pan-ttxt'+(el.rbw?' rbw':'');tt.textContent=el.txt;tt.style.color=el.txc;
+    }
     const dot=document.createElement('span');dot.className='pan-dot';dot.textContent=el.collapsed?'▶':'▼';dot.style.background=el.txc;
     dot.addEventListener('touchstart',e=>{e.stopPropagation();togglePanel(el.id);},{passive:true});
     dot.addEventListener('click',e=>{e.stopPropagation();togglePanel(el.id);});
@@ -852,6 +1086,7 @@ function applyStyle(el){
     const body=document.createElement('div');body.className='pan-body'+(el.collapsed?' col':'');body.style.maxHeight=el.collapsed?'0':(el.h-28)+'px';
     const g=document.createElement('div');g.style.cssText='position:absolute;inset:6px;border:1px dashed rgba(168,85,247,.12);border-radius:4px;pointer-events:none;';body.appendChild(g);
     ins(tb);ins(body);
+    if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
   }
 }
 
@@ -1020,6 +1255,41 @@ function buildSheet(el){
     <div class="sr"><span class="sl">Color</span><input class="sc" type="color" value="${el.txc}" onchange="sp(${el.id},'txc',this.value)"></div>
     <div class="sr"><span class="sl">🌈 Rainbow</span><input class="sx" type="checkbox" ${el.rbw?'checked':''} onchange="sp(${el.id},'rbw',this.checked)"></div>
   </div>`:''}
+  <div class="ss"><div class="ss-hd">✨ Gradient Wave</div>
+    <div style="margin-bottom:8px;">
+      <div id="gwp-${el.id}" style="border-radius:8px;height:34px;display:flex;align-items:center;justify-content:center;gap:8px;overflow:hidden;position:relative;border:1px solid var(--brd);">
+        ${(el.gwav&&el.gwtxt)||(!el.gwav)?`<span style="${el.gwav&&el.gwtxt?`background:linear-gradient(to right,${el.gwc1||'#a855f7'},${el.gwc2||'#e879f9'},${el.gwc1||'#a855f7'});background-size:400% 400%;animation:gwavH ${el.gwspd||3}s ease infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;`:`color:var(--txt2);`}font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;">TEXT WAVE</span>`:''}
+        ${el.gwav&&el.gwbrd?`<div style="position:absolute;inset:0;border-radius:8px;padding:2px;background:linear-gradient(to right,${el.gwc1||'#a855f7'},${el.gwc2||'#e879f9'},${el.gwc1||'#a855f7'});background-size:400% 400%;animation:gwavH ${el.gwspd||3}s ease infinite;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude;pointer-events:none;"></div>`:''}
+        ${!el.gwav?'<span style="font-size:10px;color:var(--txt2);font-family:\'Rajdhani\',sans-serif;">● PREVIEW</span>':''}
+      </div>
+    </div>
+    <div class="sr">
+      <span class="sl">Color 1</span>
+      <input class="sc" type="color" value="${el.gwc1||'#a855f7'}" onchange="sp(${el.id},'gwc1',this.value)">
+      <span class="sl" style="width:42px;text-align:center">Color 2</span>
+      <input class="sc" type="color" value="${el.gwc2||'#e879f9'}" onchange="sp(${el.id},'gwc2',this.value)">
+    </div>
+    <div class="sr"><span class="sl">Speed</span>
+      <input class="sr2" type="range" min="0.5" max="8" step="0.5" value="${el.gwspd||3}" oninput="sp(${el.id},'gwspd',+this.value);this.nextElementSibling.textContent=this.value+'s'">
+      <span style="font-size:10px;color:var(--txt2);width:28px">${el.gwspd||3}s</span>
+    </div>
+    <div class="sr"><span class="sl">Direction</span>
+      <select class="si" onchange="sp(${el.id},'gwdir',this.value)">
+        <option value="horizontal" ${(el.gwdir||'horizontal')==='horizontal'?'selected':''}>→ Horizontal</option>
+        <option value="vertical" ${el.gwdir==='vertical'?'selected':''}>↓ Vertical</option>
+        <option value="diagonal" ${el.gwdir==='diagonal'?'selected':''}>↗ Diagonal</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:4px;">
+      <div onclick="spToggleGW(${el.id},'gwtxt')" style="flex:1;padding:7px 6px;border-radius:7px;border:1px solid ${el.gwav&&el.gwtxt?'var(--acc)':'var(--brd)'};background:${el.gwav&&el.gwtxt?'rgba(168,85,247,.15)':'var(--bg3)'};cursor:pointer;text-align:center;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;color:${el.gwav&&el.gwtxt?'var(--acc)':'var(--txt2)'};" id="gw-txt-btn-${el.id}">
+        🔤 Text Wave ${el.gwav&&el.gwtxt?'ON':'OFF'}
+      </div>
+      <div onclick="spToggleGW(${el.id},'gwbrd')" style="flex:1;padding:7px 6px;border-radius:7px;border:1px solid ${el.gwav&&el.gwbrd?'var(--pink)':'var(--brd)'};background:${el.gwav&&el.gwbrd?'rgba(232,121,249,.12)':'var(--bg3)'};cursor:pointer;text-align:center;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;color:${el.gwav&&el.gwbrd?'var(--pink)':'var(--txt2)'};" id="gw-brd-btn-${el.id}">
+        🔲 Border Wave ${el.gwav&&el.gwbrd?'ON':'OFF'}
+      </div>
+    </div>
+    <div style="font-size:9px;color:var(--txt2);margin-top:6px;line-height:1.6;">Tap a button to toggle. Both can be active at once.</div>
+  </div>
   ${el.type==='panel'?`<div class="ss"><div class="ss-hd">Panel</div>
     <div class="btn" onclick="togglePanel(${el.id})" style="width:100%;padding:9px;background:${el.collapsed?'var(--grn)':'var(--warn)'};color:#000;border-color:transparent;margin-bottom:4px;cursor:pointer;">
       ${el.collapsed?'🔽 Expand':'🔼 Collapse'}
@@ -1038,6 +1308,17 @@ function buildSheet(el){
 
 function escAttr(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
 
+function spToggleGW(id, key){
+  const el=getEl(id);if(!el)return;
+  // if either gwtxt or gwbrd is being turned on, set gwav=true
+  const newVal=!(el[key]);
+  el[key]=newVal;
+  if(newVal) el.gwav=true;
+  else if(!el.gwtxt&&!el.gwbrd) el.gwav=false;
+  applyStyle(el);
+  buildSheet(el);
+}
+
 function sp(id,key,val){
   const el=getEl(id);if(!el)return;
   el[key]=val;
@@ -1050,6 +1331,8 @@ function sp(id,key,val){
   else if(key==='op')dom.style.opacity=val;
   else if(key==='rad')dom.style.borderRadius=val+'px';
   else applyStyle(el);
+  // rebuild sheet if gwav params changed
+  if(['gwc1','gwc2','gwspd','gwdir'].includes(key)) buildSheet(el);
 }
 
 // ═══ UNDO / REDO ═══
@@ -1321,6 +1604,42 @@ function generateLua(){
     if(el.sh>0&&el.neon==='none'){
       c+=`local Shadow_${n}=Instance.new("ImageLabel")\nShadow_${n}.AnchorPoint=Vector2.new(0.5,0.5)\nShadow_${n}.BackgroundTransparency=1\nShadow_${n}.Position=UDim2.new(0.5,0,0.5,${el.sh})\nShadow_${n}.Size=UDim2.new(1,${el.sh*4},1,${el.sh*4})\nShadow_${n}.ZIndex=${(el.z||1)-1}\nShadow_${n}.Image="rbxassetid://5028857084"\nShadow_${n}.ImageColor3=Color3.fromRGB(0,0,0)\nShadow_${n}.ImageTransparency=0.6\nShadow_${n}.ScaleType=Enum.ScaleType.Slice\nShadow_${n}.SliceCenter=Rect.new(24,24,276,276)\nShadow_${n}.Parent=${n}\n`;
     }
+    // Gradient Wave
+    if(el.gwav){
+      const c1=h2r(el.gwc1||'#a855f7')||'168, 85, 247';
+      const c2=h2r(el.gwc2||'#e879f9')||'232, 121, 249';
+      const spd=el.gwspd||3;
+      const dir=el.gwdir||'horizontal';
+      const enumDir=dir==='vertical'?'Enum.UIGradientDirection.Vertical':dir==='diagonal'?'Enum.UIGradientDirection.Custom':'Enum.UIGradientDirection.Horizontal';
+      c+=`-- Gradient Wave for ${n}\n`;
+      c+=`local Grad_${n}=Instance.new("UIGradient")\n`;
+      c+=`Grad_${n}.Color=ColorSequence.new({\n`;
+      c+=`  ColorSequenceKeypoint.new(0,   Color3.fromRGB(${c1})),\n`;
+      c+=`  ColorSequenceKeypoint.new(0.5, Color3.fromRGB(${c2})),\n`;
+      c+=`  ColorSequenceKeypoint.new(1,   Color3.fromRGB(${c1}))\n`;
+      c+=`})\n`;
+      if(dir==='vertical') c+=`Grad_${n}.Rotation=90\n`;
+      else if(dir==='diagonal') c+=`Grad_${n}.Rotation=45\n`;
+      c+=`Grad_${n}.Parent=${n}\n`;
+      c+=`-- Animate gradient wave\n`;
+      c+=`local _gw_${n}=0\n`;
+      c+=`game:GetService("RunService").Heartbeat:Connect(function(dt)\n`;
+      c+=`  _gw_${n}=(_gw_${n}+dt/${spd})%1\n`;
+      c+=`  local t=_gw_${n}\n`;
+      c+=`  local function lerp(a,b,x) return a+(b-a)*x end\n`;
+      c+=`  local function hsvWave(phase)\n`;
+      c+=`    local r1,g1,b1=Color3.fromRGB(${c1}).R,Color3.fromRGB(${c1}).G,Color3.fromRGB(${c1}).B\n`;
+      c+=`    local r2,g2,b2=Color3.fromRGB(${c2}).R,Color3.fromRGB(${c2}).G,Color3.fromRGB(${c2}).B\n`;
+      c+=`    local f=math.abs(math.sin(math.pi*phase))\n`;
+      c+=`    return Color3.new(lerp(r1,r2,f),lerp(g1,g2,f),lerp(b1,b2,f))\n`;
+      c+=`  end\n`;
+      c+=`  Grad_${n}.Color=ColorSequence.new({\n`;
+      c+=`    ColorSequenceKeypoint.new(0,   hsvWave(t)),\n`;
+      c+=`    ColorSequenceKeypoint.new(0.5, hsvWave(t+0.5)),\n`;
+      c+=`    ColorSequenceKeypoint.new(1,   hsvWave(t+1))\n`;
+      c+=`  })\n`;
+      c+=`end)\n`;
+    }
     if(el.type==='panel'){
       const pt=(el.txt||'Panel').replace(/"/g,'\\"');const ptc=h2r(el.txc)||'168, 85, 247';
       c+=`local PTitle_${n}=Instance.new("TextLabel")\nPTitle_${n}.Size=UDim2.new(1,0,0,28)\nPTitle_${n}.BackgroundTransparency=1\nPTitle_${n}.Text="${pt}"\nPTitle_${n}.TextColor3=Color3.fromRGB(${ptc})\nPTitle_${n}.TextSize=13\nPTitle_${n}.Font=Enum.Font.GothamBold\nPTitle_${n}.Parent=${n}\n`;
@@ -1413,6 +1732,314 @@ function fallbackCopy(text,cb){
 storageLoad();
 showScreen('menu-screen');
 renderProjList();
+
+// ═══════════════════════════════════════════════════════════════════
+//  ANIMATIONS TAB
+// ═══════════════════════════════════════════════════════════════════
+let animPlatform = 'roblox';
+let animPriority = 'Idle';
+let animKeyframes = []; // [{time, bones:{head,torso,larm,rarm,lleg,rleg} each {x,y,z}}]
+let animPreviewTimer = null;
+let animPreviewFrame = 0;
+
+function switchMenuTab(tab) {
+  document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
+  document.getElementById('mtab-' + tab).classList.add('active');
+  document.getElementById('menu-tab-projects').style.display = tab === 'projects' ? 'flex' : 'none';
+  document.getElementById('menu-tab-animations').style.display = tab === 'animations' ? 'flex' : 'none';
+  if (tab === 'animations') renderKeyframeList();
+}
+
+function selectAnimPlatform(p) {
+  animPlatform = p;
+  document.querySelectorAll('.anim-plat-card').forEach(c => c.classList.remove('active-plat'));
+  document.getElementById('anim-plat-' + p).classList.add('active-plat');
+}
+
+function setAnimPri(pri) {
+  animPriority = pri;
+  document.querySelectorAll('.anim-pri-btn').forEach(b => b.classList.remove('active-pri'));
+  document.getElementById('pri-' + pri.toLowerCase()).classList.add('active-pri');
+}
+
+const BONES = [
+  { id: 'head',   label: 'Head' },
+  { id: 'torso',  label: 'Torso' },
+  { id: 'larm',   label: 'L.Arm' },
+  { id: 'rarm',   label: 'R.Arm' },
+  { id: 'lleg',   label: 'L.Leg' },
+  { id: 'rleg',   label: 'R.Leg' },
+];
+
+function defaultBones() {
+  const b = {};
+  BONES.forEach(bn => { b[bn.id] = { x: 0, y: 0, z: 0 }; });
+  return b;
+}
+
+function addKeyframe() {
+  const maxT = animKeyframes.length > 0
+    ? Math.max(...animKeyframes.map(k => k.time)) + 0.1
+    : 0;
+  animKeyframes.push({ time: parseFloat(maxT.toFixed(2)), bones: defaultBones(), open: true });
+  renderKeyframeList();
+  // scroll to bottom
+  setTimeout(() => {
+    const list = document.getElementById('anim-keyframes-list');
+    if (list) list.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, 80);
+}
+
+function removeKeyframe(i) {
+  animKeyframes.splice(i, 1);
+  renderKeyframeList();
+}
+
+function toggleKF(i) {
+  animKeyframes[i].open = !animKeyframes[i].open;
+  const body = document.getElementById('kfb-' + i);
+  const tog = document.getElementById('kft-' + i);
+  if (body) body.classList.toggle('open', animKeyframes[i].open);
+  if (tog) tog.classList.toggle('open', animKeyframes[i].open);
+}
+
+function renderKeyframeList() {
+  const list = document.getElementById('anim-keyframes-list');
+  if (!list) return;
+  if (animKeyframes.length === 0) {
+    list.innerHTML = '<div style="text-align:center;color:var(--txt2);font-size:11px;padding:14px 0;line-height:1.8;">No keyframes yet.<br>Tap <strong style="color:var(--acc)">+ Add Keyframe</strong> to start.</div>';
+    return;
+  }
+  list.innerHTML = animKeyframes.map((kf, i) => `
+    <div class="kf-card">
+      <div class="kf-head" onclick="toggleKF(${i})">
+        <div style="font-size:14px">🔑</div>
+        <div class="kf-time">t = <input
+          class="si"
+          type="number"
+          value="${kf.time}"
+          min="0" max="60" step="0.05"
+          style="width:56px;display:inline-block;padding:3px 6px;font-size:12px;"
+          onclick="event.stopPropagation()"
+          oninput="animKeyframes[${i}].time=parseFloat(this.value)||0"
+        ></div>
+        <div style="font-size:10px;color:var(--txt2);margin-left:4px">sec</div>
+        <div class="kf-del" onclick="event.stopPropagation();removeKeyframe(${i})">🗑</div>
+        <div class="kf-toggle ${kf.open ? 'open' : ''}" id="kft-${i}">▾</div>
+      </div>
+      <div class="kf-body ${kf.open ? 'open' : ''}" id="kfb-${i}">
+        ${BONES.map(bn => `
+        <div class="kf-bone-row">
+          <div class="kf-bone-lbl">${bn.label}</div>
+          <div class="kf-axis">X</div>
+          <input class="kf-inp" type="number" value="${kf.bones[bn.id].x}" step="5" placeholder="0"
+            oninput="animKeyframes[${i}].bones['${bn.id}'].x=parseFloat(this.value)||0;previewPose(${i})">
+          <div class="kf-axis">Y</div>
+          <input class="kf-inp" type="number" value="${kf.bones[bn.id].y}" step="5" placeholder="0"
+            oninput="animKeyframes[${i}].bones['${bn.id}'].y=parseFloat(this.value)||0;previewPose(${i})">
+          <div class="kf-axis">Z</div>
+          <input class="kf-inp" type="number" value="${kf.bones[bn.id].z}" step="5" placeholder="0"
+            oninput="animKeyframes[${i}].bones['${bn.id}'].z=parseFloat(this.value)||0;previewPose(${i})">
+        </div>`).join('')}
+        <div style="margin-top:6px;font-size:9px;color:var(--txt2);line-height:1.7;border-top:1px solid var(--brd);padding-top:6px;">
+          Values are degrees (°). Positive X = forward tilt, Y = twist, Z = side tilt.
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// Apply pose to SVG for preview
+function previewPose(kfIdx) {
+  const kf = animKeyframes[kfIdx];
+  if (!kf) return;
+  const bones = kf.bones;
+  const char = document.getElementById('roblox-char');
+  if (!char) return;
+  document.getElementById('anim-preview-label').textContent = `KF ${kfIdx} @ t=${kf.time}s`;
+
+  // head
+  const head = document.getElementById('rb-head');
+  if (head) head.style.transform = `rotate(${(bones.head.z||0)}deg)`;
+  head.style.transformOrigin = '45px 20px';
+
+  // torso
+  const torso = document.getElementById('rb-torso');
+  if (torso) { torso.style.transform = `rotate(${(bones.torso.z||0)*0.5}deg)`; torso.style.transformOrigin = '45px 66px'; }
+
+  // arms
+  const la = document.getElementById('rb-larm');
+  const ra = document.getElementById('rb-rarm');
+  if (la) { la.style.transform = `rotate(${-(bones.larm.z||0)}deg)`; la.style.transformOrigin = '13px 44px'; }
+  if (ra) { ra.style.transform = `rotate(${(bones.rarm.z||0)}deg)`; ra.style.transformOrigin = '77px 44px'; }
+
+  // legs
+  const ll = document.getElementById('rb-lleg');
+  const rl = document.getElementById('rb-rleg');
+  if (ll) { ll.style.transform = `rotate(${(bones.lleg.z||0)*0.7}deg)`; ll.style.transformOrigin = '31px 90px'; }
+  if (rl) { rl.style.transform = `rotate(${-(bones.rleg.z||0)*0.7}deg)`; rl.style.transformOrigin = '58px 90px'; }
+}
+
+function previewAnim() {
+  if (animKeyframes.length === 0) { toast('Add keyframes first'); return; }
+  stopAnimPreview();
+  const badge = document.getElementById('anim-playing-badge');
+  if (badge) badge.style.display = 'block';
+  let i = 0;
+  const sorted = [...animKeyframes].sort((a, b) => a.time - b.time);
+  function step() {
+    if (i >= sorted.length) {
+      i = 0;
+      if (document.getElementById('anim-loop').value === 'false') { stopAnimPreview(); return; }
+    }
+    previewPose(animKeyframes.indexOf(sorted[i]) >= 0 ? animKeyframes.indexOf(sorted[i]) : i);
+    document.getElementById('anim-preview-label').textContent = `▶ t=${sorted[i].time}s`;
+    const nextTime = sorted[i + 1] ? (sorted[i + 1].time - sorted[i].time) * 1000 / parseFloat(document.getElementById('anim-speed').value || 1) : 600;
+    i++;
+    animPreviewTimer = setTimeout(step, Math.max(80, nextTime));
+  }
+  step();
+}
+
+function stopAnimPreview() {
+  if (animPreviewTimer) { clearTimeout(animPreviewTimer); animPreviewTimer = null; }
+  const badge = document.getElementById('anim-playing-badge');
+  if (badge) badge.style.display = 'none';
+  // reset pose
+  ['rb-head','rb-torso','rb-larm','rb-rarm','rb-lleg','rb-rleg'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.transform = '';
+  });
+  document.getElementById('anim-preview-label').textContent = 'Idle';
+}
+
+function generateAnimLua() {
+  const name = (document.getElementById('anim-name').value || 'MyAnimation').replace(/[^A-Za-z0-9_]/g,'_');
+  const speed = parseFloat(document.getElementById('anim-speed').value) || 1;
+  const loop = document.getElementById('anim-loop').value === 'true';
+  const sorted = [...animKeyframes].sort((a, b) => a.time - b.time);
+
+  let c = '-- ============================================================\n';
+  c += `-- Animation: ${name}.lua\n`;
+  c += `-- Generated by LSM (Lua Script Maker) v2.1\n`;
+  c += `-- Priority: ${animPriority}  |  Loop: ${loop}  |  Speed: ${speed}\n`;
+  c += `-- Keyframes: ${sorted.length}\n`;
+  c += '-- ============================================================\n\n';
+  c += `local Players = game:GetService("Players")\n`;
+  c += `local RunService = game:GetService("RunService")\n`;
+  c += `local TweenService = game:GetService("TweenService")\n\n`;
+  c += `local LocalPlayer = Players.LocalPlayer\n`;
+  c += `local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()\n`;
+  c += `local humanoid = character:WaitForChild("Humanoid")\n`;
+  c += `local humanoidRootPart = character:WaitForChild("HumanoidRootPart")\n\n`;
+  c += `-- Get motor joints\n`;
+  c += `local function getMotor(parent, name)\n`;
+  c += `  return parent and parent:FindFirstChild(name)\n`;
+  c += `end\n\n`;
+  c += `local torso = character:WaitForChild("Torso", 5) or character:WaitForChild("UpperTorso", 5)\n`;
+  c += `local head = character:WaitForChild("Head", 5)\n\n`;
+  c += `local joints = {\n`;
+  c += `  Neck      = torso and getMotor(torso, "Neck"),\n`;
+  c += `  RightShoulder = torso and getMotor(torso, "Right Shoulder"),\n`;
+  c += `  LeftShoulder  = torso and getMotor(torso, "Left Shoulder"),\n`;
+  c += `  RightHip  = torso and getMotor(torso, "Right Hip"),\n`;
+  c += `  LeftHip   = torso and getMotor(torso, "Left Hip"),\n`;
+  c += `}\n\n`;
+  c += `-- Default C0 positions (backup)\n`;
+  c += `local defaultC0 = {}\n`;
+  c += `for name, joint in pairs(joints) do\n`;
+  c += `  if joint then defaultC0[name] = joint.C0 end\n`;
+  c += `end\n\n`;
+  c += `-- ── Keyframe data ──\n`;
+  c += `local keyframes = {\n`;
+  sorted.forEach((kf, i) => {
+    c += `  -- Keyframe ${i + 1} at t=${kf.time}s\n`;
+    c += `  [${i + 1}] = {\n`;
+    c += `    time = ${kf.time},\n`;
+    c += `    Neck          = CFrame.Angles(math.rad(${kf.bones.head.x||0}), math.rad(${kf.bones.head.y||0}), math.rad(${kf.bones.head.z||0})),\n`;
+    c += `    RightShoulder = CFrame.Angles(math.rad(${kf.bones.rarm.x||0}), math.rad(${kf.bones.rarm.y||0}), math.rad(${kf.bones.rarm.z||0})),\n`;
+    c += `    LeftShoulder  = CFrame.Angles(math.rad(${kf.bones.larm.x||0}), math.rad(${kf.bones.larm.y||0}), math.rad(${kf.bones.larm.z||0})),\n`;
+    c += `    RightHip      = CFrame.Angles(math.rad(${kf.bones.rleg.x||0}), math.rad(${kf.bones.rleg.y||0}), math.rad(${kf.bones.rleg.z||0})),\n`;
+    c += `    LeftHip       = CFrame.Angles(math.rad(${kf.bones.lleg.x||0}), math.rad(${kf.bones.lleg.y||0}), math.rad(${kf.bones.lleg.z||0})),\n`;
+    c += `  },\n`;
+  });
+  c += `}\n\n`;
+  c += `-- ── Animation player ──\n`;
+  c += `local animSpeed = ${speed}\n`;
+  c += `local shouldLoop = ${loop}\n`;
+  c += `local isPlaying = false\n\n`;
+  c += `local function playAnimation()\n`;
+  c += `  if isPlaying then return end\n`;
+  c += `  isPlaying = true\n`;
+  c += `  repeat\n`;
+  c += `    for i, kf in ipairs(keyframes) do\n`;
+  c += `      local nextKF = keyframes[i + 1]\n`;
+  c += `      local duration = nextKF and (nextKF.time - kf.time) / animSpeed or 0.2 / animSpeed\n`;
+  c += `      duration = math.max(0.05, duration)\n`;
+  c += `      local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)\n`;
+  c += `      for jointName, rotation in pairs(kf) do\n`;
+  c += `        if jointName ~= "time" and joints[jointName] and defaultC0[jointName] then\n`;
+  c += `          local goal = { C0 = defaultC0[jointName] * rotation }\n`;
+  c += `          TweenService:Create(joints[jointName], tweenInfo, goal):Play()\n`;
+  c += `        end\n`;
+  c += `      end\n`;
+  c += `      task.wait(duration)\n`;
+  c += `    end\n`;
+  c += `  until not shouldLoop or not isPlaying\n`;
+  c += `  -- Reset to default\n`;
+  c += `  for name, joint in pairs(joints) do\n`;
+  c += `    if joint and defaultC0[name] then\n`;
+  c += `      TweenService:Create(joint, TweenInfo.new(0.15), {C0 = defaultC0[name]}):Play()\n`;
+  c += `    end\n`;
+  c += `  end\n`;
+  c += `  isPlaying = false\n`;
+  c += `end\n\n`;
+  c += `local function stopAnimation()\n`;
+  c += `  isPlaying = false\n`;
+  c += `end\n\n`;
+  c += `-- ── Start animation ──\n`;
+  c += `task.spawn(playAnimation)\n\n`;
+  c += `-- Optional: bind to humanoid state\n`;
+  c += `-- humanoid.StateChanged:Connect(function(old, new)\n`;
+  c += `--   if new == Enum.HumanoidStateType.Running then playAnimation()\n`;
+  c += `--   else stopAnimation() end\n`;
+  c += `-- end)\n`;
+  return c;
+}
+
+function generateAnimCode() {
+  if (animKeyframes.length === 0) { toast('Add at least one keyframe first'); return; }
+  const code = generateAnimLua();
+  const name = (document.getElementById('anim-name').value || 'MyAnimation').replace(/[^A-Za-z0-9_]/g,'_');
+  document.getElementById('anim-code-fn').textContent = name + '.lua';
+  document.getElementById('anim-code-stats').innerHTML =
+    `🔑 <b style="color:var(--acc)">${animKeyframes.length}</b> keyframes &nbsp;·&nbsp; ` +
+    `📄 <b style="color:var(--grn)">${code.split('\n').length}</b> lines &nbsp;·&nbsp; ` +
+    `⚙️ <b style="color:var(--warn)">${animPriority}</b> priority`;
+  document.getElementById('anim-cdisplay').textContent = code;
+  document.getElementById('anim-code-modal').classList.add('open');
+}
+
+function copyAnimCode() {
+  if (animKeyframes.length === 0) { toast('Add at least one keyframe first'); return; }
+  copyText(generateAnimLua(), () => toast('Animation code copied ✓'));
+}
+
+function copyAnimGenCode() {
+  const code = document.getElementById('anim-cdisplay').textContent;
+  copyText(code, () => {
+    const btn = document.getElementById('anim-copy-btn');
+    btn.textContent = '✅ Copied!'; btn.style.background = 'var(--grn)';
+    setTimeout(() => { btn.textContent = '📋 Copy'; btn.style.background = ''; }, 2500);
+  });
+}
+
+function downloadAnimLua() {
+  const code = generateAnimLua();
+  const name = (document.getElementById('anim-name').value || 'MyAnimation').replace(/[^A-Za-z0-9_]/g,'_');
+  const blob = new Blob([code], { type: 'text/plain' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name + '.lua'; a.click();
+  toast('Downloaded ' + name + '.lua ✓');
+}
 </script>
 </body>
 </html>
