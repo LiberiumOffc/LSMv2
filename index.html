@@ -897,16 +897,16 @@ function addEl(type,x,y){
   const p=proj();
   const id=p.idCnt++;
   const D={
-    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
     checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',txs:13,txf:'GothamBold',txalign:'Left',tyalign:'Center',rbw:false,collapsed:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    image:    {w:120,h:120,bg:'#0a0812',border:'#3d2860',op:1,rad:6,sh:0,neon:'none',imgId:'',imgUrl:'',imgScale:'Fit',imgTint:'#ffffff',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',txs:13,txf:'GothamBold',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,collapsed:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    image:    {w:120,h:120,bg:'#0a0812',border:'#3d2860',op:1,rad:6,sh:0,neon:'none',imgId:'',imgUrl:'',imgScale:'Fit',imgTint:'#ffffff',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
   };
   const d=D[type]||D.frame;
   const lbl=type.charAt(0).toUpperCase()+type.slice(1)+'_'+id;
@@ -1348,7 +1348,7 @@ function buildSheet(el){
       </div>
     </div>
     <div class="sr"><span class="sl">🌈 Rainbow</span><input class="sx" type="checkbox" ${el.rbw?'checked':''} onchange="sp(${el.id},'rbw',this.checked)"></div>
-    <div class="sr"><span class="sl">↵ Wrap</span><input class="sx" type="checkbox" ${el.txwrap?'checked':''} onchange="sp(${el.id},'txwrap',this.checked)">
+    <div class="sr"><span class="sl">↵ Wrap</span><input class="sx" type="checkbox" ${el.txwrap?'checked':''} onchange="sp(${el.id},'txwrap',this.checked)" style="cursor:pointer">
       <span style="font-size:9px;color:var(--txt2);margin-left:4px">TextWrapped</span></div>
   </div>`:''}
   <div class="ss"><div class="ss-hd">✨ Gradient Wave</div>
@@ -1451,7 +1451,7 @@ function sp(id,key,val){
   else if(key==='rad')dom.style.borderRadius=val+'px';
   else applyStyle(el);
   // These keys need full re-render + sheet rebuild
-  if(['gwc1','gwc2','gwspd','gwdir','txf','txs','txalign','tyalign','imgId','imgUrl','imgScale','imgTint'].includes(key)){
+  if(['gwc1','gwc2','gwspd','gwdir','txf','txs','txalign','tyalign','txwrap','imgId','imgUrl','imgScale','imgTint'].includes(key)){
     applyStyle(el);
     buildSheet(el);
   }
@@ -1722,26 +1722,22 @@ function generateLua(){
     }
 
     if(['button','label','textbox'].includes(el.type)){
-      // Split text by newlines — Roblox needs \n as actual newline char in string
       const rawTxt = (el.txt||'');
-      const lines = rawTxt.split('\n');
-      let luaText;
-      if(lines.length > 1){
-        // Build text with newlines using string.char(10) concatenation
-        luaText = lines.map(l=>'"'+l.replace(/\\/g,'\\\\').replace(/"/g,'\\"')+'"').join(' .. "\\n" .. ');
-        c+=`${n}.Text = ${luaText}\n`;
+      const hasNewlines = rawTxt.includes('\n');
+      // Escape for Lua: backslash → \\, quote → \", newline → \n (Lua escape)
+      const t = rawTxt.replace(/\\/g,'\\\\').replace(/"/g,'\\"').replace(/\n/g,'\\n');
+      c+=`${n}.Text = "${t}"\n`;
+      c+=`${n}.TextScaled = false\n`;
+      if(hasNewlines || el.txwrap){
         c+=`${n}.TextWrapped = true\n`;
-      } else {
-        const t = rawTxt.replace(/\\/g,'\\\\').replace(/"/g,'\\"');
-        c+=`${n}.Text = "${t}"\n`;
-        if(el.txwrap) c+=`${n}.TextWrapped = true\n`;
+        // AutomaticSize = Y makes element grow to fit all lines
+        if(el.type==='label') c+=`${n}.AutomaticSize = Enum.AutomaticSize.Y\n`;
       }
       const tc=h2r(el.txc);if(tc)c+=`${n}.TextColor3 = Color3.fromRGB(${tc})\n`;
       c+=`${n}.TextSize = ${el.txs||14}\n`;
       c+=`${n}.Font = Enum.Font.${el.txf||'SourceSans'}\n`;
       c+=`${n}.TextXAlignment = Enum.TextXAlignment.${el.txalign||'Center'}\n`;
       c+=`${n}.TextYAlignment = Enum.TextYAlignment.${el.tyalign||'Center'}\n`;
-      if(el.txwrap||lines.length>1) c+=`${n}.TextScaled = false\n`;
       if(el.type==='button')c+=`${n}.AutoButtonColor = false\n`;
       if(el.type==='textbox'){c+=`${n}.PlaceholderText = "Enter text..."\n${n}.ClearTextOnFocus = false\n`;}
     }
