@@ -89,7 +89,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .mm-sec-title{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;
   background:linear-gradient(90deg,#a855f7,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .mm-btn{width:100%;padding:14px 16px;background:var(--bg2);border:1px solid var(--brd);border-radius:10px;color:var(--txt);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:14px;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .15s;}
-.mm-btn:active{background:var(--bg3);border-color:var(--acc);transform:scale(.98);}
+.mm-btn:active{background для:var(--bg3);border-color:var(--acc);transform:scale(.98);}
 .mm-btn .mm-ic{font-size:20px;width:28px;text-align:center;}
 .mm-btn .mm-txt{flex:1;text-align:left;}
 .mm-btn .mm-arrow{color:var(--txt2);font-size:16px;}
@@ -303,6 +303,13 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .kf-axis{font-size:9px;color:var(--txt2);width:10px;text-align:center;flex-shrink:0;}
 .kf-inp{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--glass-brd);color:var(--txt);font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 6px;border-radius:5px;outline:none;min-width:0;}
 .kf-inp:focus{border-color:var(--acc);}
+.anim-bone-sel{
+  padding:5px 4px;border-radius:5px;border:1px solid transparent;
+  color:var(--txt2);font-size:10px;font-family:'Rajdhani',sans-serif;
+  font-weight:700;letter-spacing:.5px;cursor:pointer;text-align:center;
+  margin-bottom:3px;transition:all .12s;
+}
+.anim-bone-sel:active{background:rgba(168,85,247,.2);}
 .kf-del{color:var(--red);font-size:16px;cursor:pointer;padding:2px 4px;flex-shrink:0;}
 
 /* Font preview in dropdown options */
@@ -335,6 +342,19 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .font-select option[value="Arcade"]             { font-family: monospace; }
 
 /* GW info badge */
+.el-parent-ind{
+  position:absolute;top:-14px;left:0;
+  font-size:8px;font-family:'Rajdhani',sans-serif;font-weight:700;
+  letter-spacing:.5px;color:var(--acc);background:rgba(168,85,247,.18);
+  border:1px solid rgba(168,85,247,.35);border-radius:3px;
+  padding:1px 4px;pointer-events:none;white-space:nowrap;z-index:25;
+  max-width:90px;overflow:hidden;text-overflow:ellipsis;
+}
+.el-child-line{
+  position:absolute;top:0;left:-2px;width:2px;height:100%;
+  background:rgba(168,85,247,.5);pointer-events:none;z-index:24;
+  border-radius:1px;
+}
 .gw-info-badge{
   display:inline-flex;align-items:center;gap:4px;
   padding:3px 8px;border-radius:10px;font-size:9px;
@@ -353,7 +373,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
     <div>
       <div class="mm-logo"><span class="mm-logo-txt">LSM</span><small>Lua Script Maker</small></div>
     </div>
-    <div style="font-size:10px;color:var(--txt2)">v2.2</div>
+    <div style="font-size:10px;color:var(--txt2)">v2.3</div>
   </div>
   <div id="menu-tabs" style="display:flex;background:var(--bg2);border-bottom:1px solid var(--brd);padding:0 10px;gap:4px;">
     <div class="mtab active" id="mtab-projects" onclick="switchMenuTab('projects')">📁 Projects</div>
@@ -376,86 +396,116 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
       </div>
     </div>
   </div>
-  <div id="menu-tab-animations" class="mm-body" style="display:none;flex-direction:column;padding:0;">
-    <div id="anim-platform-sel" style="padding:14px 16px;">
-      <div class="mm-sec-title" style="margin-bottom:12px;">Select Platform</div>
-      <div id="anim-plat-roblox" class="anim-plat-card active-plat" onclick="selectAnimPlatform('roblox')">
-        <div class="anim-plat-icon">🎮</div>
-        <div>
-          <div class="anim-plat-name">ROBLOX</div>
-          <div class="anim-plat-desc">Generate Lua animation scripts for Roblox characters</div>
-        </div>
-        <div class="anim-plat-check" id="plat-check-roblox">✓</div>
+  <div id="menu-tab-animations" style="display:none;flex-direction:column;flex:1;overflow:hidden;background:var(--bg);">
+    <!-- TOP BAR -->
+    <div style="background:var(--bg2);border-bottom:1px solid var(--brd);padding:8px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0;">
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;background:linear-gradient(90deg,#a855f7,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">3D ANIMATOR</div>
+      <div style="flex:1"></div>
+      <div id="anim-rec-btn" onclick="toggleRecord()" style="padding:4px 10px;border-radius:6px;border:1px solid var(--red);color:var(--red);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;cursor:pointer;letter-spacing:1px;">⏺ REC</div>
+      <div onclick="animPlay()" style="padding:4px 10px;border-radius:6px;border:1px solid var(--grn);color:var(--grn);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;cursor:pointer;">▶ PLAY</div>
+      <div onclick="animStop()" style="padding:4px 10px;border-radius:6px;border:1px solid var(--brd);color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;cursor:pointer;">■ STOP</div>
+    </div>
+
+    <!-- 3D VIEWPORT -->
+    <div id="anim-3d-wrap" style="height:260px;flex-shrink:0;position:relative;background:#060410;overflow:hidden;">
+      <canvas id="anim-3d-canvas" style="width:100%;height:100%;display:block;touch-action:none;"></canvas>
+      <!-- bone selector overlay -->
+      <div id="anim-bone-panel" style="position:absolute;right:0;top:0;bottom:0;width:78px;background:rgba(10,8,20,.85);border-left:1px solid var(--brd);display:flex;flex-direction:column;padding:4px;">
+        <div style="font-size:8px;color:var(--txt2);text-align:center;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-bottom:4px;">BONE</div>
+        ${['Head','Torso','L.Arm','R.Arm','L.Leg','R.Leg'].map((b,i)=>`<div class="anim-bone-sel" id="absel-${i}" onclick="selectBone(${i})">${b}</div>`).join('')}
+        <div style="margin-top:6px;font-size:8px;color:var(--txt2);text-align:center;font-family:'Rajdhani',sans-serif;letter-spacing:.5px;line-height:1.6;">Drag<br>to<br>rotate</div>
       </div>
-      <div style="margin-top:8px;padding:12px;background:var(--bg2);border:1px dashed var(--brd);border-radius:10px;text-align:center;color:var(--txt2);font-size:11px;opacity:.5;">
-        More platforms coming soon…
+      <!-- axis label -->
+      <div id="anim-axis-label" style="position:absolute;left:8px;top:8px;font-size:9px;color:var(--acc);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;background:rgba(10,8,20,.7);padding:2px 6px;border-radius:4px;border:1px solid var(--brd);">SELECT BONE →</div>
+      <!-- rot display -->
+      <div id="anim-rot-disp" style="position:absolute;left:8px;bottom:8px;font-size:9px;color:var(--txt);font-family:'JetBrains Mono',monospace;background:rgba(10,8,20,.8);padding:3px 7px;border-radius:4px;border:1px solid var(--brd);line-height:1.8;display:none;"></div>
+    </div>
+
+    <!-- AXIS CONTROLS -->
+    <div id="anim-axis-ctrl" style="display:none;flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--brd);padding:6px 10px;">
+      <div style="display:flex;gap:6px;align-items:center;">
+        <div style="font-size:10px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;width:50px;" id="anim-sel-bone-name">Head</div>
+        <div style="flex:1;">
+          <div style="display:flex;gap:4px;align-items:center;margin-bottom:4px;">
+            <div style="font-size:9px;color:#f78c6c;width:10px;font-family:'JetBrains Mono',monospace;">X</div>
+            <input type="range" min="-180" max="180" value="0" id="anim-rx" oninput="onAxisDrag('x',+this.value)" style="flex:1;accent-color:#f78c6c;">
+            <div style="font-size:9px;color:#f78c6c;width:30px;text-align:right;font-family:'JetBrains Mono',monospace;" id="anim-rx-val">0°</div>
+            <div onclick="resetAxis('x')" style="font-size:9px;color:var(--txt2);cursor:pointer;padding:2px 4px;border:1px solid var(--brd);border-radius:3px;">↺</div>
+          </div>
+          <div style="display:flex;gap:4px;align-items:center;margin-bottom:4px;">
+            <div style="font-size:9px;color:#10b981;width:10px;font-family:'JetBrains Mono',monospace;">Y</div>
+            <input type="range" min="-180" max="180" value="0" id="anim-ry" oninput="onAxisDrag('y',+this.value)" style="flex:1;accent-color:#10b981;">
+            <div style="font-size:9px;color:#10b981;width:30px;text-align:right;font-family:'JetBrains Mono',monospace;" id="anim-ry-val">0°</div>
+            <div onclick="resetAxis('y')" style="font-size:9px;color:var(--txt2);cursor:pointer;padding:2px 4px;border:1px solid var(--brd);border-radius:3px;">↺</div>
+          </div>
+          <div style="display:flex;gap:4px;align-items:center;">
+            <div style="font-size:9px;color:#a855f7;width:10px;font-family:'JetBrains Mono',monospace;">Z</div>
+            <input type="range" min="-180" max="180" value="0" id="anim-rz" oninput="onAxisDrag('z',+this.value)" style="flex:1;accent-color:#a855f7;">
+            <div style="font-size:9px;color:#a855f7;width:30px;text-align:right;font-family:'JetBrains Mono',monospace;" id="anim-rz-val">0°</div>
+            <div onclick="resetAxis('z')" style="font-size:9px;color:var(--txt2);cursor:pointer;padding:2px 4px;border:1px solid var(--brd);border-radius:3px;">↺</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div id="anim-roblox-editor" style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
-      <div style="background:var(--bg2);border-bottom:1px solid var(--brd);padding:10px;display:flex;align-items:center;gap:10px;">
-        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;background:linear-gradient(90deg,#a855f7,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ROBLOX CHARACTER</div>
-        <div style="margin-left:auto;font-size:10px;color:var(--txt2)" id="anim-preview-label">Idle</div>
-      </div>
-      <div id="anim-stage" style="height:200px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 80%,rgba(168,85,247,.12) 0%,transparent 70%);position:relative;overflow:hidden;">
-        <div style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:80px;height:4px;background:rgba(168,85,247,.2);border-radius:50%;filter:blur(2px);"></div>
-        <svg id="roblox-char" width="90" height="150" viewBox="0 0 90 150" style="position:relative;z-index:2;filter:drop-shadow(0 8px 20px rgba(168,85,247,.4));">
-          <rect id="rb-head" x="27" y="2" width="36" height="36" rx="4" fill="#FFD700" stroke="#c4a000" stroke-width="1.5"/>
-          <rect x="34" y="12" width="8" height="8" rx="2" fill="#1a1a2e"/>
-          <rect x="48" y="12" width="8" height="8" rx="2" fill="#1a1a2e"/>
-          <rect x="36" y="13" width="3" height="3" rx="1" fill="white" opacity="0.8"/>
-          <rect x="50" y="13" width="3" height="3" rx="1" fill="white" opacity="0.8"/>
-          <path d="M37 26 Q45 31 53 26" stroke="#c4a000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <rect x="38" y="38" width="14" height="6" fill="#e8b800"/>
-          <rect id="rb-torso" x="22" y="44" width="46" height="44" rx="3" fill="#a855f7" stroke="#7c3aed" stroke-width="1.5"/>
-          <rect x="28" y="52" width="34" height="2" rx="1" fill="rgba(255,255,255,.2)"/>
-          <rect x="28" y="58" width="34" height="2" rx="1" fill="rgba(255,255,255,.15)"/>
-          <rect x="28" y="64" width="20" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
-          <rect id="rb-larm" x="6" y="44" width="14" height="36" rx="3" fill="#c084fc" stroke="#a855f7" stroke-width="1"/>
-          <rect id="rb-rarm" x="70" y="44" width="14" height="36" rx="3" fill="#c084fc" stroke="#a855f7" stroke-width="1"/>
-          <rect id="rb-lleg" x="22" y="90" width="19" height="40" rx="3" fill="#7c3aed" stroke="#6d28d9" stroke-width="1"/>
-          <rect id="rb-rleg" x="49" y="90" width="19" height="40" rx="3" fill="#7c3aed" stroke="#6d28d9" stroke-width="1"/>
-          <rect x="20" y="128" width="22" height="10" rx="3" fill="#1a0533"/>
-          <rect x="47" y="128" width="22" height="10" rx="3" fill="#1a0533"/>
-        </svg>
-        <div id="anim-playing-badge" style="position:absolute;top:8px;right:10px;font-size:9px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:10px;background:rgba(168,85,247,.2);border:1px solid var(--acc);color:var(--acc);display:none;">▶ PLAYING</div>
-      </div>
-      <div style="flex:1;overflow-y:auto;padding:10px 14px 4px;">
-        <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center;">
-          <div style="flex:1;">
-            <div style="font-size:9px;color:var(--txt2);margin-bottom:3px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">ANIM NAME</div>
-            <input id="anim-name" class="si" value="MyAnimation" placeholder="AnimationName" style="width:100%">
-          </div>
-          <div style="width:70px;">
-            <div style="font-size:9px;color:var(--txt2);margin-bottom:3px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">SPEED</div>
-            <input id="anim-speed" class="si" type="number" value="1" min="0.1" max="10" step="0.1" style="width:100%">
-          </div>
-          <div style="width:70px;">
-            <div style="font-size:9px;color:var(--txt2);margin-bottom:3px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">LOOP</div>
-            <select id="anim-loop" class="si" style="width:100%;padding:6px 4px;">
-              <option value="true">Yes</option>
-              <option value="false">No</option>
-            </select>
-          </div>
+
+    <!-- TIMELINE -->
+    <div style="background:var(--bg2);border-bottom:1px solid var(--brd);padding:6px 10px;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+        <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;">TIMELINE</div>
+        <div style="flex:1;display:flex;align-items:center;gap:6px;">
+          <div style="font-size:9px;color:var(--txt2)">t=</div>
+          <input type="range" min="0" max="200" value="0" id="anim-timeline" oninput="onTimelineScrub(+this.value/100)" style="flex:1;accent-color:var(--acc);">
+          <div id="anim-time-disp" style="font-size:9px;color:var(--acc);font-family:'JetBrains Mono',monospace;width:34px;">0.00s</div>
         </div>
-        <div style="margin-bottom:10px;">
-          <div style="font-size:9px;color:var(--txt2);margin-bottom:5px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">PRIORITY</div>
-          <div style="display:flex;gap:5px;">
-            <div class="anim-pri-btn active-pri" id="pri-idle" onclick="setAnimPri('Idle')">Idle</div>
-            <div class="anim-pri-btn" id="pri-movement" onclick="setAnimPri('Movement')">Movement</div>
-            <div class="anim-pri-btn" id="pri-action" onclick="setAnimPri('Action')">Action</div>
-            <div class="anim-pri-btn" id="pri-action2" onclick="setAnimPri('Action2')">Action2</div>
-            <div class="anim-pri-btn" id="pri-action3" onclick="setAnimPri('Action3')">Action3</div>
-          </div>
+        <div onclick="addKeyframeAtTime()" style="padding:3px 8px;border-radius:5px;border:1px solid var(--acc);color:var(--acc);font-size:9px;font-family:'Rajdhani',sans-serif;font-weight:700;cursor:pointer;letter-spacing:.5px;">+ KF</div>
+      </div>
+      <!-- keyframe dots track -->
+      <div id="anim-kf-track" style="position:relative;height:20px;background:rgba(255,255,255,.03);border-radius:4px;overflow:hidden;cursor:pointer;" onclick="onTrackClick(event)">
+        <div id="anim-playhead" style="position:absolute;top:0;bottom:0;width:2px;background:var(--acc);left:0%;pointer-events:none;box-shadow:0 0 6px var(--acc);"></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS + KEYFRAME LIST -->
+    <div style="flex:1;overflow-y:auto;padding:10px 12px;">
+      <!-- anim settings -->
+      <div style="display:flex;gap:8px;margin-bottom:10px;">
+        <div style="flex:2;">
+          <div style="font-size:9px;color:var(--txt2);margin-bottom:3px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">NAME</div>
+          <input id="anim-name" class="si" value="MyAnimation" style="width:100%">
         </div>
-        <div style="font-size:9px;color:var(--txt2);margin-bottom:6px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">KEYFRAMES — BONE ROTATIONS</div>
-        <div id="anim-keyframes-list"></div>
-        <div class="btn btn2" onclick="addKeyframe()" style="width:100%;padding:8px;margin-top:4px;cursor:pointer;font-size:11px;">+ Add Keyframe</div>
+        <div style="flex:1;">
+          <div style="font-size:9px;color:var(--txt2);margin-bottom:3px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">SPEED</div>
+          <input id="anim-speed" class="si" type="number" value="1" min="0.1" max="10" step="0.1" style="width:100%">
+        </div>
+        <div style="flex:1;">
+          <div style="font-size:9px;color:var(--txt2);margin-bottom:3px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">LOOP</div>
+          <select id="anim-loop" class="si" style="width:100%;padding:5px 3px;">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
       </div>
-      <div style="padding:10px 14px;border-top:1px solid var(--brd);background:var(--bg2);display:flex;gap:8px;flex-shrink:0;">
-        <div class="btn btns" onclick="previewAnim()" style="flex:1;cursor:pointer;">▶ Preview</div>
-        <div class="btn btn2" onclick="copyAnimCode()" style="flex:1;cursor:pointer;">📋 Copy</div>
-        <div class="btn btnp" onclick="generateAnimCode()" style="flex:1;cursor:pointer;">⚡ Generate</div>
+      <!-- priority -->
+      <div style="margin-bottom:10px;">
+        <div style="font-size:9px;color:var(--txt2);margin-bottom:5px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">PRIORITY</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;">
+          <div class="anim-pri-btn active-pri" id="pri-idle" onclick="setAnimPri('Idle')">Idle</div>
+          <div class="anim-pri-btn" id="pri-movement" onclick="setAnimPri('Movement')">Movement</div>
+          <div class="anim-pri-btn" id="pri-action" onclick="setAnimPri('Action')">Action</div>
+          <div class="anim-pri-btn" id="pri-action2" onclick="setAnimPri('Action2')">Action2</div>
+          <div class="anim-pri-btn" id="pri-action3" onclick="setAnimPri('Action3')">Action3</div>
+        </div>
       </div>
+      <!-- keyframe list -->
+      <div style="font-size:9px;color:var(--txt2);margin-bottom:6px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">KEYFRAMES</div>
+      <div id="anim-keyframes-list"></div>
+    </div>
+
+    <!-- BOTTOM ACTIONS -->
+    <div style="padding:8px 12px;border-top:1px solid var(--brd);background:var(--bg2);display:flex;gap:6px;flex-shrink:0;">
+      <div class="btn btnd" onclick="clearAllKF()" style="padding:8px 10px;font-size:10px;cursor:pointer;">🗑 Clear</div>
+      <div class="btn btn2" onclick="copyAnimCode()" style="flex:1;cursor:pointer;font-size:10px;">📋 Copy</div>
+      <div class="btn btnp" onclick="generateAnimCode()" style="flex:1;cursor:pointer;font-size:10px;">⚡ Generate</div>
     </div>
   </div>
 </div>
@@ -646,6 +696,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 // ═══ STATE ═══
 let projects = [];
@@ -897,16 +948,16 @@ function addEl(type,x,y){
   const p=proj();
   const id=p.idCnt++;
   const D={
-    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',txs:13,txf:'GothamBold',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,collapsed:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    image:    {w:120,h:120,bg:'#0a0812',border:'#3d2860',op:1,rad:6,sh:0,neon:'none',imgId:'',imgUrl:'',imgScale:'Fit',imgTint:'#ffffff',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',txs:13,txf:'GothamBold',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,collapsed:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    image:    {w:120,h:120,bg:'#0a0812',border:'#3d2860',op:1,rad:6,sh:0,neon:'none',imgId:'',imgUrl:'',imgScale:'Fit',imgTint:'#ffffff',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
   };
   const d=D[type]||D.frame;
   const lbl=type.charAt(0).toUpperCase()+type.slice(1)+'_'+id;
@@ -1056,6 +1107,19 @@ function applyStyle(el){
     domEl.appendChild(brd);
   }
 
+  // ── Parent indicator overlay ──
+  if(el.parentId){
+    const parentEl=getEl(el.parentId);
+    if(parentEl){
+      const ind=document.createElement('div');
+      ind.className='el-parent-ind';
+      ind.textContent='↳ '+parentEl.label;
+      dom.appendChild(ind);
+      const line=document.createElement('div');
+      line.className='el-child-line';
+      dom.appendChild(line);
+    }
+  }
   if(el.type==='frame'){
     dom.style.background=el.bg.startsWith('t')?'transparent':el.bg;
     dom.style.borderColor=el.border.startsWith('t')?'transparent':el.border;
@@ -1265,6 +1329,23 @@ function selectEl(id,openP){
 function openSheet(el){if(!el)return;buildSheet(el);document.getElementById('psheet').classList.add('open');}
 function closeSheet(){document.getElementById('psheet').classList.remove('open');}
 
+function buildParentBtns(el){
+  return els()
+    .filter(e => e.id !== el.id && ['frame','panel'].includes(e.type))
+    .map(e => {
+      const active = el.parentId === e.id;
+      const ic = e.type==='panel' ? '🗂' : '⬛';
+      const brd = active ? 'var(--grn)' : 'var(--brd)';
+      const bg  = active ? 'rgba(16,185,129,.15)' : 'var(--bg3)';
+      const col = active ? 'var(--grn)' : 'var(--txt2)';
+      return '<div onclick="sp(' + el.id + ',\'parentId\',' + e.id + ')" ' +
+        'style="padding:5px 10px;border-radius:6px;border:1px solid ' + brd + ';background:' + bg + ';' +
+        'color:' + col + ';font-size:10px;font-family:Rajdhani,sans-serif;font-weight:700;cursor:pointer;' +
+        'max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" ' +
+        'title="' + e.label + '">' + ic + ' ' + e.label + '</div>';
+    }).join('');
+}
+
 function buildSheet(el){
   document.getElementById('psh-title').textContent=el.label+' · '+el.type;
   const b=document.getElementById('psh-body');
@@ -1275,6 +1356,15 @@ function buildSheet(el){
   b.innerHTML=`
   <div class="ss"><div class="ss-hd">Identity</div>
     <div class="sr"><span class="sl">Label</span><input class="si" value="${escAttr(el.label)}" onchange="sp(${el.id},'label',this.value)"></div>
+  </div>
+  <div class="ss"><div class="ss-hd">🔗 Parent</div>
+    <div id="parent-btns-${el.id}" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;">
+      <div onclick="sp(${el.id},'parentId',null)" style="padding:5px 10px;border-radius:6px;border:1px solid ${!el.parentId?'var(--acc)':'var(--brd)'};background:${!el.parentId?'rgba(168,85,247,.15)':'var(--bg3)'};color:${!el.parentId?'var(--acc)':'var(--txt2)'};font-size:10px;font-family:'Rajdhani',sans-serif;font-weight:700;cursor:pointer;letter-spacing:.5px;">
+        🖥 ScreenGui
+      </div>
+      ${buildParentBtns(el)}
+    </div>
+    <div style="font-size:9px;color:${el.parentId?'var(--grn)':'var(--txt2)'};line-height:1.6;">${el.parentId?'✓ Child of <b>'+(getEl(el.parentId)||{label:'?'}).label+'</b>':'Default: ScreenGui'}</div>
   </div>
   <div class="ss"><div class="ss-hd">Transform</div>
     <div class="sr">
@@ -1451,7 +1541,7 @@ function sp(id,key,val){
   else if(key==='rad')dom.style.borderRadius=val+'px';
   else applyStyle(el);
   // These keys need full re-render + sheet rebuild
-  if(['gwc1','gwc2','gwspd','gwdir','txf','txs','txalign','tyalign','txwrap','imgId','imgUrl','imgScale','imgTint'].includes(key)){
+  if(['gwc1','gwc2','gwspd','gwdir','txf','txs','txalign','tyalign','txwrap','imgId','imgUrl','imgScale','imgTint','parentId'].includes(key)){
     applyStyle(el);
     buildSheet(el);
   }
@@ -1480,7 +1570,13 @@ function redoAction(){
 }
 function restoreState(newEls){
   const p=proj();
-  p.elements.forEach(el=>{const d=getDom(el.id);if(d)d.remove();});
+  // Sort: parents before children
+  const sortedEls=[...p.elements].sort((a,b)=>{
+    if(!a.parentId&&b.parentId) return -1;
+    if(a.parentId&&!b.parentId) return 1;
+    return 0;
+  });
+  sortedEls.forEach(el=>{const d=getDom(el.id);if(d)d.remove();});
   p.elements=newEls;
   p.idCnt=newEls.length?Math.max(...newEls.map(e=>e.id))+1:1;
   p.sel=null;
@@ -1871,7 +1967,18 @@ function generateLua(){
       c+=`local UIS_${n}=game:GetService("UserInputService")\nlocal drag_${n}=false\n${n}_knob.MouseButton1Down:Connect(function()drag_${n}=true end)\nUIS_${n}.InputEnded:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then drag_${n}=false end end)\nRunService.Heartbeat:Connect(function()\nif not drag_${n} then return end\nlocal mp=UIS_${n}:GetMouseLocation()\nlocal abs=${n}_bar.AbsolutePosition\nlocal sz=${n}_bar.AbsoluteSize\nlocal pct=math.clamp((mp.X-abs.X)/sz.X,0,1)\n${n}_val=math.floor(pct*100)\n${n}_fill.Size=UDim2.new(pct,0,1,0)\n${n}_knob.Position=UDim2.new(pct,0,0.5,0)\nend)\n`;
     }
 
-    c+=`${n}.Parent = ScreenGui\n`;
+    // Parent: use parentId if set, else ScreenGui
+    if(el.parentId){
+      const parentEl=getEl(el.parentId);
+      if(parentEl){
+        const pn=parentEl.label.replace(/[^A-Za-z0-9_]/g,'_');
+        c+=`${n}.Parent = ${pn}\n`;
+      } else {
+        c+=`${n}.Parent = ScreenGui\n`;
+      }
+    } else {
+      c+=`${n}.Parent = ScreenGui\n`;
+    }
 
     const scriptLines=(el.script||'').split('\n').filter(l=>l.trim()&&!l.trim().startsWith('--'));
     if(scriptLines.length>0){
@@ -1948,245 +2055,596 @@ showScreen('menu-screen');
 renderProjList();
 
 // ═══════════════════════════════════════════════════════════
-//  ANIMATIONS TAB
+//  ANIMATIONS TAB — 3D EDITOR
 // ═══════════════════════════════════════════════════════════
-let animPlatform = 'roblox';
+
+// ── State ──
 let animPriority = 'Idle';
-let animKeyframes = [];
-let animPreviewTimer = null;
+let animKeyframes = []; // [{time, bones:{head,torso,larm,rarm,lleg,rleg} each {x,y,z}}]
+let animCurrentTime = 0;
+let animPlaying = false;
+let animPlayTimer = null;
+let animRecording = false;
+let animSelectedBone = -1; // -1=none, 0=head,1=torso,2=larm,3=rarm,4=lleg,5=rleg
+const BONE_NAMES = ['head','torso','larm','rarm','lleg','rleg'];
+const BONE_LABELS = ['Head','Torso','L.Arm','R.Arm','L.Leg','R.Leg'];
+
+// ── Three.js scene ──
+let scene, camera, renderer, threeReady=false;
+let boneObjects = {}; // id → THREE.Mesh
+let boneGroups  = {}; // id → THREE.Group (pivot)
+let charGroup;
 
 function switchMenuTab(tab) {
   document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
   document.getElementById('mtab-' + tab).classList.add('active');
   document.getElementById('menu-tab-projects').style.display = tab === 'projects' ? 'flex' : 'none';
   document.getElementById('menu-tab-animations').style.display = tab === 'animations' ? 'flex' : 'none';
-  if (tab === 'animations') renderKeyframeList();
+  if (tab === 'animations') {
+    renderKeyframeList();
+    renderKFTrack();
+    setTimeout(init3D, 60);
+  }
 }
 
-function selectAnimPlatform(p) {
-  animPlatform = p;
-  document.querySelectorAll('.anim-plat-card').forEach(c => c.classList.remove('active-plat'));
-  document.getElementById('anim-plat-' + p).classList.add('active-plat');
+// ── Init Three.js ──
+function init3D() {
+  const canvas = document.getElementById('anim-3d-canvas');
+  if (!canvas || threeReady) { if(threeReady) render3D(); return; }
+  const THREE = window.THREE;
+  if (!THREE) { setTimeout(init3D, 200); return; }
+
+  const w = canvas.clientWidth || 300;
+  const h = canvas.clientHeight || 260;
+
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setSize(w, h, false);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x060410);
+  scene.fog = new THREE.FogExp2(0x060410, 0.04);
+
+  camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 100);
+  camera.position.set(0, 1.8, 5.5);
+  camera.lookAt(0, 1.5, 0);
+
+  // Lighting
+  const amb = new THREE.AmbientLight(0x6622aa, 0.8);
+  scene.add(amb);
+  const dir = new THREE.DirectionalLight(0xffffff, 1.2);
+  dir.position.set(3, 6, 4);
+  dir.castShadow = true;
+  scene.add(dir);
+  const pt = new THREE.PointLight(0xa855f7, 2, 8);
+  pt.position.set(0, 3, 2);
+  scene.add(pt);
+
+  // Grid floor
+  const grid = new THREE.GridHelper(10, 20, 0x2d1f4a, 0x1a0d2e);
+  grid.position.y = 0;
+  scene.add(grid);
+
+  // Build Roblox character
+  buildCharacter(THREE);
+
+  // Camera orbit (touch/mouse)
+  setupOrbit(canvas, THREE);
+
+  threeReady = true;
+  renderLoop3D();
 }
 
-function setAnimPri(pri) {
-  animPriority = pri;
-  document.querySelectorAll('.anim-pri-btn').forEach(b => b.classList.remove('active-pri'));
-  document.getElementById('pri-' + pri.toLowerCase()).classList.add('active-pri');
+function buildCharacter(THREE) {
+  const MAT = {
+    head:   new THREE.MeshLambertMaterial({ color: 0xFFD700 }),
+    torso:  new THREE.MeshLambertMaterial({ color: 0xa855f7 }),
+    limb:   new THREE.MeshLambertMaterial({ color: 0xc084fc }),
+    leg:    new THREE.MeshLambertMaterial({ color: 0x7c3aed }),
+    shoe:   new THREE.MeshLambertMaterial({ color: 0x1a0533 }),
+    sel:    new THREE.MeshLambertMaterial({ color: 0xf0ff00, emissive: 0x888800 }),
+  };
+
+  charGroup = new THREE.Group();
+  charGroup.position.set(0, 0, 0);
+  scene.add(charGroup);
+
+  function box(w, h, d, mat, px, py, pz) {
+    const g = new THREE.BoxGeometry(w, h, d);
+    const m = new THREE.Mesh(g, mat);
+    m.position.set(px, py, pz);
+    m.castShadow = true;
+    return m;
+  }
+
+  // ── Torso (pivot at waist) ──
+  const torsoGrp = new THREE.Group();
+  torsoGrp.position.set(0, 1.35, 0); // waist height
+  const torsoMesh = box(0.9, 1.1, 0.5, MAT.torso, 0, 0.55, 0);
+  torsoGrp.add(torsoMesh);
+  charGroup.add(torsoGrp);
+  boneGroups['torso'] = torsoGrp;
+  boneObjects['torso'] = torsoMesh;
+
+  // ── Head (pivot at neck) ──
+  const headGrp = new THREE.Group();
+  headGrp.position.set(0, 1.15, 0); // relative to torso top
+  const headMesh = box(0.72, 0.72, 0.6, MAT.head, 0, 0.36, 0);
+  // eyes
+  const eyeGeo = new THREE.BoxGeometry(0.14, 0.14, 0.05);
+  const eyeMat = new THREE.MeshLambertMaterial({ color: 0x1a1a2e });
+  const eyeL = new THREE.Mesh(eyeGeo, eyeMat); eyeL.position.set(-0.18, 0.42, 0.31);
+  const eyeR = new THREE.Mesh(eyeGeo, eyeMat); eyeR.position.set(0.18, 0.42, 0.31);
+  headGrp.add(headMesh, eyeL, eyeR);
+  torsoGrp.add(headGrp);
+  boneGroups['head'] = headGrp;
+  boneObjects['head'] = headMesh;
+
+  // ── Right Arm (pivot at shoulder) ──
+  const rarmGrp = new THREE.Group();
+  rarmGrp.position.set(0.55, 0.9, 0);
+  const rarmMesh = box(0.35, 0.9, 0.35, MAT.limb, 0, -0.45, 0);
+  rarmGrp.add(rarmMesh);
+  torsoGrp.add(rarmGrp);
+  boneGroups['rarm'] = rarmGrp;
+  boneObjects['rarm'] = rarmMesh;
+
+  // ── Left Arm (pivot at shoulder) ──
+  const larmGrp = new THREE.Group();
+  larmGrp.position.set(-0.55, 0.9, 0);
+  const larmMesh = box(0.35, 0.9, 0.35, MAT.limb, 0, -0.45, 0);
+  larmGrp.add(larmMesh);
+  torsoGrp.add(larmGrp);
+  boneGroups['larm'] = larmGrp;
+  boneObjects['larm'] = larmMesh;
+
+  // ── Right Leg (pivot at hip) ──
+  const rlegGrp = new THREE.Group();
+  rlegGrp.position.set(0.22, 1.35, 0);
+  const rlegMesh = box(0.38, 1.0, 0.38, MAT.leg, 0, -0.5, 0);
+  const rshoeMesh = box(0.42, 0.22, 0.5, MAT.shoe, 0, -1.01, 0.06);
+  rlegGrp.add(rlegMesh, rshoeMesh);
+  charGroup.add(rlegGrp);
+  boneGroups['rleg'] = rlegGrp;
+  boneObjects['rleg'] = rlegMesh;
+
+  // ── Left Leg (pivot at hip) ──
+  const llegGrp = new THREE.Group();
+  llegGrp.position.set(-0.22, 1.35, 0);
+  const llegMesh = box(0.38, 1.0, 0.38, MAT.leg, 0, -0.5, 0);
+  const lshoeMesh = box(0.42, 0.22, 0.5, MAT.shoe, 0, -1.01, 0.06);
+  llegGrp.add(llegMesh, lshoeMesh);
+  charGroup.add(llegGrp);
+  boneGroups['lleg'] = llegGrp;
+  boneObjects['lleg'] = llegMesh;
+
+  // Store original mats
+  Object.keys(boneObjects).forEach(id => {
+    boneObjects[id]._origMat = boneObjects[id].material;
+  });
 }
 
-const BONES = [
-  { id: 'head',  label: 'Head' },
-  { id: 'torso', label: 'Torso' },
-  { id: 'larm',  label: 'L.Arm' },
-  { id: 'rarm',  label: 'R.Arm' },
-  { id: 'lleg',  label: 'L.Leg' },
-  { id: 'rleg',  label: 'R.Leg' },
-];
+function highlightBone(boneId) {
+  const THREE = window.THREE;
+  Object.keys(boneObjects).forEach(id => {
+    boneObjects[id].material = id === boneId
+      ? new THREE.MeshLambertMaterial({ color: 0xffff00, emissive: 0x444400 })
+      : boneObjects[id]._origMat;
+  });
+}
 
+let animFrame;
+function renderLoop3D() {
+  animFrame = requestAnimationFrame(renderLoop3D);
+  render3D();
+}
+function render3D() {
+  if (renderer && scene && camera) renderer.render(scene, camera);
+}
+
+// ── Camera orbit ──
+function setupOrbit(canvas, THREE) {
+  let down = false, lastX = 0, lastY = 0;
+  let camTheta = 0, camPhi = 0.3, camDist = 5.5;
+
+  function updateCam() {
+    camera.position.x = camDist * Math.sin(camTheta) * Math.cos(camPhi);
+    camera.position.y = 1.5 + camDist * Math.sin(camPhi);
+    camera.position.z = camDist * Math.cos(camTheta) * Math.cos(camPhi);
+    camera.lookAt(0, 1.5, 0);
+  }
+
+  canvas.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) { down=true; lastX=e.touches[0].clientX; lastY=e.touches[0].clientY; }
+  }, {passive:true});
+  canvas.addEventListener('touchmove', e => {
+    if (!down || e.touches.length!==1) return;
+    const dx = e.touches[0].clientX - lastX;
+    const dy = e.touches[0].clientY - lastY;
+    lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
+    camTheta -= dx * 0.012;
+    camPhi = Math.max(-0.4, Math.min(0.8, camPhi + dy * 0.01));
+    updateCam();
+    e.preventDefault();
+  }, {passive:false});
+  canvas.addEventListener('touchend', () => down=false, {passive:true});
+
+  // mouse
+  canvas.addEventListener('mousedown', e => { down=true; lastX=e.clientX; lastY=e.clientY; });
+  canvas.addEventListener('mousemove', e => {
+    if (!down) return;
+    camTheta -= (e.clientX-lastX)*0.012;
+    camPhi = Math.max(-0.4,Math.min(0.8, camPhi+(e.clientY-lastY)*0.01));
+    lastX=e.clientX; lastY=e.clientY; updateCam();
+  });
+  canvas.addEventListener('mouseup', () => down=false);
+  canvas.addEventListener('wheel', e => {
+    camDist = Math.max(2, Math.min(10, camDist + e.deltaY*0.01));
+    updateCam(); e.preventDefault();
+  }, {passive:false});
+}
+
+// ── Bone selection ──
+function selectBone(idx) {
+  animSelectedBone = idx;
+  const id = BONE_NAMES[idx];
+  document.querySelectorAll('.anim-bone-sel').forEach((b,i) => {
+    b.style.background = i===idx ? 'rgba(168,85,247,.3)' : '';
+    b.style.color = i===idx ? 'var(--acc)' : 'var(--txt2)';
+    b.style.borderColor = i===idx ? 'var(--acc)' : 'transparent';
+  });
+  highlightBone(id);
+  document.getElementById('anim-axis-ctrl').style.display = 'block';
+  document.getElementById('anim-sel-bone-name').textContent = BONE_LABELS[idx];
+  document.getElementById('anim-axis-label').textContent = BONE_LABELS[idx] + ' — drag to rotate';
+  document.getElementById('anim-rot-disp').style.display = 'block';
+  // Sync sliders to current pose
+  syncSlidersToCurrentPose();
+}
+
+function syncSlidersToCurrentPose() {
+  if (animSelectedBone < 0) return;
+  const id = BONE_NAMES[animSelectedBone];
+  const pose = getPoseAtTime(animCurrentTime);
+  const rot = pose[id] || {x:0,y:0,z:0};
+  document.getElementById('anim-rx').value = rot.x;
+  document.getElementById('anim-ry').value = rot.y;
+  document.getElementById('anim-rz').value = rot.z;
+  document.getElementById('anim-rx-val').textContent = Math.round(rot.x) + '°';
+  document.getElementById('anim-ry-val').textContent = Math.round(rot.y) + '°';
+  document.getElementById('anim-rz-val').textContent = Math.round(rot.z) + '°';
+  updateRotDisp(rot);
+}
+
+function updateRotDisp(rot) {
+  const d = document.getElementById('anim-rot-disp');
+  if (d) d.innerHTML = `X: <span style="color:#f78c6c">${Math.round(rot.x)}°</span>  Y: <span style="color:#10b981">${Math.round(rot.y)}°</span>  Z: <span style="color:#a855f7">${Math.round(rot.z)}°</span>`;
+}
+
+function onAxisDrag(axis, val) {
+  if (animSelectedBone < 0) return;
+  const id = BONE_NAMES[animSelectedBone];
+  const label = {x:'rx',y:'ry',z:'rz'}[axis];
+  document.getElementById('anim-r'+axis+'-val').textContent = Math.round(val) + '°';
+
+  // Apply to 3D
+  applyBoneRot(id, axis, val);
+
+  // If recording → add/update keyframe at current time
+  if (animRecording) {
+    setKFBone(animCurrentTime, id, axis, val);
+    renderKFTrack();
+    renderKeyframeList();
+  }
+
+  // Update rot display
+  const rx = +document.getElementById('anim-rx').value;
+  const ry = +document.getElementById('anim-ry').value;
+  const rz = +document.getElementById('anim-rz').value;
+  updateRotDisp({x:rx,y:ry,z:rz});
+}
+
+function resetAxis(axis) {
+  document.getElementById('anim-r'+axis).value = 0;
+  onAxisDrag(axis, 0);
+}
+
+function applyBoneRot(boneId, axis, deg) {
+  const grp = boneGroups[boneId];
+  if (!grp) return;
+  const rad = deg * Math.PI / 180;
+  if (axis==='x') grp.rotation.x = rad;
+  if (axis==='y') grp.rotation.y = rad;
+  if (axis==='z') grp.rotation.z = rad;
+}
+
+function applyFullPose(pose) {
+  BONE_NAMES.forEach(id => {
+    const rot = pose[id] || {x:0,y:0,z:0};
+    applyBoneRot(id,'x',rot.x);
+    applyBoneRot(id,'y',rot.y);
+    applyBoneRot(id,'z',rot.z);
+  });
+}
+
+// ── Keyframe management ──
 function defaultBones() {
   const b = {};
-  BONES.forEach(bn => { b[bn.id] = { x: 0, y: 0, z: 0 }; });
+  BONE_NAMES.forEach(id => { b[id] = {x:0,y:0,z:0}; });
   return b;
 }
 
-function addKeyframe() {
-  const maxT = animKeyframes.length > 0 ? Math.max(...animKeyframes.map(k => k.time)) + 0.1 : 0;
-  animKeyframes.push({ time: parseFloat(maxT.toFixed(2)), bones: defaultBones(), open: true });
+function setKFBone(time, boneId, axis, val) {
+  let kf = animKeyframes.find(k => Math.abs(k.time-time)<0.01);
+  if (!kf) {
+    kf = { time: parseFloat(time.toFixed(2)), bones: defaultBones() };
+    animKeyframes.push(kf);
+    animKeyframes.sort((a,b)=>a.time-b.time);
+  }
+  kf.bones[boneId][axis] = val;
+}
+
+function addKeyframeAtTime() {
+  const t = parseFloat(animCurrentTime.toFixed(2));
+  // Capture current 3D pose
+  const bones = {};
+  BONE_NAMES.forEach(id => {
+    const grp = boneGroups[id];
+    bones[id] = grp ? {
+      x: Math.round(grp.rotation.x * 180/Math.PI),
+      y: Math.round(grp.rotation.y * 180/Math.PI),
+      z: Math.round(grp.rotation.z * 180/Math.PI),
+    } : {x:0,y:0,z:0};
+  });
+  let existing = animKeyframes.find(k => Math.abs(k.time-t)<0.01);
+  if (existing) { existing.bones = bones; }
+  else {
+    animKeyframes.push({time:t, bones});
+    animKeyframes.sort((a,b)=>a.time-b.time);
+  }
   renderKeyframeList();
-  setTimeout(() => {
-    const list = document.getElementById('anim-keyframes-list');
-    if (list) list.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }, 80);
+  renderKFTrack();
+  toast('Keyframe @ ' + t.toFixed(2) + 's ✓');
 }
 
 function removeKeyframe(i) {
   animKeyframes.splice(i, 1);
   renderKeyframeList();
+  renderKFTrack();
 }
 
-function toggleKF(i) {
-  animKeyframes[i].open = !animKeyframes[i].open;
-  const body = document.getElementById('kfb-' + i);
-  const tog = document.getElementById('kft-' + i);
-  if (body) body.classList.toggle('open', animKeyframes[i].open);
-  if (tog) tog.classList.toggle('open', animKeyframes[i].open);
+function clearAllKF() {
+  confirm2('Clear all keyframes?','Clear',()=>{
+    animKeyframes=[];
+    renderKeyframeList();
+    renderKFTrack();
+    applyFullPose(defaultBones());
+    toast('Cleared');
+  });
 }
 
+// ── Interpolation ──
+function getPoseAtTime(t) {
+  if (animKeyframes.length === 0) return defaultBones();
+  if (animKeyframes.length === 1) return animKeyframes[0].bones;
+  const sorted = [...animKeyframes].sort((a,b)=>a.time-b.time);
+  if (t <= sorted[0].time) return sorted[0].bones;
+  if (t >= sorted[sorted.length-1].time) return sorted[sorted.length-1].bones;
+  for (let i=0; i<sorted.length-1; i++) {
+    if (t >= sorted[i].time && t <= sorted[i+1].time) {
+      const f = (t-sorted[i].time)/(sorted[i+1].time-sorted[i].time);
+      const out = {};
+      BONE_NAMES.forEach(id => {
+        const a=sorted[i].bones[id]||{x:0,y:0,z:0};
+        const b=sorted[i+1].bones[id]||{x:0,y:0,z:0};
+        out[id]={x:a.x+(b.x-a.x)*f, y:a.y+(b.y-a.y)*f, z:a.z+(b.z-a.z)*f};
+      });
+      return out;
+    }
+  }
+  return defaultBones();
+}
+
+// ── Timeline ──
+function onTimelineScrub(t) {
+  // t is 0..2 (max 2s by default; scale by max time)
+  const maxT = animKeyframes.length>0 ? Math.max(...animKeyframes.map(k=>k.time),2) : 2;
+  const val = +document.getElementById('anim-timeline').value;
+  animCurrentTime = (val/200)*maxT;
+  document.getElementById('anim-time-disp').textContent = animCurrentTime.toFixed(2)+'s';
+  document.getElementById('anim-playhead').style.left = (val/2)+'%';
+  applyFullPose(getPoseAtTime(animCurrentTime));
+  if (animSelectedBone>=0) syncSlidersToCurrentPose();
+}
+
+function onTrackClick(e) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const pct = (e.clientX-rect.left)/rect.width;
+  const maxT = animKeyframes.length>0 ? Math.max(...animKeyframes.map(k=>k.time),2) : 2;
+  animCurrentTime = pct*maxT;
+  document.getElementById('anim-timeline').value = pct*200;
+  document.getElementById('anim-time-disp').textContent = animCurrentTime.toFixed(2)+'s';
+  document.getElementById('anim-playhead').style.left = (pct*100)+'%';
+  applyFullPose(getPoseAtTime(animCurrentTime));
+  if (animSelectedBone>=0) syncSlidersToCurrentPose();
+}
+
+function renderKFTrack() {
+  const track = document.getElementById('anim-kf-track');
+  if (!track) return;
+  // Remove old dots
+  track.querySelectorAll('.kf-dot').forEach(d=>d.remove());
+  const maxT = animKeyframes.length>0 ? Math.max(...animKeyframes.map(k=>k.time),2) : 2;
+  animKeyframes.forEach((kf,i) => {
+    const dot = document.createElement('div');
+    dot.className = 'kf-dot';
+    const pct = (kf.time/maxT)*100;
+    dot.style.cssText = `position:absolute;top:3px;bottom:3px;width:8px;left:calc(${pct}% - 4px);background:var(--acc);border-radius:2px;cursor:pointer;z-index:2;`;
+    dot.title = 't='+kf.time+'s';
+    dot.onclick = (e) => { e.stopPropagation(); jumpToKF(i); };
+    track.appendChild(dot);
+  });
+}
+
+function jumpToKF(i) {
+  const kf = animKeyframes[i];
+  if (!kf) return;
+  animCurrentTime = kf.time;
+  const maxT = Math.max(...animKeyframes.map(k=>k.time),2);
+  const pct = kf.time/maxT;
+  document.getElementById('anim-timeline').value = pct*200;
+  document.getElementById('anim-time-disp').textContent = kf.time.toFixed(2)+'s';
+  document.getElementById('anim-playhead').style.left = (pct*100)+'%';
+  applyFullPose(kf.bones);
+  if (animSelectedBone>=0) syncSlidersToCurrentPose();
+}
+
+// ── Play / Stop / Record ──
+function animPlay() {
+  if (animPlaying) return;
+  if (animKeyframes.length < 2) { toast('Need at least 2 keyframes'); return; }
+  animPlaying = true;
+  const sorted = [...animKeyframes].sort((a,b)=>a.time-b.time);
+  const maxT = sorted[sorted.length-1].time;
+  const startWall = performance.now() - animCurrentTime*1000;
+  const loop = document.getElementById('anim-loop').value==='true';
+  const speed = parseFloat(document.getElementById('anim-speed').value)||1;
+  document.getElementById('anim-playing-badge') && (document.getElementById('anim-playing-badge').style.display='block');
+
+  function tick() {
+    if (!animPlaying) return;
+    const elapsed = (performance.now()-startWall)/1000*speed;
+    animCurrentTime = loop ? elapsed%maxT : Math.min(elapsed,maxT);
+    const pct = animCurrentTime/maxT;
+    document.getElementById('anim-timeline').value = pct*200;
+    document.getElementById('anim-time-disp').textContent = animCurrentTime.toFixed(2)+'s';
+    document.getElementById('anim-playhead').style.left=(pct*100)+'%';
+    applyFullPose(getPoseAtTime(animCurrentTime));
+    if (!loop && animCurrentTime>=maxT) { animStop(); return; }
+    animPlayTimer = requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+function animStop() {
+  animPlaying = false;
+  if (animPlayTimer) { cancelAnimationFrame(animPlayTimer); animPlayTimer=null; }
+}
+
+function toggleRecord() {
+  animRecording = !animRecording;
+  const btn = document.getElementById('anim-rec-btn');
+  if (animRecording) {
+    btn.style.background='rgba(239,68,68,.2)';
+    btn.style.boxShadow='0 0 10px rgba(239,68,68,.4)';
+    btn.textContent='⏺ REC ON';
+    toast('Recording — move bones to create keyframes');
+  } else {
+    btn.style.background='';
+    btn.style.boxShadow='';
+    btn.textContent='⏺ REC';
+    toast('Recording stopped');
+  }
+}
+
+// ── Keyframe list render ──
 function renderKeyframeList() {
   const list = document.getElementById('anim-keyframes-list');
   if (!list) return;
   if (animKeyframes.length === 0) {
-    list.innerHTML = '<div style="text-align:center;color:var(--txt2);font-size:11px;padding:14px 0;line-height:1.8;">No keyframes yet.<br>Tap <strong style="color:var(--acc)">+ Add Keyframe</strong> to start.</div>';
+    list.innerHTML = '<div style="text-align:center;color:var(--txt2);font-size:11px;padding:14px 0;line-height:1.8;">No keyframes.<br>Select a bone → rotate → tap <strong style="color:var(--acc)">+ KF</strong><br>or enable ⏺ REC and move bones.</div>';
     return;
   }
-  list.innerHTML = animKeyframes.map((kf, i) => `
-    <div class="kf-card">
-      <div class="kf-head" onclick="toggleKF(${i})">
-        <div style="font-size:14px">🔑</div>
-        <div class="kf-time">t = <input
-          class="si" type="number" value="${kf.time}" min="0" max="60" step="0.05"
-          style="width:56px;display:inline-block;padding:3px 6px;font-size:12px;"
-          onclick="event.stopPropagation()"
-          oninput="animKeyframes[${i}].time=parseFloat(this.value)||0"
-        ></div>
-        <div style="font-size:10px;color:var(--txt2);margin-left:4px">sec</div>
-        <div class="kf-del" onclick="event.stopPropagation();removeKeyframe(${i})">🗑</div>
-        <div class="kf-toggle ${kf.open ? 'open' : ''}" id="kft-${i}">▾</div>
-      </div>
-      <div class="kf-body ${kf.open ? 'open' : ''}" id="kfb-${i}">
-        ${BONES.map(bn => `
-        <div class="kf-bone-row">
-          <div class="kf-bone-lbl">${bn.label}</div>
-          <div class="kf-axis">X</div>
-          <input class="kf-inp" type="number" value="${kf.bones[bn.id].x}" step="5" placeholder="0"
-            oninput="animKeyframes[${i}].bones['${bn.id}'].x=parseFloat(this.value)||0;previewPose(${i})">
-          <div class="kf-axis">Y</div>
-          <input class="kf-inp" type="number" value="${kf.bones[bn.id].y}" step="5" placeholder="0"
-            oninput="animKeyframes[${i}].bones['${bn.id}'].y=parseFloat(this.value)||0;previewPose(${i})">
-          <div class="kf-axis">Z</div>
-          <input class="kf-inp" type="number" value="${kf.bones[bn.id].z}" step="5" placeholder="0"
-            oninput="animKeyframes[${i}].bones['${bn.id}'].z=parseFloat(this.value)||0;previewPose(${i})">
-        </div>`).join('')}
-        <div style="margin-top:6px;font-size:9px;color:var(--txt2);line-height:1.7;border-top:1px solid var(--brd);padding-top:6px;">
-          Values are degrees (°). Positive X = forward tilt, Y = twist, Z = side tilt.
-        </div>
+  const sorted = [...animKeyframes].sort((a,b)=>a.time-b.time);
+  list.innerHTML = sorted.map((kf,i)=>`
+    <div style="background:var(--bg2);border:1px solid var(--brd);border-radius:8px;margin-bottom:6px;overflow:hidden;">
+      <div style="display:flex;align-items:center;padding:6px 10px;gap:8px;cursor:pointer;" onclick="jumpToKF(${animKeyframes.indexOf(kf)})">
+        <div style="font-size:12px">🔑</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;color:var(--acc);">t = ${kf.time.toFixed(2)}s</div>
+        <div style="flex:1;font-size:9px;color:var(--txt2);">${BONE_NAMES.filter(b=>kf.bones[b]&&(kf.bones[b].x||kf.bones[b].y||kf.bones[b].z)).map(b=>b).join(', ')||'no rotation'}</div>
+        <div style="color:var(--red);font-size:16px;cursor:pointer;padding:2px 4px;" onclick="event.stopPropagation();removeKeyframe(${animKeyframes.indexOf(kf)})">🗑</div>
       </div>
     </div>`).join('');
 }
 
-function previewPose(kfIdx) {
-  const kf = animKeyframes[kfIdx];
-  if (!kf) return;
-  const bones = kf.bones;
-  document.getElementById('anim-preview-label').textContent = `KF ${kfIdx} @ t=${kf.time}s`;
-  const head = document.getElementById('rb-head');
-  if (head) { head.style.transform = `rotate(${bones.head.z||0}deg)`; head.style.transformOrigin = '45px 20px'; }
-  const torso = document.getElementById('rb-torso');
-  if (torso) { torso.style.transform = `rotate(${(bones.torso.z||0)*0.5}deg)`; torso.style.transformOrigin = '45px 66px'; }
-  const la = document.getElementById('rb-larm');
-  const ra = document.getElementById('rb-rarm');
-  if (la) { la.style.transform = `rotate(${-(bones.larm.z||0)}deg)`; la.style.transformOrigin = '13px 44px'; }
-  if (ra) { ra.style.transform = `rotate(${bones.rarm.z||0}deg)`; ra.style.transformOrigin = '77px 44px'; }
-  const ll = document.getElementById('rb-lleg');
-  const rl = document.getElementById('rb-rleg');
-  if (ll) { ll.style.transform = `rotate(${(bones.lleg.z||0)*0.7}deg)`; ll.style.transformOrigin = '31px 90px'; }
-  if (rl) { rl.style.transform = `rotate(${-(bones.rleg.z||0)*0.7}deg)`; rl.style.transformOrigin = '58px 90px'; }
+// ── Priority ──
+function setAnimPri(pri) {
+  animPriority = pri;
+  document.querySelectorAll('.anim-pri-btn').forEach(b => b.classList.remove('active-pri'));
+  const el = document.getElementById('pri-' + pri.toLowerCase());
+  if(el) el.classList.add('active-pri');
 }
 
-function previewAnim() {
-  if (animKeyframes.length === 0) { toast('Add keyframes first'); return; }
-  stopAnimPreview();
-  const badge = document.getElementById('anim-playing-badge');
-  if (badge) badge.style.display = 'block';
-  let i = 0;
-  const sorted = [...animKeyframes].sort((a, b) => a.time - b.time);
-  function step() {
-    if (i >= sorted.length) {
-      i = 0;
-      if (document.getElementById('anim-loop').value === 'false') { stopAnimPreview(); return; }
-    }
-    const kfIdx = animKeyframes.indexOf(sorted[i]);
-    previewPose(kfIdx >= 0 ? kfIdx : i);
-    document.getElementById('anim-preview-label').textContent = `▶ t=${sorted[i].time}s`;
-    const nextTime = sorted[i + 1] ? (sorted[i + 1].time - sorted[i].time) * 1000 / parseFloat(document.getElementById('anim-speed').value || 1) : 600;
-    i++;
-    animPreviewTimer = setTimeout(step, Math.max(80, nextTime));
-  }
-  step();
-}
-
-function stopAnimPreview() {
-  if (animPreviewTimer) { clearTimeout(animPreviewTimer); animPreviewTimer = null; }
-  const badge = document.getElementById('anim-playing-badge');
-  if (badge) badge.style.display = 'none';
-  ['rb-head','rb-torso','rb-larm','rb-rarm','rb-lleg','rb-rleg'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.transform = '';
-  });
-  document.getElementById('anim-preview-label').textContent = 'Idle';
-}
-
+// ── Lua generation ──
 function generateAnimLua() {
   const name = (document.getElementById('anim-name').value || 'MyAnimation').replace(/[^A-Za-z0-9_]/g,'_');
   const speed = parseFloat(document.getElementById('anim-speed').value) || 1;
   const loop = document.getElementById('anim-loop').value === 'true';
-  const sorted = [...animKeyframes].sort((a, b) => a.time - b.time);
+  const sorted = [...animKeyframes].sort((a,b)=>a.time-b.time);
 
   let c = '-- ============================================================\n';
-  c += `-- Animation: ${name}.lua\n`;
-  c += `-- Generated by LSM (Lua Script Maker) v2.2\n`;
+  c += `-- Animation: ${name}.lua\n-- Generated by LSM (Lua Script Maker) v2.2\n`;
   c += `-- Priority: ${animPriority}  |  Loop: ${loop}  |  Speed: ${speed}\n`;
-  c += `-- Keyframes: ${sorted.length}\n`;
-  c += '-- ============================================================\n\n';
-  c += `local Players = game:GetService("Players")\n`;
-  c += `local RunService = game:GetService("RunService")\n`;
-  c += `local TweenService = game:GetService("TweenService")\n\n`;
-  c += `local LocalPlayer = Players.LocalPlayer\n`;
-  c += `local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()\n`;
-  c += `local humanoid = character:WaitForChild("Humanoid")\n`;
-  c += `local humanoidRootPart = character:WaitForChild("HumanoidRootPart")\n\n`;
+  c += `-- Keyframes: ${sorted.length}\n-- ============================================================\n\n`;
+  c += `local Players = game:GetService("Players")\nlocal RunService = game:GetService("RunService")\nlocal TweenService = game:GetService("TweenService")\n\n`;
+  c += `local LocalPlayer = Players.LocalPlayer\nlocal character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()\nlocal humanoid = character:WaitForChild("Humanoid")\n\n`;
   c += `local function getMotor(parent, name)\n  return parent and parent:FindFirstChild(name)\nend\n\n`;
-  c += `local torso = character:WaitForChild("Torso", 5) or character:WaitForChild("UpperTorso", 5)\n`;
-  c += `local head = character:WaitForChild("Head", 5)\n\n`;
+  c += `local torso = character:WaitForChild("Torso", 5) or character:WaitForChild("UpperTorso", 5)\n\n`;
   c += `local joints = {\n`;
   c += `  Neck          = torso and getMotor(torso, "Neck"),\n`;
   c += `  RightShoulder = torso and getMotor(torso, "Right Shoulder"),\n`;
   c += `  LeftShoulder  = torso and getMotor(torso, "Left Shoulder"),\n`;
   c += `  RightHip      = torso and getMotor(torso, "Right Hip"),\n`;
   c += `  LeftHip       = torso and getMotor(torso, "Left Hip"),\n`;
-  c += `}\n\n`;
-  c += `local defaultC0 = {}\nfor name, joint in pairs(joints) do\n  if joint then defaultC0[name] = joint.C0 end\nend\n\n`;
+  c += `}\nlocal defaultC0 = {}\nfor name, joint in pairs(joints) do\n  if joint then defaultC0[name] = joint.C0 end\nend\n\n`;
   c += `local keyframes = {\n`;
-  sorted.forEach((kf, i) => {
-    c += `  [${i + 1}] = {\n    time = ${kf.time},\n`;
-    c += `    Neck          = CFrame.Angles(math.rad(${kf.bones.head.x||0}), math.rad(${kf.bones.head.y||0}), math.rad(${kf.bones.head.z||0})),\n`;
-    c += `    RightShoulder = CFrame.Angles(math.rad(${kf.bones.rarm.x||0}), math.rad(${kf.bones.rarm.y||0}), math.rad(${kf.bones.rarm.z||0})),\n`;
-    c += `    LeftShoulder  = CFrame.Angles(math.rad(${kf.bones.larm.x||0}), math.rad(${kf.bones.larm.y||0}), math.rad(${kf.bones.larm.z||0})),\n`;
-    c += `    RightHip      = CFrame.Angles(math.rad(${kf.bones.rleg.x||0}), math.rad(${kf.bones.rleg.y||0}), math.rad(${kf.bones.rleg.z||0})),\n`;
-    c += `    LeftHip       = CFrame.Angles(math.rad(${kf.bones.lleg.x||0}), math.rad(${kf.bones.lleg.y||0}), math.rad(${kf.bones.lleg.z||0})),\n`;
+  sorted.forEach((kf,i) => {
+    c += `  [${i+1}] = { time=${kf.time},\n`;
+    c += `    Neck          = CFrame.Angles(math.rad(${Math.round(kf.bones.head.x||0)}), math.rad(${Math.round(kf.bones.head.y||0)}), math.rad(${Math.round(kf.bones.head.z||0)})),\n`;
+    c += `    RightShoulder = CFrame.Angles(math.rad(${Math.round(kf.bones.rarm.x||0)}), math.rad(${Math.round(kf.bones.rarm.y||0)}), math.rad(${Math.round(kf.bones.rarm.z||0)})),\n`;
+    c += `    LeftShoulder  = CFrame.Angles(math.rad(${Math.round(kf.bones.larm.x||0)}), math.rad(${Math.round(kf.bones.larm.y||0)}), math.rad(${Math.round(kf.bones.larm.z||0)})),\n`;
+    c += `    RightHip      = CFrame.Angles(math.rad(${Math.round(kf.bones.rleg.x||0)}), math.rad(${Math.round(kf.bones.rleg.y||0)}), math.rad(${Math.round(kf.bones.rleg.z||0)})),\n`;
+    c += `    LeftHip       = CFrame.Angles(math.rad(${Math.round(kf.bones.lleg.x||0)}), math.rad(${Math.round(kf.bones.lleg.y||0)}), math.rad(${Math.round(kf.bones.lleg.z||0)})),\n`;
     c += `  },\n`;
   });
-  c += `}\n\n`;
-  c += `local animSpeed = ${speed}\nlocal shouldLoop = ${loop}\nlocal isPlaying = false\n\n`;
-  c += `local function playAnimation()\n  if isPlaying then return end\n  isPlaying = true\n  repeat\n    for i, kf in ipairs(keyframes) do\n      local nextKF = keyframes[i + 1]\n      local duration = nextKF and (nextKF.time - kf.time) / animSpeed or 0.2 / animSpeed\n      duration = math.max(0.05, duration)\n      local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)\n      for jointName, rotation in pairs(kf) do\n        if jointName ~= "time" and joints[jointName] and defaultC0[jointName] then\n          TweenService:Create(joints[jointName], tweenInfo, { C0 = defaultC0[jointName] * rotation }):Play()\n        end\n      end\n      task.wait(duration)\n    end\n  until not shouldLoop or not isPlaying\n  for name, joint in pairs(joints) do\n    if joint and defaultC0[name] then\n      TweenService:Create(joint, TweenInfo.new(0.15), {C0 = defaultC0[name]}):Play()\n    end\n  end\n  isPlaying = false\nend\n\n`;
-  c += `local function stopAnimation() isPlaying = false end\n\ntask.spawn(playAnimation)\n`;
+  c += `}\n\nlocal animSpeed=${speed}\nlocal shouldLoop=${loop}\nlocal isPlaying=false\n\n`;
+  c += `local function playAnimation()\n  if isPlaying then return end\n  isPlaying=true\n  repeat\n    for i,kf in ipairs(keyframes) do\n      local nextKF=keyframes[i+1]\n      local dur=nextKF and (nextKF.time-kf.time)/animSpeed or 0.2/animSpeed\n      dur=math.max(0.05,dur)\n      local ti=TweenInfo.new(dur,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)\n      for jName,rot in pairs(kf) do\n        if jName~="time" and joints[jName] and defaultC0[jName] then\n          TweenService:Create(joints[jName],ti,{C0=defaultC0[jName]*rot}):Play()\n        end\n      end\n      task.wait(dur)\n    end\n  until not shouldLoop or not isPlaying\n  for name,joint in pairs(joints) do\n    if joint and defaultC0[name] then TweenService:Create(joint,TweenInfo.new(0.15),{C0=defaultC0[name]}):Play() end\n  end\n  isPlaying=false\nend\n\nlocal function stopAnimation() isPlaying=false end\ntask.spawn(playAnimation)\n`;
   return c;
 }
 
 function generateAnimCode() {
   if (animKeyframes.length === 0) { toast('Add at least one keyframe first'); return; }
   const code = generateAnimLua();
-  const name = (document.getElementById('anim-name').value || 'MyAnimation').replace(/[^A-Za-z0-9_]/g,'_');
-  document.getElementById('anim-code-fn').textContent = name + '.lua';
+  const name = (document.getElementById('anim-name').value||'MyAnimation').replace(/[^A-Za-z0-9_]/g,'_');
+  document.getElementById('anim-code-fn').textContent = name+'.lua';
   document.getElementById('anim-code-stats').innerHTML =
-    `🔑 <b style="color:var(--acc)">${animKeyframes.length}</b> keyframes &nbsp;·&nbsp; ` +
-    `📄 <b style="color:var(--grn)">${code.split('\n').length}</b> lines &nbsp;·&nbsp; ` +
-    `⚙️ <b style="color:var(--warn)">${animPriority}</b> priority`;
+    `🔑 <b style="color:var(--acc)">${animKeyframes.length}</b> keyframes &nbsp;·&nbsp;`+
+    `📄 <b style="color:var(--grn)">${code.split('\n').length}</b> lines &nbsp;·&nbsp;`+
+    `⚙️ <b style="color:var(--warn)">${animPriority}</b>`;
   document.getElementById('anim-cdisplay').textContent = code;
   document.getElementById('anim-code-modal').classList.add('open');
 }
 
 function copyAnimCode() {
-  if (animKeyframes.length === 0) { toast('Add at least one keyframe first'); return; }
-  copyText(generateAnimLua(), () => toast('Animation code copied ✓'));
+  if (animKeyframes.length===0){ toast('Add keyframes first'); return; }
+  copyText(generateAnimLua(), ()=>toast('Animation copied ✓'));
 }
 
 function copyAnimGenCode() {
-  const code = document.getElementById('anim-cdisplay').textContent;
-  copyText(code, () => {
-    const btn = document.getElementById('anim-copy-btn');
-    btn.textContent = '✅ Copied!'; btn.style.background = 'var(--grn)';
-    setTimeout(() => { btn.textContent = '📋 Copy'; btn.style.background = ''; }, 2500);
+  copyText(document.getElementById('anim-cdisplay').textContent, ()=>{
+    const btn=document.getElementById('anim-copy-btn');
+    btn.textContent='✅ Copied!';btn.style.background='var(--grn)';
+    setTimeout(()=>{btn.textContent='📋 Copy';btn.style.background='';},2500);
   });
 }
 
 function downloadAnimLua() {
-  const code = generateAnimLua();
-  const name = (document.getElementById('anim-name').value || 'MyAnimation').replace(/[^A-Za-z0-9_]/g,'_');
-  const blob = new Blob([code], { type: 'text/plain' });
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name + '.lua'; a.click();
-  toast('Downloaded ' + name + '.lua ✓');
+  const code=generateAnimLua();
+  const name=(document.getElementById('anim-name').value||'MyAnimation').replace(/[^A-Za-z0-9_]/g,'_');
+  const blob=new Blob([code],{type:'text/plain'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name+'.lua';a.click();
+  toast('Downloaded '+name+'.lua ✓');
 }
 </script>
 </body>
