@@ -89,7 +89,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .mm-sec-title{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;
   background:linear-gradient(90deg,#a855f7,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .mm-btn{width:100%;padding:14px 16px;background:var(--bg2);border:1px solid var(--brd);border-radius:10px;color:var(--txt);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:14px;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .15s;}
-.mm-btn:active{background для:var(--bg3);border-color:var(--acc);transform:scale(.98);}
+.mm-btn:active{background:var(--bg3);border-color:var(--acc);transform:scale(.98);}
 .mm-btn .mm-ic{font-size:20px;width:28px;text-align:center;}
 .mm-btn .mm-txt{flex:1;text-align:left;}
 .mm-btn .mm-arrow{color:var(--txt2);font-size:16px;}
@@ -303,6 +303,37 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .kf-axis{font-size:9px;color:var(--txt2);width:10px;text-align:center;flex-shrink:0;}
 .kf-inp{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--glass-brd);color:var(--txt);font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 6px;border-radius:5px;outline:none;min-width:0;}
 .kf-inp:focus{border-color:var(--acc);}
+/* 3D Modeling */
+.mdl-mode-btn{
+  padding:4px 8px;font-size:9px;font-family:'Rajdhani',sans-serif;font-weight:700;
+  letter-spacing:.5px;color:var(--txt2);background:rgba(10,8,20,.8);
+  border:1px solid var(--brd);border-radius:5px;cursor:pointer;
+  backdrop-filter:blur(6px);transition:all .12s;white-space:nowrap;
+}
+.mdl-mode-btn.active{color:var(--acc);border-color:var(--acc);background:rgba(168,85,247,.18);}
+.mdl-mode-btn:active{transform:scale(.93);}
+.mdl-add-btn{
+  padding:5px 10px;font-size:10px;font-family:'Rajdhani',sans-serif;font-weight:700;
+  letter-spacing:.5px;color:var(--txt);background:var(--bg3);
+  border:1px solid var(--brd);border-radius:6px;cursor:pointer;
+  flex-shrink:0;transition:all .12s;white-space:nowrap;
+}
+.mdl-add-btn:active{background:rgba(168,85,247,.2);border-color:var(--acc);color:var(--acc);}
+.mdl-attach-btn{
+  padding:4px 9px;font-size:9px;font-family:'Rajdhani',sans-serif;font-weight:700;
+  letter-spacing:.3px;color:var(--txt2);background:var(--bg3);
+  border:1px solid var(--brd);border-radius:6px;cursor:pointer;
+  transition:all .12s;white-space:nowrap;
+}
+.mdl-attach-btn.active{color:#fff;background:rgba(16,185,129,.2);border-color:var(--grn);}
+.mdl-attach-btn:active{transform:scale(.95);}
+.mdl-part-row{
+  display:flex;align-items:center;gap:8px;padding:7px 10px;
+  background:var(--bg2);border:1px solid var(--brd);border-radius:8px;
+  margin-bottom:5px;cursor:pointer;transition:all .12s;
+}
+.mdl-part-row.active{border-color:var(--grn);background:rgba(16,185,129,.08);}
+.mdl-part-row:active{transform:scale(.98);}
 .anim-bone-sel{
   padding:5px 4px;border-radius:5px;border:1px solid transparent;
   color:var(--txt2);font-size:10px;font-family:'Rajdhani',sans-serif;
@@ -373,11 +404,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
     <div>
       <div class="mm-logo"><span class="mm-logo-txt">LSM</span><small>Lua Script Maker</small></div>
     </div>
-    <div style="font-size:10px;color:var(--txt2)">v2.3</div>
+    <div style="font-size:10px;color:var(--txt2)">v2.2</div>
   </div>
   <div id="menu-tabs" style="display:flex;background:var(--bg2);border-bottom:1px solid var(--brd);padding:0 10px;gap:4px;">
     <div class="mtab active" id="mtab-projects" onclick="switchMenuTab('projects')">📁 Projects</div>
     <div class="mtab" id="mtab-animations" onclick="switchMenuTab('animations')">🎬 Animations</div>
+    <div class="mtab" id="mtab-modeling" onclick="switchMenuTab('modeling')">🧊 3D Model</div>
   </div>
   <div id="menu-tab-projects" class="mm-body" style="display:flex;flex-direction:column;">
     <div class="mm-section">
@@ -508,6 +540,131 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
       <div class="btn btnp" onclick="generateAnimCode()" style="flex:1;cursor:pointer;font-size:10px;">⚡ Generate</div>
     </div>
   </div>
+
+  <!-- 3D MODELING TAB -->
+  <div id="menu-tab-modeling" style="display:none;flex-direction:column;flex:1;overflow:hidden;background:var(--bg);">
+
+    <!-- TOP BAR -->
+    <div style="background:var(--bg2);border-bottom:1px solid var(--brd);padding:8px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0;">
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;background:linear-gradient(90deg,#10b981,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">3D MODELING</div>
+      <div style="flex:1"></div>
+      <div onclick="mdlUndo()" style="padding:4px 9px;border-radius:6px;border:1px solid var(--brd);color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;cursor:pointer;">↩</div>
+      <div onclick="mdlGenLua()" style="padding:4px 10px;border-radius:6px;border:1px solid var(--grn);color:var(--grn);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;cursor:pointer;letter-spacing:.5px;">⚡ LUA</div>
+    </div>
+
+    <!-- 3D VIEWPORT -->
+    <div id="mdl-wrap" style="height:270px;flex-shrink:0;position:relative;overflow:hidden;background:#05030d;">
+      <canvas id="mdl-canvas" style="width:100%;height:100%;display:block;touch-action:none;"></canvas>
+
+      <!-- Mode buttons -->
+      <div style="position:absolute;top:8px;left:8px;display:flex;flex-direction:column;gap:5px;">
+        <div class="mdl-mode-btn active" id="mdlb-select" onclick="setMdlMode('select')">✦ SEL</div>
+        <div class="mdl-mode-btn" id="mdlb-move"   onclick="setMdlMode('move')">✛ MOVE</div>
+        <div class="mdl-mode-btn" id="mdlb-scale"  onclick="setMdlMode('scale')">⇲ SCALE</div>
+        <div class="mdl-mode-btn" id="mdlb-rotate" onclick="setMdlMode('rotate')">↻ ROT</div>
+      </div>
+
+      <!-- Part info overlay -->
+      <div id="mdl-info" style="position:absolute;right:8px;bottom:8px;font-size:9px;color:var(--txt);font-family:'JetBrains Mono',monospace;background:rgba(5,3,13,.85);padding:4px 8px;border-radius:5px;border:1px solid var(--brd);line-height:1.8;display:none;"></div>
+
+      <!-- Drag hint -->
+      <div id="mdl-hint" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;background:rgba(5,3,13,.7);padding:3px 8px;border-radius:10px;border:1px solid var(--brd);white-space:nowrap;">2-finger=orbit · 1-finger=drag part</div>
+    </div>
+
+    <!-- ADD SHAPES BAR -->
+    <div style="background:var(--bg2);border-bottom:1px solid var(--brd);padding:6px 10px;flex-shrink:0;">
+      <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-bottom:5px;">ADD PART</div>
+      <div style="display:flex;gap:5px;overflow-x:auto;">
+        <div class="mdl-add-btn" onclick="mdlAddPart('block')">⬛ Block</div>
+        <div class="mdl-add-btn" onclick="mdlAddPart('sphere')">🔵 Sphere</div>
+        <div class="mdl-add-btn" onclick="mdlAddPart('cylinder')">🟣 Cylinder</div>
+        <div class="mdl-add-btn" onclick="mdlAddPart('wedge')">🔺 Wedge</div>
+        <div class="mdl-add-btn" onclick="mdlAddPart('truss')">🔩 Truss</div>
+      </div>
+    </div>
+
+    <!-- PARTS LIST + PROPERTIES -->
+    <div style="flex:1;overflow-y:auto;padding:10px 12px;">
+
+      <!-- Attach to body part -->
+      <div style="margin-bottom:12px;">
+        <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-bottom:6px;">ATTACH TO CHARACTER</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">
+          <div class="mdl-attach-btn active" id="mdla-Back"       onclick="setMdlAttach('Back')">🔙 Back</div>
+          <div class="mdl-attach-btn" id="mdla-Head"              onclick="setMdlAttach('Head')">👤 Head</div>
+          <div class="mdl-attach-btn" id="mdla-Torso"             onclick="setMdlAttach('Torso')">🫁 Torso</div>
+          <div class="mdl-attach-btn" id="mdla-Left Arm"          onclick="setMdlAttach('Left Arm')">💪 L.Arm</div>
+          <div class="mdl-attach-btn" id="mdla-Right Arm"         onclick="setMdlAttach('Right Arm')">💪 R.Arm</div>
+          <div class="mdl-attach-btn" id="mdla-Left Leg"          onclick="setMdlAttach('Left Leg')">🦵 L.Leg</div>
+          <div class="mdl-attach-btn" id="mdla-Right Leg"         onclick="setMdlAttach('Right Leg')">🦵 R.Leg</div>
+          <div class="mdl-attach-btn" id="mdla-None"              onclick="setMdlAttach('None')">🌐 World</div>
+        </div>
+      </div>
+
+      <!-- Selected part properties -->
+      <div id="mdl-props" style="display:none;margin-bottom:12px;background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:10px;">
+        <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-bottom:8px;">SELECTED PART</div>
+        <div class="sr" style="margin-bottom:6px;">
+          <span class="sl">Name</span>
+          <input class="si" id="mdl-pname" oninput="mdlSetProp('name',this.value)" style="flex:1">
+        </div>
+        <div class="sr" style="margin-bottom:6px;">
+          <span class="sl">Color</span>
+          <input type="color" class="sc" id="mdl-pcolor" onchange="mdlSetProp('color',this.value)">
+          <span class="sl" style="margin-left:8px">Material</span>
+          <select class="si" id="mdl-pmat" onchange="mdlSetProp('material',this.value)" style="flex:1">
+            <option>SmoothPlastic</option><option>Plastic</option><option>Metal</option>
+            <option>Neon</option><option>Wood</option><option>Brick</option>
+            <option>Glass</option><option>DiamondPlate</option><option>Foil</option>
+            <option>Granite</option><option>Grass</option><option>Ice</option>
+            <option>Marble</option><option>Pebble</option><option>Sand</option>
+            <option>SlateTile</option><option>Fabric</option><option>WoodPlanks</option>
+          </select>
+        </div>
+        <div class="sr" style="margin-bottom:6px;">
+          <span class="sl">Anchor</span>
+          <input type="checkbox" class="sx" id="mdl-panchor" onchange="mdlSetProp('anchored',this.checked)">
+          <span style="font-size:9px;color:var(--txt2);margin-left:6px">Anchored</span>
+          <span class="sl" style="margin-left:10px">Cast Shadow</span>
+          <input type="checkbox" class="sx" id="mdl-pshadow" checked onchange="mdlSetProp('castShadow',this.checked)">
+        </div>
+        <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-top:8px;margin-bottom:5px;">SIZE (studs)</div>
+        <div style="display:flex;gap:6px;margin-bottom:6px;">
+          <div style="flex:1;text-align:center;">
+            <div style="font-size:8px;color:#f78c6c;margin-bottom:2px;">X</div>
+            <input class="si" type="number" id="mdl-sx" value="1" min="0.1" step="0.1" oninput="mdlSetSize('x',+this.value)" style="text-align:center;padding:4px;">
+          </div>
+          <div style="flex:1;text-align:center;">
+            <div style="font-size:8px;color:#10b981;margin-bottom:2px;">Y</div>
+            <input class="si" type="number" id="mdl-sy" value="1" min="0.1" step="0.1" oninput="mdlSetSize('y',+this.value)" style="text-align:center;padding:4px;">
+          </div>
+          <div style="flex:1;text-align:center;">
+            <div style="font-size:8px;color:#a855f7;margin-bottom:2px;">Z</div>
+            <input class="si" type="number" id="mdl-sz" value="1" min="0.1" step="0.1" oninput="mdlSetSize('z',+this.value)" style="text-align:center;padding:4px;">
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <div class="btn btnd" onclick="mdlDeleteSelected()" style="flex:1;padding:7px;font-size:10px;cursor:pointer;">🗑 Delete</div>
+          <div class="btn btn2" onclick="mdlDupSelected()" style="flex:1;padding:7px;font-size:10px;cursor:pointer;">⧉ Duplicate</div>
+        </div>
+      </div>
+
+      <!-- Parts list -->
+      <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-bottom:6px;">PARTS <span id="mdl-count" style="color:var(--acc)">0</span></div>
+      <div id="mdl-parts-list"></div>
+      <div id="mdl-empty" style="text-align:center;color:var(--txt2);font-size:11px;padding:16px 0;line-height:1.9;">
+        No parts yet.<br>Tap <strong style="color:var(--grn)">ADD PART</strong> above to start modeling.
+      </div>
+    </div>
+
+    <!-- BOTTOM: Generate -->
+    <div style="padding:8px 12px;border-top:1px solid var(--brd);background:var(--bg2);display:flex;gap:6px;flex-shrink:0;">
+      <div class="btn btnd" onclick="mdlClearAll()" style="padding:8px 10px;font-size:10px;cursor:pointer;">🗑 Clear</div>
+      <div class="btn btn2" onclick="mdlCopyLua()" style="flex:1;cursor:pointer;font-size:10px;">📋 Copy Lua</div>
+      <div class="btn btnp" onclick="mdlGenLua()" style="flex:1;cursor:pointer;font-size:10px;">⚡ Generate</div>
+    </div>
+  </div>
+
 </div>
 
 <!-- EDITOR SCREEN -->
@@ -2646,6 +2803,609 @@ function downloadAnimLua() {
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name+'.lua';a.click();
   toast('Downloaded '+name+'.lua ✓');
 }
+
+// ═══════════════════════════════════════════════════════════
+//  3D MODELING TAB
+// ═══════════════════════════════════════════════════════════
+let _mdlScene, _mdlCam, _mdlRenderer, _mdlReady=false;
+let _mdlParts=[];       // [{id,name,shape,color,material,anchored,castShadow,sx,sy,sz,px,py,pz,rx,ry,rz,attach,mesh,group}]
+let _mdlSel=null;       // selected part id
+let _mdlMode='select';  // select|move|scale|rotate
+let _mdlAttach='Back';
+let _mdlIdCnt=0;
+let _mdlUndoStack=[];
+let _mdlCamTheta=0.4, _mdlCamPhi=0.28, _mdlCamDist=7;
+let _mdlDrag=false, _mdlDragX=0, _mdlDragY=0;
+let _mdlCharGrps={};    // body part groups in scene for reference display
+
+// ── Init ──
+function initMdl3D(){
+  const cvs=document.getElementById('mdl-canvas');
+  if(!cvs) return;
+  const T=window.THREE;
+  if(!T){setTimeout(initMdl3D,200);return;}
+
+  // Get real size from parent since canvas may be hidden
+  const wrap=document.getElementById('mdl-wrap');
+  const W=(wrap&&wrap.clientWidth>0?wrap.clientWidth:window.innerWidth)||340;
+  const H=270;
+
+  if(_mdlReady){
+    // Just resize if already init
+    _mdlRenderer.setSize(W,H,false);
+    _mdlCam.aspect=W/H;
+    _mdlCam.updateProjectionMatrix();
+    return;
+  }
+  _mdlRenderer=new T.WebGLRenderer({canvas:cvs,antialias:true});
+  _mdlRenderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  _mdlRenderer.setSize(W,H,false);
+  _mdlRenderer.shadowMap.enabled=true;
+  _mdlRenderer.shadowMap.type=T.PCFSoftShadowMap;
+
+  _mdlScene=new T.Scene();
+  _mdlScene.background=new T.Color(0x05030d);
+
+  _mdlCam=new T.PerspectiveCamera(45,W/H,0.1,80);
+  mdlUpdateCam();
+
+  // Lights
+  _mdlScene.add(new T.AmbientLight(0xffffff,0.5));
+  const sun=new T.DirectionalLight(0xffffff,1.1);
+  sun.position.set(5,10,6);sun.castShadow=true;
+  sun.shadow.mapSize.set(512,512);
+  _mdlScene.add(sun);
+  const _mdlPt=new T.PointLight(0xa855f7,1.2,14);
+  _mdlPt.position.set(-3,5,-3);
+  _mdlScene.add(_mdlPt);
+
+  // Floor grid
+  const floor=new T.Mesh(new T.PlaneGeometry(20,20),new T.MeshLambertMaterial({color:0x0d0920}));
+  floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;
+  _mdlScene.add(floor);
+  _mdlScene.add(new T.GridHelper(20,40,0x2d1f4a,0x160f22));
+
+  // Ghost Roblox R6 character (transparent reference)
+  buildMdlCharRef(T);
+
+  // Input
+  mdlSetupInput(cvs);
+
+  _mdlReady=true;
+  (function loop(){requestAnimationFrame(loop);_mdlRenderer.render(_mdlScene,_mdlCam);})();
+}
+
+function mdlUpdateCam(){
+  if(!_mdlCam) return;
+  _mdlCam.position.set(
+    _mdlCamDist*Math.sin(_mdlCamTheta)*Math.cos(_mdlCamPhi),
+    1.5+_mdlCamDist*Math.sin(_mdlCamPhi),
+    _mdlCamDist*Math.cos(_mdlCamTheta)*Math.cos(_mdlCamPhi)
+  );
+  _mdlCam.lookAt(0,1.5,0);
+}
+
+// ── Ghost R6 character reference ──
+function buildMdlCharRef(T){
+  const gm=new T.MeshLambertMaterial({color:0x4444aa,transparent:true,opacity:0.18,depthWrite:false});
+  const S=0.22;
+  function ghostBox(w,h,d,px,py,pz,name){
+    const m=new T.Mesh(new T.BoxGeometry(w*S,h*S,d*S),gm);
+    m.position.set(px*S,py*S,pz*S);
+    m.name='charRef';
+    _mdlScene.add(m);
+    _mdlCharGrps[name]=m;
+    return m;
+  }
+  // R6 proportions, floor at y=0
+  ghostBox(2,2,1,   0, 3,0,'Torso');       // torso center y=3
+  ghostBox(2,2,2,   0, 5.5,0,'Head');      // head center y=5.5
+  ghostBox(1,2,1,   1.5,3,0,'Right Arm');  // arm center y=3
+  ghostBox(1,2,1,  -1.5,3,0,'Left Arm');
+  ghostBox(1,2,1,   0.5,1,0,'Right Leg');  // leg center y=1
+  ghostBox(1,2,1,  -0.5,1,0,'Left Leg');
+}
+
+// ── Attach point → world offset ──
+function attachOffset(attach){
+  const S=0.22;
+  const map={
+    'Back':      {x:0,y:3,z:-0.6},
+    'Head':      {x:0,y:5.5,z:0},
+    'Torso':     {x:0,y:3,z:0},
+    'Left Arm':  {x:-1.5,y:3,z:0},
+    'Right Arm': {x:1.5,y:3,z:0},
+    'Left Leg':  {x:-0.5,y:1,z:0},
+    'Right Leg': {x:0.5,y:1,z:0},
+    'None':      {x:0,y:2,z:3},
+  };
+  const o=map[attach]||map['None'];
+  return {x:o.x*S, y:o.y*S, z:o.z*S};
+}
+
+// ── Mode & attach ──
+function setMdlMode(m){
+  _mdlMode=m;
+  document.querySelectorAll('.mdl-mode-btn').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('mdlb-'+m);
+  if(el) el.classList.add('active');
+  const hints={select:'Tap part to select',move:'Drag to move part',scale:'Drag to scale part',rotate:'Drag to rotate part'};
+  document.getElementById('mdl-hint').textContent=hints[m]||'';
+}
+
+function setMdlAttach(a){
+  _mdlAttach=a;
+  document.querySelectorAll('.mdl-attach-btn').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('mdla-'+a.replace(' ','-').replace(' ','-'));
+  // Try different id formats
+  document.querySelectorAll('.mdl-attach-btn').forEach(b=>{
+    if(b.id==='mdla-'+a) b.classList.add('active');
+  });
+  toast('Attach → '+a);
+}
+
+// ── Add part ──
+function mdlAddPart(shape){
+  mdlSaveUndo();
+  const T=window.THREE;
+  if(!T||!_mdlScene){toast('3D not ready yet');return;}
+  const id=++_mdlIdCnt;
+  const name=shape.charAt(0).toUpperCase()+shape.slice(1)+'_'+id;
+  const color='#'+Math.floor(Math.random()*0x888888+0x444444).toString(16).padStart(6,'0');
+
+  const off=attachOffset(_mdlAttach);
+  const part={
+    id,name,shape,color,material:'SmoothPlastic',
+    anchored:false,castShadow:true,
+    sx:1,sy:1,sz:1,
+    px:off.x,py:off.y,pz:off.z,
+    rx:0,ry:0,rz:0,
+    attach:_mdlAttach,
+    mesh:null,group:null
+  };
+
+  _mdlParts.push(part);
+  mdlBuildMesh(part,T);
+  mdlSelectPart(id);
+  mdlRenderList();
+  toast(name+' added ✓');
+}
+
+function mdlBuildMesh(part,T){
+  T=T||window.THREE;
+  if(!T||!_mdlScene) return;
+
+  // Remove old
+  if(part.group) _mdlScene.remove(part.group);
+
+  const S=0.22;
+  let geo;
+  switch(part.shape){
+    case 'sphere':   geo=new T.SphereGeometry(0.5*S*Math.max(part.sx,part.sy,part.sz),16,12); break;
+    case 'cylinder': geo=new T.CylinderGeometry(0.5*S*part.sx,0.5*S*part.sx,S*part.sy,16); break;
+    case 'wedge':
+      geo=new T.BufferGeometry();
+      const sw=part.sx*S,sh=part.sy*S,sd=part.sz*S;
+      const wv=new Float32Array([
+        -sw/2,0,-sd/2,  sw/2,0,-sd/2,  sw/2,0,sd/2,  -sw/2,0,sd/2,
+        -sw/2,sh,sd/2,  sw/2,sh,sd/2,
+      ]);
+      const wi=new Uint16Array([0,1,2, 0,2,3, 4,5,1, 4,1,0, 3,2,5, 3,5,4, 0,3,4, 1,5,2]);
+      geo.setAttribute('position',new T.BufferAttribute(wv,3));
+      geo.setIndex(new T.BufferAttribute(wi,1));
+      geo.computeVertexNormals();
+      break;
+    case 'truss':
+      geo=new T.CylinderGeometry(0.06*S,0.06*S,S*part.sy,6);
+      break;
+    default:
+      geo=new T.BoxGeometry(part.sx*S,part.sy*S,part.sz*S);
+  }
+
+  const mat=new T.MeshLambertMaterial({color:new T.Color(part.color)});
+  if(part.material==='Neon') mat.emissive=new T.Color(part.color);
+  if(part.material==='Glass'){mat.transparent=true;mat.opacity=0.45;}
+
+  const mesh=new T.Mesh(geo,mat);
+  mesh.castShadow=part.castShadow;
+  mesh.receiveShadow=true;
+  mesh._partId=part.id;
+
+  const grp=new T.Group();
+  grp.position.set(part.px,part.py,part.pz);
+  grp.rotation.set(part.rx*Math.PI/180,part.ry*Math.PI/180,part.rz*Math.PI/180);
+  grp.add(mesh);
+
+  // Selection outline
+  const selGeo=geo.clone();
+  const selMat=new T.MeshBasicMaterial({color:0x00ff88,wireframe:true});
+  const selMesh=new T.Mesh(selGeo,selMat);
+  selMesh.scale.setScalar(1.04);
+  selMesh.visible=false;
+  selMesh._isSelOutline=true;
+  grp.add(selMesh);
+
+  _mdlScene.add(grp);
+  part.mesh=mesh;
+  part.group=grp;
+  part._selOutline=selMesh;
+}
+
+// ── Selection ──
+function mdlSelectPart(id){
+  _mdlSel=id;
+  _mdlParts.forEach(p=>{
+    if(p._selOutline) p._selOutline.visible=(p.id===id);
+  });
+  const part=_mdlParts.find(p=>p.id===id);
+  if(!part){
+    document.getElementById('mdl-props').style.display='none';
+    document.getElementById('mdl-info').style.display='none';
+    mdlRenderList();
+    return;
+  }
+  document.getElementById('mdl-props').style.display='block';
+  document.getElementById('mdl-pname').value=part.name;
+  document.getElementById('mdl-pcolor').value=part.color;
+  document.getElementById('mdl-pmat').value=part.material;
+  document.getElementById('mdl-panchor').checked=part.anchored;
+  document.getElementById('mdl-pshadow').checked=part.castShadow;
+  document.getElementById('mdl-sx').value=part.sx;
+  document.getElementById('mdl-sy').value=part.sy;
+  document.getElementById('mdl-sz').value=part.sz;
+
+  const info=document.getElementById('mdl-info');
+  info.style.display='block';
+  info.innerHTML=
+    part.name+'<br>'+
+    'Pos: '+[part.px,part.py,part.pz].map(v=>(v/0.22).toFixed(1)).join(', ')+'<br>'+
+    'Attach: '+part.attach;
+
+  mdlRenderList();
+}
+
+function mdlDeselectAll(){
+  _mdlSel=null;
+  _mdlParts.forEach(p=>{if(p._selOutline)p._selOutline.visible=false;});
+  document.getElementById('mdl-props').style.display='none';
+  document.getElementById('mdl-info').style.display='none';
+  mdlRenderList();
+}
+
+// ── Properties ──
+function mdlSetProp(key,val){
+  const p=_mdlParts.find(p=>p.id===_mdlSel);
+  if(!p) return;
+  p[key]=val;
+  if(key==='color'||key==='material'||key==='anchored'||key==='castShadow'){
+    mdlBuildMesh(p);
+    if(_mdlSel===p.id && p._selOutline) p._selOutline.visible=true;
+  }
+  mdlRenderList();
+  mdlUpdateInfo(p);
+}
+
+function mdlSetSize(axis,val){
+  const p=_mdlParts.find(p=>p.id===_mdlSel);
+  if(!p||val<=0) return;
+  p['s'+axis]=val;
+  mdlBuildMesh(p);
+  if(p._selOutline) p._selOutline.visible=true;
+}
+
+function mdlUpdateInfo(p){
+  const info=document.getElementById('mdl-info');
+  if(!info||!p) return;
+  info.innerHTML=
+    p.name+'<br>'+
+    'Pos: '+[p.px,p.py,p.pz].map(v=>(v/0.22).toFixed(1)).join(', ')+'<br>'+
+    'Attach: '+p.attach;
+}
+
+// ── Delete / Duplicate ──
+function mdlDeleteSelected(){
+  const p=_mdlParts.find(p=>p.id===_mdlSel);
+  if(!p) return;
+  mdlSaveUndo();
+  if(p.group) _mdlScene.remove(p.group);
+  _mdlParts=_mdlParts.filter(x=>x.id!==p.id);
+  _mdlSel=null;
+  document.getElementById('mdl-props').style.display='none';
+  document.getElementById('mdl-info').style.display='none';
+  mdlRenderList();
+  toast('Deleted');
+}
+
+function mdlDupSelected(){
+  const p=_mdlParts.find(p=>p.id===_mdlSel);
+  if(!p) return;
+  mdlSaveUndo();
+  const np=Object.assign({},p,{
+    id:++_mdlIdCnt,
+    name:p.name+'_copy',
+    px:p.px+0.22,py:p.py,pz:p.pz,
+    mesh:null,group:null,_selOutline:null
+  });
+  _mdlParts.push(np);
+  mdlBuildMesh(np);
+  mdlSelectPart(np.id);
+  mdlRenderList();
+  toast('Duplicated');
+}
+
+function mdlClearAll(){
+  confirm2('Clear all parts?','Clear',()=>{
+    _mdlParts.forEach(p=>{if(p.group)_mdlScene.remove(p.group);});
+    _mdlParts=[];_mdlSel=null;
+    document.getElementById('mdl-props').style.display='none';
+    document.getElementById('mdl-info').style.display='none';
+    mdlRenderList();
+    toast('Cleared');
+  });
+}
+
+// ── Undo ──
+function mdlSaveUndo(){
+  _mdlUndoStack.push(JSON.stringify(_mdlParts.map(p=>({
+    id:p.id,name:p.name,shape:p.shape,color:p.color,material:p.material,
+    anchored:p.anchored,castShadow:p.castShadow,
+    sx:p.sx,sy:p.sy,sz:p.sz,
+    px:p.px,py:p.py,pz:p.pz,
+    rx:p.rx,ry:p.ry,rz:p.rz,
+    attach:p.attach
+  }))));
+  if(_mdlUndoStack.length>20) _mdlUndoStack.shift();
+}
+
+function mdlUndo(){
+  if(!_mdlUndoStack.length){toast('Nothing to undo');return;}
+  const prev=JSON.parse(_mdlUndoStack.pop());
+  _mdlParts.forEach(p=>{if(p.group)_mdlScene.remove(p.group);});
+  _mdlParts=prev.map(d=>{
+    const p=Object.assign({},d,{mesh:null,group:null,_selOutline:null});
+    mdlBuildMesh(p);
+    return p;
+  });
+  _mdlSel=null;
+  document.getElementById('mdl-props').style.display='none';
+  mdlRenderList();
+  toast('Undo ↩');
+}
+
+// ── Parts list render ──
+function mdlRenderList(){
+  const list=document.getElementById('mdl-parts-list');
+  const empty=document.getElementById('mdl-empty');
+  const cnt=document.getElementById('mdl-count');
+  if(!list) return;
+  cnt.textContent=_mdlParts.length;
+  if(!_mdlParts.length){list.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  list.innerHTML=_mdlParts.map(p=>{
+    const active=p.id===_mdlSel;
+    const ic={block:'⬛',sphere:'🔵',cylinder:'🟣',wedge:'🔺',truss:'🔩'}[p.shape]||'⬛';
+    return `<div class="mdl-part-row${active?' active':''}" onclick="mdlSelectPart(${p.id})">
+      <div style="width:14px;height:14px;border-radius:3px;background:${p.color};flex-shrink:0;border:1px solid rgba(255,255,255,.15);"></div>
+      <span style="font-size:11px">${ic}</span>
+      <span style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;color:${active?'var(--grn)':'var(--txt)'};flex:1;">${p.name}</span>
+      <span style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;">${p.attach}</span>
+      <span style="color:var(--red);font-size:14px;padding:2px 4px;" onclick="event.stopPropagation();_mdlSel=${p.id};mdlDeleteSelected()">✕</span>
+    </div>`;
+  }).join('');
+}
+
+// ── Input: orbit + drag part ──
+function mdlSetupInput(cvs){
+  let mDown=false;
+
+  cvs.addEventListener('touchstart',e=>{
+    e.preventDefault();
+    _mdlDrag=true;
+    _mdlDragX=e.touches[0].clientX;
+    _mdlDragY=e.touches[0].clientY;
+    if(e.touches.length===1 && _mdlMode==='select'){
+      // Raycast tap to select
+      mdlRaycast(e.touches[0].clientX,e.touches[0].clientY,cvs);
+    }
+  },{passive:false});
+
+  cvs.addEventListener('touchmove',e=>{
+    e.preventDefault();
+    if(!_mdlDrag) return;
+    const dx=e.touches[0].clientX-_mdlDragX;
+    const dy=e.touches[0].clientY-_mdlDragY;
+    _mdlDragX=e.touches[0].clientX;
+    _mdlDragY=e.touches[0].clientY;
+
+    if(e.touches.length===2){
+      // 2-finger orbit
+      const cx=(e.touches[0].clientX+e.touches[1].clientX)/2;
+      const cy=(e.touches[0].clientY+e.touches[1].clientY)/2;
+      _mdlCamTheta-=(cx-_mdlDragX)*0.008;
+      _mdlCamPhi=Math.max(-0.3,Math.min(0.7,_mdlCamPhi-(cy-_mdlDragY)*0.006));
+      _mdlDragX=cx;_mdlDragY=cy;
+      mdlUpdateCam(); return;
+    }
+
+    if(_mdlSel!==null && _mdlMode!=='select'){
+      mdlDragTransform(dx,dy);
+    } else {
+      // Orbit
+      _mdlCamTheta-=dx*0.009;
+      _mdlCamPhi=Math.max(-0.3,Math.min(0.7,_mdlCamPhi-dy*0.006));
+      mdlUpdateCam();
+    }
+  },{passive:false});
+
+  cvs.addEventListener('touchend',()=>{_mdlDrag=false;},{passive:true});
+
+  // Mouse
+  cvs.addEventListener('mousedown',e=>{
+    mDown=true;_mdlDragX=e.clientX;_mdlDragY=e.clientY;
+    if(e.button===0 && _mdlMode==='select') mdlRaycast(e.clientX,e.clientY,cvs);
+  });
+  window.addEventListener('mousemove',e=>{
+    if(!mDown) return;
+    const dx=e.clientX-_mdlDragX,dy=e.clientY-_mdlDragY;
+    _mdlDragX=e.clientX;_mdlDragY=e.clientY;
+    if(e.buttons===1 && _mdlSel!==null && _mdlMode!=='select'){
+      mdlDragTransform(dx,dy);
+    } else {
+      _mdlCamTheta-=dx*0.009;
+      _mdlCamPhi=Math.max(-0.3,Math.min(0.7,_mdlCamPhi-dy*0.006));
+      mdlUpdateCam();
+    }
+  });
+  window.addEventListener('mouseup',()=>mDown=false);
+  cvs.addEventListener('wheel',e=>{
+    _mdlCamDist=Math.max(2,Math.min(14,_mdlCamDist+e.deltaY*0.009));
+    mdlUpdateCam();e.preventDefault();
+  },{passive:false});
+}
+
+function mdlDragTransform(dx,dy){
+  const p=_mdlParts.find(p=>p.id===_mdlSel);
+  if(!p||!p.group) return;
+  const spd=0.007*_mdlCamDist;
+  const cosT=Math.cos(_mdlCamTheta), sinT=Math.sin(_mdlCamTheta);
+
+  if(_mdlMode==='move'){
+    p.px+=dx*spd*cosT;
+    p.pz+=dx*spd*(-sinT);
+    p.py-=dy*spd;
+    p.group.position.set(p.px,p.py,p.pz);
+  } else if(_mdlMode==='scale'){
+    const ds=1+dx*0.01;
+    p.sx=Math.max(0.1,p.sx*ds);
+    p.sy=Math.max(0.1,p.sy*(1-dy*0.01));
+    p.sz=Math.max(0.1,p.sz*ds);
+    document.getElementById('mdl-sx').value=p.sx.toFixed(2);
+    document.getElementById('mdl-sy').value=p.sy.toFixed(2);
+    document.getElementById('mdl-sz').value=p.sz.toFixed(2);
+    mdlBuildMesh(p);
+    if(p._selOutline) p._selOutline.visible=true;
+  } else if(_mdlMode==='rotate'){
+    p.ry+=dx*0.7;
+    p.rx+=dy*0.7;
+    p.group.rotation.set(p.rx*Math.PI/180,p.ry*Math.PI/180,p.rz*Math.PI/180);
+  }
+  mdlUpdateInfo(p);
+}
+
+// ── Raycast click/tap to select ──
+function mdlRaycast(cx,cy,cvs){
+  const T=window.THREE;
+  if(!T||!_mdlScene||!_mdlCam) return;
+  const rect=cvs.getBoundingClientRect();
+  const nx=((cx-rect.left)/rect.width)*2-1;
+  const ny=-((cy-rect.top)/rect.height)*2+1;
+  const ray=new T.Raycaster();
+  ray.setFromCamera({x:nx,y:ny},_mdlCam);
+  const objs=_mdlParts.filter(p=>p.mesh).map(p=>p.mesh);
+  const hits=ray.intersectObjects(objs);
+  if(hits.length>0){
+    const hitId=hits[0].object._partId;
+    if(hitId!==undefined) mdlSelectPart(hitId);
+  } else {
+    mdlDeselectAll();
+  }
+}
+
+// ── Lua generation ──
+function mdlBuildLua(){
+  if(!_mdlParts.length) return '-- No parts added yet';
+  // 1 unit in Three.js = 0.22m ≈ 1 Roblox stud (exact: 1 stud = 0.28m but we keep 1:1 for simplicity)
+  const S=1; // sizes are already in studs (user-facing)
+  let c='-- ============================================================\n';
+  c+='-- 3D Model — Generated by LSM v2.2\n';
+  c+='-- Paste into a LocalScript inside StarterCharacterScripts\n';
+  c+='-- Parts: '+_mdlParts.length+'\n';
+  c+='-- ============================================================\n\n';
+  c+='local char = script.Parent\n';
+  c+='local hum  = char:WaitForChild("Humanoid")\n\n';
+  c+='-- Helper: weld a part to a body part\n';
+  c+='local function weldTo(part, bodyPartName, cf)\n';
+  c+='  local bp = char:WaitForChild(bodyPartName, 5)\n';
+  c+='  if not bp then warn("Body part not found: "..bodyPartName) return end\n';
+  c+='  local wc = Instance.new("WeldConstraint")\n';
+  c+='  wc.Part0 = bp\n';
+  c+='  wc.Part1 = part\n';
+  c+='  wc.Parent = bp\n';
+  c+='  part.CFrame = bp.CFrame * cf\n';
+  c+='  part.Anchored = false\n';
+  c+='  part.Parent = char\n';
+  c+='end\n\n';
+  c+='-- Model container\n';
+  c+='local model = Instance.new("Model")\n';
+  c+='model.Name = "LSM_Model"\n';
+  c+='model.Parent = char\n\n';
+
+  _mdlParts.forEach(p=>{
+    const n=p.name.replace(/[^A-Za-z0-9_]/g,'_');
+    const sx=p.sx.toFixed(3), sy=p.sy.toFixed(3), sz=p.sz.toFixed(3);
+    // Position relative to attach point in studs
+    const off=attachOffset(p.attach);
+    const relX=((p.px-off.x)/0.22).toFixed(3);
+    const relY=((p.py-off.y)/0.22).toFixed(3);
+    const relZ=((p.pz-off.z)/0.22).toFixed(3);
+    const rx=p.rx.toFixed(2),ry=p.ry.toFixed(2),rz=p.rz.toFixed(2);
+    const r=parseInt(p.color.slice(1,3),16);
+    const g=parseInt(p.color.slice(3,5),16);
+    const b=parseInt(p.color.slice(5,7),16);
+
+    c+=`-- ${p.shape.toUpperCase()}: ${n} → ${p.attach}\n`;
+
+    // Choose correct Instance type
+    if(p.shape==='wedge'){
+      c+=`local ${n}=Instance.new("WedgePart")\n`;
+    } else if(p.shape==='truss'){
+      c+=`local ${n}=Instance.new("TrussPart")\n`;
+    } else {
+      c+=`local ${n}=Instance.new("Part")\n`;
+      if(p.shape==='sphere')   c+=`${n}.Shape=Enum.PartType.Ball\n`;
+      if(p.shape==='cylinder') c+=`${n}.Shape=Enum.PartType.Cylinder\n`;
+    }
+
+    c+=`${n}.Name="${n}"\n`;
+    c+=`${n}.Size=Vector3.new(${sx},${sy},${sz})\n`;
+    c+=`${n}.Color=Color3.fromRGB(${r},${g},${b})\n`;
+    c+=`${n}.Material=Enum.Material.${p.material}\n`;
+    c+=`${n}.Anchored=${p.attach==='None'?'true':'false'}\n`;
+    c+=`${n}.CastShadow=${p.castShadow}\n`;
+    c+=`${n}.CanCollide=false\n`;
+    c+=`${n}.Parent=model\n`;
+
+    if(p.attach==='None'){
+      // World-anchored: absolute position
+      const wx=(p.px/0.22).toFixed(3);
+      const wy=(p.py/0.22).toFixed(3);
+      const wz=(p.pz/0.22).toFixed(3);
+      c+=`${n}.CFrame=CFrame.new(${wx},${wy},${wz})*CFrame.Angles(math.rad(${rx}),math.rad(${ry}),math.rad(${rz}))\n`;
+    } else {
+      // Relative to body part via WeldConstraint
+      c+=`weldTo(${n},"${p.attach}",CFrame.new(${relX},${relY},${relZ})*CFrame.Angles(math.rad(${rx}),math.rad(${ry}),math.rad(${rz})))\n`;
+    }
+    c+='\n';
+  });
+
+  return c;
+}
+function mdlGenLua(){
+  if(!_mdlParts.length){toast('Add parts first');return;}
+  const code=mdlBuildLua();
+  document.getElementById('anim-code-fn').textContent='LSM_Model.lua';
+  document.getElementById('anim-code-stats').innerHTML=
+    `🧊 <b style="color:var(--grn)">${_mdlParts.length}</b> parts &nbsp;·&nbsp;`+
+    `📄 <b style="color:var(--acc)">${code.split('\n').length}</b> lines`;
+  document.getElementById('anim-cdisplay').textContent=code;
+  document.getElementById('anim-code-modal').classList.add('open');
+}
+
+function mdlCopyLua(){
+  if(!_mdlParts.length){toast('Add parts first');return;}
+  copyText(mdlBuildLua(),()=>toast('Model Lua copied ✓'));
+}
+
 </script>
 </body>
 </html>
