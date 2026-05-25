@@ -405,7 +405,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
     <div>
       <div class="mm-logo"><span class="mm-logo-txt">LSM</span><small>Lua Script Maker</small></div>
     </div>
-    <div style="font-size:10px;color:var(--txt2)">v2.3</div>
+    <div style="font-size:10px;color:var(--txt2)">v2.2</div>
   </div>
   <div id="menu-tabs" style="display:flex;background:var(--bg2);border-bottom:1px solid var(--brd);padding:0 10px;gap:4px;">
     <div class="mtab active" id="mtab-projects" onclick="switchMenuTab('projects')">📁 Projects</div>
@@ -863,6 +863,27 @@ function els(){ return proj().elements; }
 function getEl(id){ return els().find(e=>e.id===id); }
 function getDom(id){ return document.getElementById('el-'+proj().id+'-'+id); }
 
+// ═══ MENU TAB SWITCHING ═══
+function switchMenuTab(tab){
+  document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('active'));
+  const btn=document.getElementById('mtab-'+tab);
+  if(btn) btn.classList.add('active');
+  const tabs=['projects','animations','modeling'];
+  tabs.forEach(t=>{
+    const el=document.getElementById('menu-tab-'+t);
+    if(el) el.style.display=(t===tab?'flex':'none');
+  });
+  if(tab==='animations'){
+    renderKeyframeList();
+    renderKFTrack();
+    requestAnimationFrame(()=>requestAnimationFrame(init3D));
+  }
+  if(tab==='modeling'){
+    requestAnimationFrame(()=>requestAnimationFrame(initMdl3D));
+  }
+}
+
+// ═══ PROMPT / CONFIRM HELPERS ═══
 function promptInp(title, def){
   return new Promise(res=>{
     inpResolve = res;
@@ -2771,71 +2792,133 @@ function generateAnimLua(){
   const name=(document.getElementById('anim-name').value||'MyAnimation').replace(/[^A-Za-z0-9_]/g,'_');
   const speed=parseFloat(document.getElementById('anim-speed').value)||1;
   const loop=document.getElementById('anim-loop').value==='true';
+  const priority=animPriority;
   const sorted=[...animKeyframes].sort((a,b)=>a.time-b.time);
-  let c='-- ============================================================\n';
-  c+=`-- Animation: ${name}.lua  |  LSM v2.2\n`;
-  c+=`-- Priority: ${animPriority}  Loop: ${loop}  Speed: ${speed}x\n`;
-  c+=`-- Paste into LocalScript in StarterCharacterScripts\n`;
-  c+=`-- Keyframes: ${sorted.length}\n`;
+
+  // bone id → Motor6D name in R6 torso
+  const JOINT={
+    head: 'Neck',
+    rarm: 'Right Shoulder',
+    larm: 'Left Shoulder',
+    rleg: 'Right Hip',
+    lleg: 'Left Hip',
+  };
+
+  let c='';
+  c+='-- ============================================================\n';
+  c+=`-- Animation: ${name}\n`;
+  c+=`-- Priority: ${priority} | Loop: ${loop} | Speed: ${speed}x\n`;
+  c+='-- HOW TO USE:\n';
+  c+='--   1. Put this LocalScript inside StarterCharacterScripts\n';
+  c+='--   2. Press Play in Roblox Studio to test\n';
   c+='-- ============================================================\n\n';
-  c+='local TweenService=game:GetService("TweenService")\n';
-  c+='local char=script.Parent\n';
-  c+='local tor=char:WaitForChild("Torso",5)\n';
-  c+='if not tor then return end\n\n';
-  c+='-- Joints\n';
-  c+='local joints={\n';
-  c+='  Neck          = tor:FindFirstChild("Neck"),\n';
-  c+='  RightShoulder = tor:FindFirstChild("Right Shoulder"),\n';
-  c+='  LeftShoulder  = tor:FindFirstChild("Left Shoulder"),\n';
-  c+='  RightHip      = tor:FindFirstChild("Right Hip"),\n';
-  c+='  LeftHip       = tor:FindFirstChild("Left Hip"),\n';
-  c+='}\n';
-  c+='local dc0={}\n';
-  c+='for n,j in pairs(joints) do if j then dc0[n]=j.C0 end end\n\n';
-  c+='-- Keyframes\n';
-  c+='local KF={\n';
-
-  // Bone → joint name mapping
-  const boneJoint={head:'Neck',rarm:'RightShoulder',larm:'LeftShoulder',rleg:'RightHip',lleg:'LeftHip'};
-
-  sorted.forEach((kf,i)=>{
-    c+=`  [${i+1}]={t=${kf.time},\n`;
-    Object.entries(boneJoint).forEach(([bone,joint])=>{
-      const r=kf.bones[bone]||{x:0,y:0,z:0};
-      c+=`    ${joint}=CFrame.Angles(math.rad(${Math.round(r.x)}),math.rad(${Math.round(r.y)}),math.rad(${Math.round(r.z)})),\n`;
-    });
-    c+=`  },\n`;
-  });
-
-  c+=`}\n\nlocal spd=${speed}\nlocal loop=${loop}\nlocal playing=false\n\n`;
-  c+='local function play()\n';
-  c+='  if playing then return end\n  playing=true\n';
-  c+='  repeat\n';
-  c+='    for i,kf in ipairs(KF) do\n';
-  c+='      local nx=KF[i+1]\n';
-  c+='      local dur=nx and (nx.t-kf.t)/spd or 0.2/spd\n';
-  c+='      dur=math.max(0.04,dur)\n';
-  c+='      local ti=TweenInfo.new(dur,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)\n';
-  c+='      for jn,rot in pairs(kf) do\n';
-  c+='        if jn~="t" and joints[jn] and dc0[jn] then\n';
-  c+='          TweenService:Create(joints[jn],ti,{C0=dc0[jn]*rot}):Play()\n';
-  c+='        end\n';
-  c+='      end\n';
-  c+='      task.wait(dur)\n';
-  c+='    end\n';
-  c+='  until not loop or not playing\n';
-  c+='  -- Reset\n';
-  c+='  for n,j in pairs(joints) do\n';
-  c+='    if j and dc0[n] then\n';
-  c+='      TweenService:Create(j,TweenInfo.new(0.2),{C0=dc0[n]}):Play()\n';
-  c+='    end\n';
-  c+='  end\n';
-  c+='  playing=false\n';
+  c+='local TweenService = game:GetService("TweenService")\n\n';
+  c+='local char = script.Parent\n';
+  c+='local humanoid = char:WaitForChild("Humanoid")\n';
+  c+='local torso = char:WaitForChild("Torso", 10)\n';
+  c+='if not torso then\n';
+  c+='    warn("[Anim] Torso not found — R6 character required")\n';
+  c+='    return\n';
   c+='end\n\n';
-  c+='task.spawn(play)\n';
+
+  c+='-- Get Motor6D joints from Torso\n';
+  c+='local joints = {}\n';
+  Object.entries(JOINT).forEach(([bone,jname])=>{
+    c+=`joints["${jname}"] = torso:WaitForChild("${jname}", 5)\n`;
+  });
+  c+='\n';
+
+  c+='-- Save default C0 for each joint (rest pose)\n';
+  c+='local defaultC0 = {}\n';
+  c+='for name, motor in pairs(joints) do\n';
+  c+='    if motor then\n';
+  c+='        defaultC0[name] = motor.C0\n';
+  c+='    end\n';
+  c+='end\n\n';
+
+  // Keyframes table
+  c+='-- Keyframe data\n';
+  c+='-- Each keyframe: time (seconds) + rotation offset per joint (CFrame.Angles)\n';
+  c+='local keyframes = {\n';
+  sorted.forEach((kf,i)=>{
+    c+=`    -- Keyframe ${i+1} at t=${kf.time}s\n`;
+    c+=`    {\n`;
+    c+=`        time = ${kf.time},\n`;
+    Object.entries(JOINT).forEach(([bone,jname])=>{
+      const r=kf.bones[bone]||{x:0,y:0,z:0};
+      const rx=Math.round(r.x), ry=Math.round(r.y), rz=Math.round(r.z);
+      c+=`        ["${jname}"] = CFrame.Angles(math.rad(${rx}), math.rad(${ry}), math.rad(${rz})),\n`;
+    });
+    c+=`    },\n`;
+  });
+  c+='}\n\n';
+
+  c+=`local SPEED  = ${speed}\n`;
+  c+=`local LOOP   = ${loop}\n`;
+  c+='local playing = false\n\n';
+
+  c+='local function stopAnimation()\n';
+  c+='    playing = false\n';
+  c+='    -- Smoothly return all joints to default pose\n';
+  c+='    for name, motor in pairs(joints) do\n';
+  c+='        if motor and defaultC0[name] then\n';
+  c+='            TweenService:Create(\n';
+  c+='                motor,\n';
+  c+='                TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out),\n';
+  c+='                { C0 = defaultC0[name] }\n';
+  c+='            ):Play()\n';
+  c+='        end\n';
+  c+='    end\n';
+  c+='end\n\n';
+
+  c+='local function playAnimation()\n';
+  c+='    if playing then return end\n';
+  c+='    if #keyframes < 2 then\n';
+  c+='        warn("[Anim] Need at least 2 keyframes")\n';
+  c+='        return\n';
+  c+='    end\n';
+  c+='    playing = true\n\n';
+  c+='    repeat\n';
+  c+='        for i, kf in ipairs(keyframes) do\n';
+  c+='            if not playing then break end\n\n';
+  c+='            -- Duration until next keyframe\n';
+  c+='            local nextKF = keyframes[i + 1]\n';
+  c+='            local dur = 0.2 / SPEED\n';
+  c+='            if nextKF then\n';
+  c+='                dur = math.max(0.016, (nextKF.time - kf.time) / SPEED)\n';
+  c+='            end\n\n';
+  c+='            local tweenInfo = TweenInfo.new(\n';
+  c+='                dur,\n';
+  c+='                Enum.EasingStyle.Sine,\n';
+  c+='                Enum.EasingDirection.InOut\n';
+  c+='            )\n\n';
+  c+='            -- Apply rotation to each Motor6D\n';
+  c+='            for jointName, rotation in pairs(kf) do\n';
+  c+='                if jointName ~= "time" then\n';
+  c+='                    local motor = joints[jointName]\n';
+  c+='                    local baseC0 = defaultC0[jointName]\n';
+  c+='                    if motor and baseC0 then\n';
+  c+='                        -- Multiply base C0 by the rotation offset\n';
+  c+='                        local goal = { C0 = baseC0 * rotation }\n';
+  c+='                        TweenService:Create(motor, tweenInfo, goal):Play()\n';
+  c+='                    end\n';
+  c+='                end\n';
+  c+='            end\n\n';
+  c+='            task.wait(dur)\n';
+  c+='        end\n';
+  c+='    until not LOOP or not playing\n\n';
+  c+='    if playing then\n';
+  c+='        stopAnimation()\n';
+  c+='    end\n';
+  c+='end\n\n';
+
+  c+='-- Start playing when character spawns\n';
+  c+='task.spawn(playAnimation)\n\n';
+  c+='-- Optional: stop on humanoid death\n';
+  c+='humanoid.Died:Connect(stopAnimation)\n';
+
   return c;
 }
-
 function generateAnimCode(){
   if(!animKeyframes.length){toast('Add at least 1 keyframe');return;}
   const code=generateAnimLua();
