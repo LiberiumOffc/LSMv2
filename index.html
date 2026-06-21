@@ -149,6 +149,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .t-slider{background:transparent;border:none;display:flex;align-items:center;}
 .t-dropdown{background:#16102a;border:1px solid #4a2d7a;}
 .t-sep{background:#4a2d7a;border:none;}
+.t-imagebutton{background:#0a0812;border:1px solid #3d2860;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;}
+.t-imagebutton img{width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;}
 .t-image{background:#0a0812;border:1px solid #3d2860;display:flex;align-items:center;justify-content:center;overflow:hidden;}
 .t-image img{width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;}
 .t-image .img-placeholder{color:#4a3a60;font-size:10px;text-align:center;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;padding:6px;}
@@ -305,6 +307,20 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .kf-inp{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--glass-brd);color:var(--txt);font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 6px;border-radius:5px;outline:none;min-width:0;}
 .kf-inp:focus{border-color:var(--acc);}
 /* 3D Modeling */
+.layer-row{
+  display:flex;align-items:center;gap:8px;padding:9px 10px;
+  background:var(--bg2);border:1px solid var(--brd);border-radius:8px;
+  margin-bottom:5px;cursor:pointer;transition:all .12s;
+}
+.layer-row.active{border-color:var(--acc);background:rgba(168,85,247,.1);}
+.layer-row.drag-over{border-color:var(--pink);background:rgba(232,121,249,.1);}
+.layer-handle{cursor:grab;color:var(--txt2);font-size:14px;padding:2px 4px;touch-action:none;}
+.layer-handle:active{cursor:grabbing;color:var(--acc);}
+.layer-ic{font-size:14px;width:20px;text-align:center;flex-shrink:0;}
+.layer-name{flex:1;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.layer-z{font-size:9px;color:var(--txt2);font-family:'JetBrains Mono',monospace;width:28px;text-align:right;flex-shrink:0;}
+.layer-btn{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:5px;color:var(--txt2);font-size:13px;flex-shrink:0;}
+.layer-btn:active{background:rgba(168,85,247,.2);color:var(--acc);}
 .mdl-mode-btn{
   padding:4px 8px;font-size:9px;font-family:'Rajdhani',sans-serif;font-weight:700;
   letter-spacing:.5px;color:var(--txt2);background:rgba(10,8,20,.8);
@@ -691,6 +707,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
       <div class="pi" ontouchstart="dragFrom(event,'label','🏷️ Label')" onclick="addElAndClose('label')"><span class="pi-ic">🏷️</span><span class="pi-nm">Label</span></div>
       <div class="pi" ontouchstart="dragFrom(event,'textbox','✏️ TextBox')" onclick="addElAndClose('textbox')"><span class="pi-ic">✏️</span><span class="pi-nm">TextBox</span></div>
       <div class="pi" ontouchstart="dragFrom(event,'image','🖼️ Image')" onclick="addElAndClose('image')"><span class="pi-ic">🖼️</span><span class="pi-nm">Image</span></div>
+      <div class="pi" ontouchstart="dragFrom(event,'imagebutton','🖱️ ImageButton')" onclick="addElAndClose('imagebutton')"><span class="pi-ic">🖱️</span><span class="pi-nm">ImageButton</span></div>
       <div class="cat">Snippets</div>
       <div class="pi" onclick="openSnipEd('notify');closeDrawer()"><span class="pi-ic">🔔</span><span class="pi-nm">Notify</span></div>
       <div class="pi" onclick="openSnipEd('loop');closeDrawer()"><span class="pi-ic">🔁</span><span class="pi-nm">Loop</span></div>
@@ -716,6 +733,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
     <div class="nbs"></div>
     <div class="nb" onclick="toFront()"><span class="nb-i">▲</span><span class="nb-l">FRONT</span></div>
     <div class="nb" onclick="toBack()"><span class="nb-i">▼</span><span class="nb-l">BACK</span></div>
+    <div class="nb" onclick="openLayers()" style="color:var(--pink);border-color:var(--pink)"><span class="nb-i">☰</span><span class="nb-l">LAYERS</span></div>
     <div class="nbs"></div>
     <div class="nb" onclick="openCode()" style="color:var(--grn);border-color:var(--grn)"><span class="nb-i">⚡</span><span class="nb-l">CODE</span></div>
     <div class="nb" onclick="saveProject()" style="color:var(--acc);border-color:var(--acc)"><span class="nb-i">💾</span><span class="nb-l">SAVE</span></div>
@@ -796,6 +814,24 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
   </div>
 </div>
 
+<!-- LAYERS MODAL -->
+<div class="mbg" id="layers-modal">
+  <div class="mc" style="max-height:85vh">
+    <div class="mbar"></div>
+    <div class="mhd">
+      <div class="mhd-t">☰ Layers</div>
+      <div class="mhd-x" onclick="closeLayers()">×</div>
+    </div>
+    <div style="padding:6px 14px;font-size:9px;color:var(--txt2);border-bottom:1px solid var(--glass-brd);flex-shrink:0;">
+      Top of list = front (drawn last) · Drag ☰ to reorder · Tap name to select
+    </div>
+    <div class="mbody" id="layers-list" style="padding:8px;"></div>
+    <div class="mft">
+      <div class="btn btns" onclick="closeLayers()" style="flex:1">Done</div>
+    </div>
+  </div>
+</div>
+
 <!-- CONFIRM -->
 <div id="conf-bg">
   <div class="ccard">
@@ -862,6 +898,208 @@ function proj(){ return projects[activeTab]; }
 function els(){ return proj().elements; }
 function getEl(id){ return els().find(e=>e.id===id); }
 function getDom(id){ return document.getElementById('el-'+proj().id+'-'+id); }
+
+
+// ═══════════════════════════════════════════════════════════
+//  LAYERS MANAGER
+// ═══════════════════════════════════════════════════════════
+let _layerDragId=null;
+
+function openLayers(){
+  renderLayersList();
+  document.getElementById('layers-modal').classList.add('open');
+}
+function closeLayers(){
+  document.getElementById('layers-modal').classList.remove('open');
+}
+
+const LAYER_ICONS={
+  frame:'⬛',button:'🔲',textbox:'✏️',label:'🏷️',checkbox:'☑️',
+  slider:'🎚️',dropdown:'🔽',separator:'─',panel:'🗂️',
+  image:'🖼️',imagebutton:'🖱️'
+};
+
+function renderLayersList(){
+  const list=document.getElementById('layers-list');
+  if(!list) return;
+  const p=proj();
+  if(!p||!p.elements.length){
+    list.innerHTML='<div style="text-align:center;color:var(--txt2);font-size:11px;padding:20px 0;">No elements yet.</div>';
+    return;
+  }
+  // Sort by z descending (front first in list)
+  const sorted=[...p.elements].sort((a,b)=>b.z-a.z);
+  list.innerHTML=sorted.map(el=>{
+    const active=p.sel===el.id;
+    const ic=LAYER_ICONS[el.type]||'⬛';
+    const parentTag=el.parentId?' <span style="color:var(--grn);font-size:8px;">↳child</span>':'';
+    return `<div class="layer-row${active?' active':''}" data-id="${el.id}" onclick="layerSelectEl(${el.id})">
+      <div class="layer-handle" data-id="${el.id}">☰</div>
+      <div class="layer-ic">${ic}</div>
+      <div class="layer-name">${escAttr(el.label)}${parentTag}</div>
+      <div class="layer-z">z:${el.z}</div>
+      <div class="layer-btn" onclick="event.stopPropagation();layerMoveStep(${el.id},1)">▲</div>
+      <div class="layer-btn" onclick="event.stopPropagation();layerMoveStep(${el.id},-1)">▼</div>
+    </div>`;
+  }).join('');
+
+  // Attach drag handlers to handles
+  list.querySelectorAll('.layer-handle').forEach(h=>{
+    attachLayerDrag(h);
+  });
+}
+
+function layerSelectEl(id){
+  selectEl(id,false);
+  renderLayersList();
+}
+
+// Move element one step up/down in z-order among siblings
+function layerMoveStep(id,dir){
+  const p=proj();
+  const el=getEl(id);
+  if(!el) return;
+  const sorted=[...p.elements].sort((a,b)=>a.z-b.z);
+  const idx=sorted.findIndex(e=>e.id===id);
+  const swapIdx=idx+dir;
+  if(swapIdx<0||swapIdx>=sorted.length) return;
+  // Swap z values
+  const tmp=sorted[idx].z;
+  sorted[idx].z=sorted[swapIdx].z;
+  sorted[swapIdx].z=tmp;
+  // Apply to DOM
+  const d1=getDom(sorted[idx].id); if(d1) d1.style.zIndex=sorted[idx].z;
+  const d2=getDom(sorted[swapIdx].id); if(d2) d2.style.zIndex=sorted[swapIdx].z;
+  renderLayersList();
+}
+
+// ── Drag to reorder ──
+function attachLayerDrag(handle){
+  let startY=0, dragging=false, startRow=null;
+
+  function onStart(clientY){
+    dragging=true;
+    startY=clientY;
+    startRow=handle.closest('.layer-row');
+    _layerDragId=+handle.dataset.id;
+    startRow.style.opacity='0.5';
+  }
+
+  function onMove(clientY){
+    if(!dragging) return;
+    const list=document.getElementById('layers-list');
+    const rows=[...list.querySelectorAll('.layer-row')];
+    const y=clientY;
+    rows.forEach(r=>r.classList.remove('drag-over'));
+    for(const row of rows){
+      const rect=row.getBoundingClientRect();
+      if(y>=rect.top && y<=rect.bottom && row!==startRow){
+        row.classList.add('drag-over');
+        break;
+      }
+    }
+  }
+
+  function onEnd(clientY){
+    if(!dragging) return;
+    dragging=false;
+    if(startRow) startRow.style.opacity='';
+    const list=document.getElementById('layers-list');
+    const rows=[...list.querySelectorAll('.layer-row')];
+    let targetRow=null;
+    for(const row of rows){
+      const rect=row.getBoundingClientRect();
+      if(clientY>=rect.top && clientY<=rect.bottom && row!==startRow){
+        targetRow=row; break;
+      }
+    }
+    rows.forEach(r=>r.classList.remove('drag-over'));
+    if(targetRow && _layerDragId!=null){
+      const targetId=+targetRow.dataset.id;
+      layerReorderTo(_layerDragId, targetId);
+    }
+    _layerDragId=null;
+  }
+
+  handle.addEventListener('touchstart',e=>{onStart(e.touches[0].clientY);e.stopPropagation();},{passive:true});
+  handle.addEventListener('touchmove',e=>{onMove(e.touches[0].clientY);e.preventDefault();},{passive:false});
+  handle.addEventListener('touchend',e=>{onEnd(e.changedTouches[0].clientY);e.stopPropagation();});
+
+  handle.addEventListener('mousedown',e=>{
+    onStart(e.clientY);
+    e.stopPropagation();
+    const mm=ev=>onMove(ev.clientY);
+    const mu=ev=>{onEnd(ev.clientY);document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',mu);};
+    document.addEventListener('mousemove',mm);
+    document.addEventListener('mouseup',mu);
+  });
+}
+
+// Reorder: place dragId's z just above or below targetId's z (front/back of target)
+function layerReorderTo(dragId, targetId){
+  if(dragId===targetId) return;
+  const p=proj();
+  const sorted=[...p.elements].sort((a,b)=>a.z-b.z); // back to front
+  const dragEl=getEl(dragId);
+  const targetEl=getEl(targetId);
+  if(!dragEl||!targetEl) return;
+
+  // Remove dragEl from list, reinsert at target position
+  const without=sorted.filter(e=>e.id!==dragId);
+  const targetIdx=without.findIndex(e=>e.id===targetId);
+  // Insert dragEl right before target (since list display is front-to-back, dropping "on" target inserts above it visually)
+  without.splice(targetIdx,0,dragEl);
+
+  // Reassign z values 1..N based on new order (back=1 .. front=N)
+  without.forEach((e,i)=>{
+    e.z=i+1;
+    const d=getDom(e.id);
+    if(d) d.style.zIndex=e.z;
+  });
+
+  renderLayersList();
+  toast('Reordered ✓');
+}
+
+// ── "Send behind/in front of specific element" via Properties ──
+function buildLayerOrderBtns(el){
+  const p=proj();
+  return p.elements
+    .filter(e=>e.id!==el.id)
+    .sort((a,b)=>b.z-a.z)
+    .map(e=>{
+      const ic=LAYER_ICONS[e.type]||'⬛';
+      return '<div onclick="layerPlaceRelative(' + el.id + ',' + e.id + ',\'front\')" ' +
+        'style="display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:6px;border:1px solid var(--brd);background:var(--bg3);cursor:pointer;margin-bottom:4px;">' +
+        '<span style="font-size:11px">' + ic + '</span>' +
+        '<span style="flex:1;font-size:10px;color:var(--txt2);font-family:Rajdhani,sans-serif;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + e.label + '</span>' +
+        '<span onclick="event.stopPropagation();layerPlaceRelative(' + el.id + ',' + e.id + ',\'back\')" style="font-size:9px;color:var(--txt2);padding:2px 6px;border:1px solid var(--brd);border-radius:4px;">behind</span>' +
+        '<span onclick="event.stopPropagation();layerPlaceRelative(' + el.id + ',' + e.id + ',\'front\')" style="font-size:9px;color:var(--acc);padding:2px 6px;border:1px solid var(--acc);border-radius:4px;">front</span>' +
+        '</div>';
+    }).join('');
+}
+
+// Place el directly in front of or behind a reference element
+function layerPlaceRelative(elId, refId, where){
+  const p=proj();
+  const el=getEl(elId);
+  const ref=getEl(refId);
+  if(!el||!ref) return;
+
+  const sorted=[...p.elements].sort((a,b)=>a.z-b.z).filter(e=>e.id!==elId);
+  const refIdx=sorted.findIndex(e=>e.id===refId);
+  const insertIdx = where==='front' ? refIdx+1 : refIdx;
+  sorted.splice(insertIdx,0,el);
+
+  sorted.forEach((e,i)=>{
+    e.z=i+1;
+    const d=getDom(e.id);
+    if(d) d.style.zIndex=e.z;
+  });
+
+  buildSheet(el);
+  toast((where==='front'?'In front of ':'Behind ')+ref.label);
+}
 
 // ═══ MENU TAB SWITCHING ═══
 function switchMenuTab(tab){
@@ -1119,16 +1357,17 @@ function addEl(type,x,y){
   const p=proj();
   const id=p.idCnt++;
   const D={
-    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,sh:0,neon:'none',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,sh:0,neon:'none',txt:'',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,sh:0,neon:'none',txt:'',txc:'#888',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',txs:13,txf:'GothamBold',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,collapsed:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
-    image:    {w:120,h:120,bg:'#0a0812',border:'#3d2860',op:1,rad:6,sh:0,neon:'none',imgId:'',imgUrl:'',imgScale:'Fit',imgTint:'#ffffff',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    frame:    {w:180,h:120,bg:'#1a1028',border:'#5a3a80',op:1,rad:6,rot:0,sh:0,neon:'none',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    button:   {w:110,h:32, bg:'#2a1f42',border:'#7c3aed',op:1,rad:6,rot:0,sh:3,neon:'none',txt:'Click me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    textbox:  {w:150,h:32, bg:'#0a0812',border:'#4c1d95',op:1,rad:5,rot:0,sh:0,neon:'none',txt:'',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    label:    {w:130,h:24, bg:'transparent',border:'transparent',op:1,rad:0,rot:0,sh:0,neon:'none',txt:'Label Text',txc:'#c084fc',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    checkbox: {w:120,h:22, bg:'transparent',border:'transparent',op:1,rad:0,rot:0,sh:0,neon:'none',txt:'Check me',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    slider:   {w:150,h:24, bg:'transparent',border:'transparent',op:1,rad:0,rot:0,sh:0,neon:'none',txt:'Slider',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    dropdown: {w:140,h:30, bg:'#16102a',border:'#4a2d7a',op:1,rad:5,rot:0,sh:0,neon:'none',txt:'Option 1\nOption 2\nOption 3',txc:'#c084fc',txs:13,txf:'SourceSans',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    separator:{w:180,h:2,  bg:'#5a3a80',border:'#5a3a80',op:1,rad:0,rot:0,sh:0,neon:'none',txt:'',txc:'#888',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,rot:0,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',txs:13,txf:'GothamBold',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,collapsed:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    image:    {w:120,h:120,bg:'#0a0812',border:'#3d2860',op:1,rad:6,rot:0,sh:0,neon:'none',imgId:'',imgUrl:'',imgScale:'Fit',imgTint:'#ffffff',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    imagebutton:{w:120,h:120,bg:'#0a0812',border:'#3d2860',op:1,rad:6,rot:0,sh:0,neon:'none',imgId:'',imgUrl:'',imgScale:'Fit',imgTint:'#ffffff',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
   };
   const d=D[type]||D.frame;
   const lbl=type.charAt(0).toUpperCase()+type.slice(1)+'_'+id;
@@ -1229,7 +1468,7 @@ function applyStyle(el){
   handles.forEach(h=>dom.appendChild(h));
   dom.className=`el t-${el.type}`;
   if(p.sel===el.id)dom.classList.add('sel');
-  dom.style.cssText=`left:${el.x}px;top:${el.y}px;width:${el.w}px;height:${el.h}px;z-index:${el.z};opacity:${el.op};border-radius:${el.rad}px;box-sizing:border-box;`;
+  dom.style.cssText=`left:${el.x}px;top:${el.y}px;width:${el.w}px;height:${el.h}px;z-index:${el.z};opacity:${el.op};border-radius:${el.rad}px;box-sizing:border-box;transform:rotate(${el.rot||0}deg);`;
   const nmap={blue:'neon-blue',purple:'neon-purple',green:'neon-green',pink:'neon-pink'};
   if(el.neon!=='none'&&nmap[el.neon])dom.classList.add(nmap[el.neon]);
   const fh=dom.querySelector('.el-rh');
@@ -1297,7 +1536,7 @@ function applyStyle(el){
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';
     if(el.sh&&el.neon==='none')dom.style.boxShadow=`0 ${el.sh}px ${el.sh*3}px rgba(0,0,0,.6)`;
     if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
-  } else if(el.type==='button'){
+  } else if(el.type==='button'||el.type==='imagebutton'){
     dom.style.background=el.bg;dom.style.borderColor=el.border;
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';dom.style.display='flex';
     dom.style.flexDirection='column';
@@ -1336,7 +1575,7 @@ function applyStyle(el){
     el.txt.split('\n').filter(Boolean).forEach(o=>{const opt=document.createElement('option');opt.value=o;opt.textContent=o;sel.appendChild(opt);});
     sel.style.cssText=`width:100%;height:100%;background:transparent;border:none;color:${el.txc};font-family:${rblxFont(el.txf)};font-size:${el.txs||13}px;font-weight:${rblxWeight(el.txf)};outline:none;padding:2px 6px;`;ins(sel);
     if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
-  } else if(el.type==='image'){
+  } else if(el.type==='image'||el.type==='imagebutton'){
     dom.style.background=el.bg.startsWith('t')?'transparent':el.bg;
     dom.style.borderColor=el.border.startsWith('t')?'transparent':el.border;
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';
@@ -1528,6 +1767,13 @@ function buildSheet(el){
   <div class="ss"><div class="ss-hd">Identity</div>
     <div class="sr"><span class="sl">Label</span><input class="si" value="${escAttr(el.label)}" onchange="sp(${el.id},'label',this.value)"></div>
   </div>
+  <div class="ss"><div class="ss-hd">☰ Layer Order</div>
+    <div style="display:flex;gap:6px;margin-bottom:8px;">
+      <div class="btn btns" onclick="toFront()" style="flex:1;padding:6px;font-size:10px;cursor:pointer;">▲ To Front</div>
+      <div class="btn btns" onclick="toBack()" style="flex:1;padding:6px;font-size:10px;cursor:pointer;">▼ To Back</div>
+    </div>
+    ${els().length>1?'<div style="font-size:9px;color:var(--txt2);margin-bottom:5px;">Place relative to another element:</div>'+buildLayerOrderBtns(el):'<div style="font-size:9px;color:var(--txt2);">Add more elements to reorder</div>'}
+  </div>
   <div class="ss"><div class="ss-hd">🔗 Parent</div>
     <div id="parent-btns-${el.id}" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;">
       <div onclick="sp(${el.id},'parentId',null)" style="padding:5px 10px;border-radius:6px;border:1px solid ${!el.parentId?'var(--acc)':'var(--brd)'};background:${!el.parentId?'rgba(168,85,247,.15)':'var(--bg3)'};color:${!el.parentId?'var(--acc)':'var(--txt2)'};font-size:10px;font-family:'Rajdhani',sans-serif;font-weight:700;cursor:pointer;letter-spacing:.5px;">
@@ -1554,7 +1800,10 @@ function buildSheet(el){
   ${hR?`<div class="ss"><div class="ss-hd">Radius</div>
     <div class="sr"><span class="sl">Radius</span>
       <input class="sr2" type="range" min="0" max="50" value="${el.rad}" oninput="sp(${el.id},'rad',+this.value);this.nextElementSibling.textContent=this.value+'px'">
-      <span style="font-size:10px;color:var(--txt2);width:28px">${el.rad}px</span></div></div>`:''}
+      <span style="font-size:10px;color:var(--txt2);width:28px">${el.rad}px</span></div>
+    <div class="sr"><span class="sl">↻ Rotate</span>
+      <input class="sr2" type="range" min="-180" max="180" value="${el.rot||0}" oninput="sp(${el.id},'rot',+this.value);this.nextElementSibling.textContent=this.value+'°'">
+      <span style="font-size:10px;color:var(--txt2);width:32px">${el.rot||0}°</span></div></div>`:''}
   ${hB?`<div class="ss"><div class="ss-hd">Appearance</div>
     <div class="sr"><span class="sl">Background</span><input class="sc" type="color" value="${el.bg.startsWith('t')?'#1a1028':el.bg}" onchange="sp(${el.id},'bg',this.value)"></div>
     <div class="sr"><span class="sl">Border</span><input class="sc" type="color" value="${el.border.startsWith('t')?'#5a3a80':el.border}" onchange="sp(${el.id},'border',this.value)"></div>
@@ -1648,7 +1897,7 @@ function buildSheet(el){
     <div style="font-size:9px;color:var(--txt2);margin-top:6px;line-height:1.6;">Tap a button to toggle. Both can be active at once.</div>
     <div class="gw-info-badge">✓ Roblox-compatible: UIGradient + Heartbeat lerp</div>
   </div>
-  ${el.type==='image'?`<div class="ss"><div class="ss-hd">🖼️ Image</div>
+  ${(el.type==='image'||el.type==='imagebutton')?`<div class="ss"><div class="ss-hd">🖼️ Image</div>
     <div class="sr"><span class="sl">Asset ID</span>
       <input class="si" value="${escAttr(el.imgId||'')}" placeholder="rbxassetid://..." oninput="sp(${el.id},'imgId',this.value)" style="flex:1">
     </div>
@@ -1710,6 +1959,7 @@ function sp(id,key,val){
   else if(key==='h')dom.style.height=val+'px';
   else if(key==='op')dom.style.opacity=val;
   else if(key==='rad')dom.style.borderRadius=val+'px';
+  else if(key==='rot')dom.style.transform='rotate('+val+'deg)';
   else applyStyle(el);
   // These keys need full re-render + sheet rebuild
   if(['gwc1','gwc2','gwspd','gwdir','txf','txs','txalign','tyalign','txwrap','imgId','imgUrl','imgScale','imgTint','parentId'].includes(key)){
@@ -1815,7 +2065,7 @@ function openSc(id){
   const el=getEl(id);if(!el)return;
   scTarget=id;
   document.getElementById('sc-name').textContent=el.label+' ('+el.type+')';
-  const evMap={button:'MouseButton1Click',textbox:'FocusLost',checkbox:'MouseButton1Click',slider:'Changed',dropdown:'Changed',frame:'OnLoad',label:'OnLoad',panel:'OnLoad'};
+  const evMap={button:'MouseButton1Click',textbox:'FocusLost',checkbox:'MouseButton1Click',slider:'Changed',dropdown:'Changed',frame:'OnLoad',label:'OnLoad',panel:'OnLoad',imagebutton:'MouseButton1Click',image:'OnLoad'};
   document.getElementById('sc-ev').textContent='-- Event: '+(evMap[el.type]||'OnLoad');
   const ta=document.getElementById('se');ta.value=el.script||'';
   setTimeout(onSEI,10);
@@ -1964,9 +2214,10 @@ function generateLua(){
   c+=`ScreenGui.Name = "${p.name}"\n`;
   c+=`ScreenGui.ResetOnSpawn = false\n`;
   c+=`ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling\n`;
+  c+=`ScreenGui.IgnoreGuiInset = true\n`;
   c+=`ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")\n\n`;
 
-  const tmap={frame:'Frame',button:'TextButton',textbox:'TextBox',label:'TextLabel',checkbox:'TextButton',slider:'Frame',dropdown:'Frame',separator:'Frame',panel:'Frame',image:'ImageLabel'};
+  const tmap={frame:'Frame',button:'TextButton',textbox:'TextBox',label:'TextLabel',checkbox:'TextButton',slider:'Frame',dropdown:'Frame',separator:'Frame',panel:'Frame',image:'ImageLabel',imagebutton:'ImageButton'};
 
   p.elements.forEach(el=>{
     const n=el.label.replace(/[^A-Za-z0-9_]/g,'_');
@@ -1974,9 +2225,16 @@ function generateLua(){
     c+=`-- [ ${el.type.toUpperCase()} ] ${n}\n`;
     c+=`local ${n} = Instance.new("${inst}")\n`;
     c+=`${n}.Name = "${n}"\n`;
-    c+=`${n}.Size = UDim2.new(0, ${Math.round(el.w)}, 0, ${Math.round(el.h)})\n`;
-    c+=`${n}.Position = UDim2.new(0, ${Math.round(el.x)}, 0, ${Math.round(el.y)})\n`;
+    // Convert LSM canvas pixels → Roblox UDim2 scale
+    // Canvas = CW×CH pixels. Scale = pos/canvas so it looks the same on any screen.
+    const scX=(el.x/CW).toFixed(4);
+    const scY=(el.y/CH).toFixed(4);
+    const scW=(el.w/CW).toFixed(4);
+    const scH=(el.h/CH).toFixed(4);
+    c+=`${n}.Size = UDim2.new(${scW}, 0, ${scH}, 0)\n`;
+    c+=`${n}.Position = UDim2.new(${scX}, 0, ${scY}, 0)\n`;
     c+=`${n}.ZIndex = ${el.z||1}\n`;
+    if(el.rot)c+=`${n}.Rotation = ${el.rot}\n`;
 
     if(el.type!=='image'){
       if(!el.bg||el.bg.startsWith('t')){
@@ -2109,22 +2367,34 @@ function generateLua(){
     }
     // ── END GRADIENT WAVE ──
 
-    if(el.type==='image'){
+    if(el.type==='image'||el.type==='imagebutton'){
+      // ImageLabel specific properties
       c+=`${n}.BackgroundTransparency = 1\n`;
-      const imgId=el.imgId||'0';
-      c+=`${n}.Image = "rbxassetid://${imgId}"\n`;
+      // Only add image if ID is set and non-empty
+      const imgId=(el.imgId||'').trim().replace(/[^0-9]/g,'');
+      if(imgId){
+        c+=`${n}.Image = "rbxassetid://${imgId}"\n`;
+      } else {
+        c+=`${n}.Image = ""\n`;
+        c+=`-- NOTE: Set Image to rbxassetid://YOUR_ID_HERE\n`;
+      }
+      // Tint (white = no tint)
       const itc=h2r(el.imgTint||'#ffffff');
       if(itc)c+=`${n}.ImageColor3 = Color3.fromRGB(${itc})\n`;
-      if((el.op||1)<1)c+=`${n}.ImageTransparency = ${(1-(el.op||1)).toFixed(2)}\n`;
+      // Transparency from opacity
+      const imgTrans=(el.op!=null&&el.op<1)?(1-el.op).toFixed(2):'0';
+      c+=`${n}.ImageTransparency = ${imgTrans}\n`;
+      // ScaleType
       const scRblx={Fit:'Fit',Crop:'Crop',Stretch:'Stretch',Tile:'Tile'};
       c+=`${n}.ScaleType = Enum.ScaleType.${scRblx[el.imgScale||'Fit']||'Fit'}\n`;
+      // Corner radius
       if(el.rad>0)c+=`local Corner_${n}=Instance.new("UICorner")\nCorner_${n}.CornerRadius=UDim.new(0,${el.rad})\nCorner_${n}.Parent=${n}\n`;
     }
     if(el.type==='panel'){
       const pt=(el.txt||'Panel').replace(/"/g,'\\"');const ptc=h2r(el.txc)||'168, 85, 247';
       c+=`local PTitle_${n}=Instance.new("TextLabel")\nPTitle_${n}.Size=UDim2.new(1,0,0,28)\nPTitle_${n}.BackgroundTransparency=1\nPTitle_${n}.Text="${pt}"\nPTitle_${n}.TextColor3=Color3.fromRGB(${ptc})\nPTitle_${n}.TextSize=${el.txs||13}\nPTitle_${n}.Font=Enum.Font.${el.txf||'GothamBold'}\nPTitle_${n}.TextXAlignment=Enum.TextXAlignment.${el.txalign||'Left'}\nPTitle_${n}.Parent=${n}\n`;
       c+=`${n}.ClipsDescendants=true\n`;
-      if(el.collapsed)c+=`${n}.Size=UDim2.new(0,${Math.round(el.w)},0,28)\n`;
+      if(el.collapsed)c+=`${n}.Size=UDim2.new(${(el.w/CW).toFixed(4)},0,0,28)\n`;
     }
     if(el.type==='dropdown'){
       c+=`local ${n}_items={${el.txt.split('\n').filter(Boolean).map(s=>'"'+s.replace(/"/g,'\\"')+'"').join(',')}}\nlocal ${n}_sel=1\n`;
@@ -2153,7 +2423,7 @@ function generateLua(){
 
     const scriptLines=(el.script||'').split('\n').filter(l=>l.trim()&&!l.trim().startsWith('--'));
     if(scriptLines.length>0){
-      if(el.type==='button'){
+      if(el.type==='button'||el.type==='imagebutton'){
         c+=`\n${n}.MouseButton1Click:Connect(function()\n`;
         scriptLines.forEach(l=>c+=`  ${l}\n`);c+=`end)\n`;
       } else if(el.type==='checkbox'){
