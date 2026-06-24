@@ -143,6 +143,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .el-rh.eb{height:9px;width:24px;bottom:-4px;left:50%;transform:translateX(-50%);border-radius:3px;}
 .t-frame{background:rgba(28,21,48,.92);border:1px solid rgba(255,255,255,.1);}
 .t-button{background:#2a1f42;border:1px solid #5a3a80;display:flex;align-items:center;justify-content:center;}
+.t-roundbutton{background:#2a1f42;border:1px solid #5a3a80;display:flex;align-items:center;justify-content:center;border-radius:50%!important;}
+.t-tabbar{background:#16102a;border:1px solid #4a2d7a;}
 .t-textbox{background:rgba(0,0,0,.55);border:1px solid #3d2860;}
 .t-label{background:transparent;border:none;display:flex;align-items:center;}
 .t-checkbox{background:transparent;border:none;display:flex;align-items:center;gap:8px;}
@@ -312,6 +314,46 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
   background:var(--bg2);border:1px solid var(--brd);border-radius:8px;
   margin-bottom:5px;cursor:pointer;transition:all .12s;
 }
+/* SAMP */
+.samp-lib-card{
+  flex:1;padding:12px 10px;background:var(--bg2);border:1px solid var(--brd);
+  border-radius:10px;cursor:pointer;text-align:center;position:relative;
+  transition:all .15s;
+}
+.samp-lib-card.active-lib{background:rgba(245,158,11,.1);border-color:var(--warn);}
+.samp-lib-card:active{transform:scale(.97);}
+.samp-lib-check{
+  position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;
+  background:var(--warn);color:#000;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;opacity:0;transition:opacity .2s;
+}
+.samp-lib-card.active-lib .samp-lib-check{opacity:1;}
+.samp-feat-row{
+  display:flex;align-items:center;gap:8px;padding:7px 10px;
+  background:var(--bg2);border:1px solid var(--brd);border-radius:8px;
+  cursor:pointer;transition:all .1s;
+}
+.samp-feat-row.active-feat{border-color:var(--warn);background:rgba(245,158,11,.08);}
+.samp-feat-row:active{transform:scale(.98);}
+.samp-feat-ic{font-size:15px;width:22px;text-align:center;}
+.samp-feat-name{flex:1;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;color:var(--txt);}
+.samp-feat-desc{font-size:9px;color:var(--txt2);}
+.samp-check{width:18px;height:18px;border:1.5px solid var(--brd);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;}
+.samp-feat-row.active-feat .samp-check{background:var(--warn);border-color:var(--warn);color:#000;}
+.samp-item-row{
+  display:flex;align-items:center;gap:6px;margin-bottom:5px;
+  background:var(--bg2);border:1px solid var(--brd);border-radius:8px;padding:7px 9px;
+}
+.page-chip{
+  display:flex;align-items:center;gap:4px;padding:3px 8px;
+  border-radius:6px;border:1px solid var(--brd);background:var(--bg3);
+  color:var(--txt2);font-size:10px;font-family:'Rajdhani',sans-serif;
+  font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;
+  transition:all .12s;
+}
+.page-chip.active{border-color:var(--acc);background:rgba(168,85,247,.18);color:var(--acc);}
+.page-chip-x{opacity:.5;font-size:11px;padding:0 1px;}
+.page-chip-x:active{opacity:1;color:var(--red);}
 .layer-row.active{border-color:var(--acc);background:rgba(168,85,247,.1);}
 .layer-row.drag-over{border-color:var(--pink);background:rgba(232,121,249,.1);}
 .layer-handle{cursor:grab;color:var(--txt2);font-size:14px;padding:2px 4px;touch-action:none;}
@@ -427,6 +469,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
     <div class="mtab active" id="mtab-projects" onclick="switchMenuTab('projects')">📁 Projects</div>
     <div class="mtab" id="mtab-animations" onclick="switchMenuTab('animations')">🎬 Animations</div>
     <div class="mtab" id="mtab-modeling" onclick="switchMenuTab('modeling')">🧊 3D Model</div>
+    <div class="mtab" id="mtab-samp" onclick="switchMenuTab('samp')">🎮 SAMP</div>
   </div>
   <div id="menu-tab-projects" class="mm-body" style="display:flex;flex-direction:column;">
     <div class="mm-section">
@@ -675,6 +718,98 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
   </div>
 
 </div>
+  <!-- SAMP TAB -->
+  <div id="menu-tab-samp" style="display:none;flex-direction:column;flex:1;overflow:hidden;background:var(--bg);">
+
+    <!-- TOP BAR -->
+    <div style="background:var(--bg2);border-bottom:1px solid var(--brd);padding:8px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0;">
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;background:linear-gradient(90deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">SA-MP SCRIPT MAKER</div>
+      <div style="flex:1"></div>
+      <div onclick="sampGenerate()" style="padding:4px 12px;border-radius:6px;border:1px solid var(--warn);color:var(--warn);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;cursor:pointer;letter-spacing:1px;">⚡ GEN</div>
+    </div>
+
+    <!-- LIBRARY SELECTOR -->
+    <div style="background:var(--bg2);border-bottom:1px solid var(--brd);padding:8px 12px;flex-shrink:0;">
+      <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-bottom:6px;">LIBRARY</div>
+      <div style="display:flex;gap:8px;">
+        <div id="samp-lib-moon" class="samp-lib-card active-lib" onclick="sampSetLib('moonloader')">
+          <div style="font-size:18px;margin-bottom:3px;">🌙</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;color:var(--txt);">MoonLoader</div>
+          <div style="font-size:9px;color:var(--txt2);margin-top:1px;">PC · Full API</div>
+          <div class="samp-lib-check" id="samp-check-moon">✓</div>
+        </div>
+        <div id="samp-lib-monet" class="samp-lib-card" onclick="sampSetLib('monetloader')">
+          <div style="font-size:18px;margin-bottom:3px;">📱</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;color:var(--txt);">MonetLoader</div>
+          <div style="font-size:9px;color:var(--txt2);margin-top:1px;">Mobile · Android</div>
+          <div class="samp-lib-check" id="samp-check-monet">✓</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div style="flex:1;overflow-y:auto;padding:10px 12px;">
+
+      <!-- Script info -->
+      <div style="margin-bottom:10px;">
+        <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-bottom:5px;">SCRIPT INFO</div>
+        <div style="display:flex;gap:6px;margin-bottom:5px;">
+          <div style="flex:2;"><div style="font-size:8px;color:var(--txt2);margin-bottom:2px;">NAME</div><input class="si" id="samp-name" value="MyScript" style="width:100%"></div>
+          <div style="flex:1;"><div style="font-size:8px;color:var(--txt2);margin-bottom:2px;">VERSION</div><input class="si" id="samp-ver" value="1.0" style="width:100%"></div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <div style="flex:1;"><div style="font-size:8px;color:var(--txt2);margin-bottom:2px;">AUTHOR</div><input class="si" id="samp-author" value="Author" style="width:100%"></div>
+          <div style="flex:1;"><div style="font-size:8px;color:var(--txt2);margin-bottom:2px;">DESCRIPTION</div><input class="si" id="samp-desc" value="" placeholder="Description" style="width:100%"></div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div style="margin-bottom:10px;">
+        <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-bottom:5px;">FEATURES</div>
+        <div id="samp-features" style="display:flex;flex-direction:column;gap:4px;"></div>
+      </div>
+
+      <!-- Commands -->
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+          <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;">COMMANDS</div>
+          <div onclick="sampAddCmd()" style="padding:2px 8px;border-radius:5px;border:1px solid var(--acc);color:var(--acc);font-size:9px;font-family:'Rajdhani',sans-serif;font-weight:700;cursor:pointer;">+ADD</div>
+        </div>
+        <div id="samp-cmds-list"></div>
+      </div>
+
+      <!-- Hotkeys -->
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+          <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;">HOTKEYS</div>
+          <div onclick="sampAddHotkey()" style="padding:2px 8px;border-radius:5px;border:1px solid var(--acc);color:var(--acc);font-size:9px;font-family:'Rajdhani',sans-serif;font-weight:700;cursor:pointer;">+ADD</div>
+        </div>
+        <div id="samp-hotkeys-list"></div>
+      </div>
+
+      <!-- Menu items (imgui) -->
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+          <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;">MENU ITEMS (ImGui)</div>
+          <div onclick="sampAddMenuItem()" style="padding:2px 8px;border-radius:5px;border:1px solid var(--grn);color:var(--grn);font-size:9px;font-family:'Rajdhani',sans-serif;font-weight:700;cursor:pointer;">+ADD</div>
+        </div>
+        <div id="samp-menu-list"></div>
+      </div>
+
+      <!-- Custom code -->
+      <div style="margin-bottom:10px;">
+        <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-bottom:4px;">CUSTOM CODE (main loop)</div>
+        <textarea class="si" id="samp-custom" rows="4" style="width:100%;resize:vertical;min-height:65px;line-height:1.6;" placeholder="-- your Lua code here"></textarea>
+      </div>
+    </div>
+
+    <!-- BOTTOM -->
+    <div style="padding:7px 12px;border-top:1px solid var(--brd);background:var(--bg2);display:flex;gap:6px;flex-shrink:0;">
+      <div class="btn btn2" onclick="sampCopy()" style="flex:1;cursor:pointer;font-size:10px;">📋 Copy</div>
+      <div class="btn btnp" onclick="sampGenerate()" style="flex:1;cursor:pointer;font-size:10px;">⚡ Generate</div>
+    </div>
+  </div>
+
 
 <!-- EDITOR SCREEN -->
 <div class="screen" id="editor-screen">
@@ -690,6 +825,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
     </div>
   </div>
   <div id="proj-tabs"></div>
+  <div id="pages-bar" style="height:30px;flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 8px;gap:5px;overflow-x:auto;">
+    <span style="font-size:8px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;flex-shrink:0;">PAGE</span>
+    <div id="pages-list" style="display:flex;gap:4px;align-items:center;"></div>
+    <div onclick="addPage()" style="width:20px;height:20px;border-radius:5px;border:1px dashed var(--brd);color:var(--txt2);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;flex-shrink:0;">+</div>
+  </div>
   <div id="dov" onclick="closeDrawer()"></div>
   <div id="drawer">
     <div class="dh">🧩 COMPONENTS</div>
@@ -708,6 +848,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
       <div class="pi" ontouchstart="dragFrom(event,'textbox','✏️ TextBox')" onclick="addElAndClose('textbox')"><span class="pi-ic">✏️</span><span class="pi-nm">TextBox</span></div>
       <div class="pi" ontouchstart="dragFrom(event,'image','🖼️ Image')" onclick="addElAndClose('image')"><span class="pi-ic">🖼️</span><span class="pi-nm">Image</span></div>
       <div class="pi" ontouchstart="dragFrom(event,'imagebutton','🖱️ ImageButton')" onclick="addElAndClose('imagebutton')"><span class="pi-ic">🖱️</span><span class="pi-nm">ImageButton</span></div>
+      <div class="pi" ontouchstart="dragFrom(event,'roundbutton','⭕ RoundButton')" onclick="addElAndClose('roundbutton')"><span class="pi-ic">⭕</span><span class="pi-nm">RoundButton</span></div>
+      <div class="pi" ontouchstart="dragFrom(event,'tabbar','📑 TabBar')" onclick="addElAndClose('tabbar')"><span class="pi-ic">📑</span><span class="pi-nm">TabBar</span></div>
       <div class="cat">Snippets</div>
       <div class="pi" onclick="openSnipEd('notify');closeDrawer()"><span class="pi-ic">🔔</span><span class="pi-nm">Notify</span></div>
       <div class="pi" onclick="openSnipEd('loop');closeDrawer()"><span class="pi-ic">🔁</span><span class="pi-nm">Loop</span></div>
@@ -1101,12 +1243,94 @@ function layerPlaceRelative(elId, refId, where){
   toast((where==='front'?'In front of ':'Behind ')+ref.label);
 }
 
+
+// ═══════════════════════════════════════════════════════════
+//  PAGES MANAGER (multi-screen GUI support)
+// ═══════════════════════════════════════════════════════════
+function renderPagesBar(){
+  const p=proj();
+  if(!p)return;
+  if(!p.pages||!p.pages.length) p.pages=[{id:1,name:'Main'}];
+  if(!p.activePage) p.activePage=p.pages[0].id;
+  const list=document.getElementById('pages-list');
+  if(!list)return;
+  list.innerHTML=p.pages.map(pg=>{
+    const active=p.activePage===pg.id;
+    const canDel=p.pages.length>1;
+    return `<div class="page-chip${active?' active':''}" onclick="switchPage(${pg.id})">
+      <span ondblclick="event.stopPropagation();renamePage(${pg.id})">${escAttr(pg.name)}</span>
+      ${canDel?`<span class="page-chip-x" onclick="event.stopPropagation();deletePage(${pg.id})">✕</span>`:''}
+    </div>`;
+  }).join('');
+}
+
+function switchPage(pageId){
+  const p=proj();
+  if(!p)return;
+  p.activePage=pageId;
+  selectEl(null);
+  renderAllEls();
+  renderPagesBar();
+  toast('→ '+(p.pages.find(pg=>pg.id===pageId)||{name:'?'}).name);
+}
+
+async function addPage(){
+  const p=proj();
+  if(!p)return;
+  const name=await promptInp('Page name:','Page'+(p.pages.length+1));
+  if(!name)return;
+  if(!p.pageIdCnt) p.pageIdCnt=Math.max(...p.pages.map(pg=>pg.id),0)+1;
+  const id=p.pageIdCnt++;
+  p.pages.push({id,name});
+  p.activePage=id;
+  selectEl(null);
+  renderAllEls();
+  renderPagesBar();
+  toast('Page "'+name+'" added ✓');
+}
+
+async function renamePage(pageId){
+  const p=proj();
+  const pg=p.pages.find(x=>x.id===pageId);
+  if(!pg)return;
+  const name=await promptInp('Rename page:',pg.name);
+  if(!name)return;
+  pg.name=name;
+  renderPagesBar();
+}
+
+function deletePage(pageId){
+  const p=proj();
+  if(p.pages.length<=1){toast('Cannot delete last page');return;}
+  const pg=p.pages.find(x=>x.id===pageId);
+  if(!pg)return;
+  confirm2('Delete page "'+pg.name+'"? Elements on it will move to first page.','Delete',()=>{
+    // Move elements from deleted page to first remaining page
+    const firstOther=p.pages.find(x=>x.id!==pageId);
+    p.elements.forEach(el=>{
+      if((el.pageId||1)===pageId) el.pageId=firstOther.id;
+    });
+    p.pages=p.pages.filter(x=>x.id!==pageId);
+    if(p.activePage===pageId) p.activePage=firstOther.id;
+    selectEl(null);
+    renderAllEls();
+    renderPagesBar();
+    toast('Page deleted');
+  });
+}
+
+// Get list of pages for current project (used by tabbar Properties)
+function getProjectPages(){
+  const p=proj();
+  return (p&&p.pages)||[{id:1,name:'Main'}];
+}
+
 // ═══ MENU TAB SWITCHING ═══
 function switchMenuTab(tab){
   document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('active'));
   const btn=document.getElementById('mtab-'+tab);
   if(btn) btn.classList.add('active');
-  const tabs=['projects','animations','modeling'];
+  const tabs=['projects','animations','modeling','samp'];
   tabs.forEach(t=>{
     const el=document.getElementById('menu-tab-'+t);
     if(el) el.style.display=(t===tab?'flex':'none');
@@ -1118,6 +1342,9 @@ function switchMenuTab(tab){
   }
   if(tab==='modeling'){
     requestAnimationFrame(()=>requestAnimationFrame(initMdl3D));
+  }
+  if(tab==='samp'){
+    initSampTab();
   }
 }
 
@@ -1163,7 +1390,7 @@ function storageSave(){
   try{
     const data=projects.map(p=>({
       id:p.id,name:p.name,elements:p.elements,
-      idCnt:p.idCnt,globalScript:p.globalScript,savedCode:p.savedCode||''
+      idCnt:p.idCnt,globalScript:p.globalScript,savedCode:p.savedCode||'',pages:p.pages||[{id:1,name:'Main'}],activePage:p.activePage||1
     }));
     localStorage.setItem('lsm_v2_projects',JSON.stringify(data));
   }catch(e){}
@@ -1176,7 +1403,7 @@ function storageLoad(){
       projects.push({
         id:p.id,name:p.name,elements:p.elements||[],
         undoStack:[],redoStack:[],idCnt:p.idCnt||1,
-        sel:null,globalScript:p.globalScript||'',savedCode:p.savedCode||''
+        sel:null,globalScript:p.globalScript||'',savedCode:p.savedCode||'',pages:p.pages&&p.pages.length?p.pages:[{id:1,name:'Main'}],activePage:p.activePage||1,pageIdCnt:p.pageIdCnt||2
       });
     });
   }catch(e){}
@@ -1196,6 +1423,7 @@ function goEditor(){
   initCanvas();
   renderTabs();
   renderAllEls();
+  renderPagesBar();
   document.getElementById('proj-name-label').textContent=proj().name+'.lua';
   updateFab();
 }
@@ -1221,7 +1449,7 @@ async function newProject(){
   projects.push({
     id,name:name.replace(/[^A-Za-z0-9_]/g,'_')||'project',
     elements:[],undoStack:[],redoStack:[],idCnt:1,
-    sel:null,globalScript:'-- Global script\n',savedCode:''
+    sel:null,globalScript:'-- Global script\n',savedCode:'',pages:[{id:1,name:'Main'}],activePage:1,pageIdCnt:2
   });
   activeTab=projects.length-1;
   storageSave();
@@ -1256,7 +1484,7 @@ function onFileLoad(e){
     const id=Date.now();
     projects.push({
       id,name,elements:[],undoStack:[],redoStack:[],idCnt:1,
-      sel:null,globalScript:code,savedCode:code
+      sel:null,globalScript:code,savedCode:code,pages:[{id:1,name:'Main'}],activePage:1,pageIdCnt:2
     });
     activeTab=projects.length-1;
     storageSave();
@@ -1297,6 +1525,7 @@ function switchTab(i){
   activeTab=i;
   renderTabs();
   renderAllEls();
+  renderPagesBar();
   closeSheet();
   document.getElementById('proj-name-label').textContent=proj().name+'.lua';
   updateFab();
@@ -1310,12 +1539,13 @@ async function newTabProject(){
   projects.push({
     id,name:name.replace(/[^A-Za-z0-9_]/g,'_'),
     elements:[],undoStack:[],redoStack:[],idCnt:1,
-    sel:null,globalScript:'',savedCode:''
+    sel:null,globalScript:'',savedCode:'',pages:[{id:1,name:'Main'}],activePage:1,pageIdCnt:2
   });
   activeTab=projects.length-1;
   storageSave();
   renderTabs();
   renderAllEls();
+  renderPagesBar();
   document.getElementById('proj-name-label').textContent=proj().name+'.lua';
   updateFab();
   toast('New: '+proj().name);
@@ -1338,16 +1568,21 @@ function closeTabAt(i){
 }
 
 function renderAllEls(){
+  const p=proj();
+  const activePg=p.activePage||1;
   document.querySelectorAll('.el').forEach(d=>{
-    if(!d.id.startsWith('el-'+proj().id+'-'))d.style.display='none';
+    if(!d.id.startsWith('el-'+p.id+'-'))d.style.display='none';
   });
-  proj().elements.forEach(el=>{
-    let dom=document.getElementById('el-'+proj().id+'-'+el.id);
+  p.elements.forEach(el=>{
+    let dom=document.getElementById('el-'+p.id+'-'+el.id);
     if(!dom)buildDom(el);
-    else{dom.style.display='';applyStyle(el);}
+    else{
+      dom.style.display=((el.pageId||1)===activePg)?'':'none';
+      applyStyle(el);
+    }
   });
   document.querySelectorAll('.el.sel').forEach(d=>d.classList.remove('sel'));
-  if(proj().sel){const d=getDom(proj().sel);if(d)d.classList.add('sel');}
+  if(p.sel){const d=getDom(p.sel);if(d)d.classList.add('sel');}
 }
 
 function addElAndClose(type){ addEl(type); closeDrawer(); }
@@ -1368,12 +1603,17 @@ function addEl(type,x,y){
     panel:    {w:200,h:160,bg:'#10081c',border:'#a855f7',op:1,rad:8,rot:0,sh:4,neon:'none',txt:'Panel',txc:'#a855f7',txs:13,txf:'GothamBold',txalign:'Left',tyalign:'Center',rbw:false,txwrap:false,collapsed:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
     image:    {w:120,h:120,bg:'#0a0812',border:'#3d2860',op:1,rad:6,rot:0,sh:0,neon:'none',imgId:'',imgUrl:'',imgScale:'Fit',imgTint:'#ffffff',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
     imagebutton:{w:120,h:120,bg:'#0a0812',border:'#3d2860',op:1,rad:6,rot:0,sh:0,neon:'none',imgId:'',imgUrl:'',imgScale:'Fit',imgTint:'#ffffff',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    roundbutton:{w:56,h:56, bg:'#2a1f42',border:'#7c3aed',op:1,rad:999,rot:0,sh:4,neon:'none',txt:'+',txc:'#ede8f8',txs:20,txf:'SourceSansBold',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
+    tabbar:   {w:300,h:44, bg:'#16102a',border:'#4a2d7a',op:1,rad:8,rot:0,sh:0,neon:'none',txt:'',txc:'#ede8f8',txcActive:'#a855f7',txs:12,txf:'SourceSansBold',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal',tabLinks:[]},
   };
   const d=D[type]||D.frame;
   const lbl=type.charAt(0).toUpperCase()+type.slice(1)+'_'+id;
   const ex=typeof x==='number'?Math.max(0,Math.min(CW-d.w,x-d.w/2)):Math.round(CW/2-d.w/2);
   const ey=typeof y==='number'?Math.max(0,Math.min(CH-d.h,y-d.h/2)):Math.round(CH/2-d.h/2);
-  const el={id,type,x:ex,y:ey,z:id,label:lbl,script:'',...d};
+  const el={id,type,x:ex,y:ey,z:id,label:lbl,script:'',pageId:p.activePage||1,...d};
+  if(type==='tabbar'){
+    el.tabLinks=(p.pages||[{id:1,name:'Main'}]).map(pg=>({pageId:pg.id,label:pg.name}));
+  }
   p.elements.push(el);
   buildDom(el);
   selectEl(id,true);
@@ -1536,16 +1776,17 @@ function applyStyle(el){
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';
     if(el.sh&&el.neon==='none')dom.style.boxShadow=`0 ${el.sh}px ${el.sh*3}px rgba(0,0,0,.6)`;
     if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
-  } else if(el.type==='button'||el.type==='imagebutton'){
+  } else if(el.type==='button'||el.type==='roundbutton'){
     dom.style.background=el.bg;dom.style.borderColor=el.border;
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';dom.style.display='flex';
     dom.style.flexDirection='column';
     dom.style.alignItems=el.txalign==='Right'?'flex-end':el.txalign==='Left'?'flex-start':'center';
     dom.style.justifyContent=(el.tyalign||'Center')==='Top'?'flex-start':(el.tyalign||'Center')==='Bottom'?'flex-end':'center';
-    dom.style.padding='2px 6px';dom.style.boxSizing='border-box';
+    dom.style.padding=el.type==='roundbutton'?'0':'2px 6px';dom.style.boxSizing='border-box';
+    if(el.type==='roundbutton')dom.style.borderRadius='50%';
     if(el.sh&&el.neon==='none')dom.style.boxShadow=`0 ${el.sh}px ${el.sh*2}px rgba(0,0,0,.5)`;
     ins(mkspan(el.txt,el.rbw,el.txc,el.gwav&&el.gwtxt,el.gwc1,el.gwc2,el.gwdir,el.gwspd));
-    if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
+    if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.type==='roundbutton'?1000:el.rad);
   } else if(el.type==='textbox'){
     dom.style.background=el.bg;dom.style.borderColor=el.border;
     dom.style.borderStyle='solid';dom.style.borderWidth='1px';
@@ -1593,6 +1834,21 @@ function applyStyle(el){
       ph.innerHTML='🖼️<br>'+(el.imgId?'rbxassetid://<br>'+el.imgId:'No image<br>tap to set ID');
       ins(ph);
     }
+    if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
+  } else if(el.type==='tabbar'){
+    dom.style.background=el.bg.startsWith('t')?'transparent':el.bg;
+    dom.style.borderColor=el.border.startsWith('t')?'transparent':el.border;
+    dom.style.borderStyle='solid';dom.style.borderWidth='1px';
+    dom.style.display='flex';dom.style.alignItems='stretch';dom.style.padding='3px';dom.style.gap='3px';
+    const links=el.tabLinks&&el.tabLinks.length?el.tabLinks:(proj().pages||[{id:1,name:'Main'}]).map(pg=>({pageId:pg.id,label:pg.name}));
+    links.forEach(link=>{
+      const btn=document.createElement('div');
+      const isActive=proj().activePage===link.pageId;
+      btn.style.cssText=`flex:1;display:flex;align-items:center;justify-content:center;border-radius:6px;cursor:pointer;font-family:${rblxFont(el.txf)};font-size:${el.txs||12}px;font-weight:${rblxWeight(el.txf)};background:${isActive?'rgba(168,85,247,.25)':'transparent'};color:${isActive?(el.txcActive||'#a855f7'):el.txc};transition:background .12s;`;
+      btn.textContent=link.label;
+      btn.onclick=(ev)=>{ev.stopPropagation();switchPage(link.pageId);};
+      dom.appendChild(btn);
+    });
     if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
   } else if(el.type==='separator'){
     if(el.gwav&&el.gwbrd){
@@ -1684,6 +1940,11 @@ function attachResize(rh,id,dx,dy,ax,ay){
     const el=getEl(id);const dom=getDom(id);if(!el||!dom)return;
     if(dx!==0){const nw=Math.max(24,sw+(cx-sx)*dx);if(ax)el.x=Math.max(0,sx0+(sw-nw));el.w=nw;dom.style.width=el.w+'px';if(ax)dom.style.left=el.x+'px';}
     if(dy!==0){const nh=Math.max(10,sh+(cy-sy)*dy);if(ay)el.y=Math.max(0,sy0+(sh-nh));el.h=nh;dom.style.height=el.h+'px';if(ay)dom.style.top=el.y+'px';}
+    if(el.type==='roundbutton'){
+      const side=Math.max(el.w,el.h);
+      el.w=side;el.h=side;
+      dom.style.width=side+'px';dom.style.height=side+'px';
+    }
   }
   rh.addEventListener('touchstart',e=>{onStart(e.touches[0].clientX,e.touches[0].clientY);e.stopPropagation();e.preventDefault();},{passive:false});
   rh.addEventListener('touchmove',e=>{onMove(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();},{passive:false});
@@ -1739,6 +2000,31 @@ function selectEl(id,openP){
 function openSheet(el){if(!el)return;buildSheet(el);document.getElementById('psheet').classList.add('open');}
 function closeSheet(){document.getElementById('psheet').classList.remove('open');}
 
+function spPage(elId,pgId){
+  const el=getEl(elId);if(!el)return;
+  el.pageId=pgId;
+  const dom=getDom(elId);
+  const p=proj();
+  if(dom) dom.style.display=(pgId===p.activePage)?'':'none';
+  buildSheet(el);
+  renderAllEls();
+  toast('Moved to page: '+(p.pages.find(x=>x.id===pgId)||{name:'?'}).name);
+}
+
+function spTabLabel(elId,idx,val){
+  const el=getEl(elId);if(!el||!el.tabLinks)return;
+  el.tabLinks[idx].label=val;
+  applyStyle(el);
+}
+function spTabSync(elId){
+  const el=getEl(elId);if(!el)return;
+  const pages=proj().pages||[{id:1,name:'Main'}];
+  el.tabLinks=pages.map(pg=>({pageId:pg.id,label:pg.name}));
+  applyStyle(el);
+  buildSheet(el);
+  toast('TabBar synced with pages ✓');
+}
+
 function buildParentBtns(el){
   return els()
     .filter(e => e.id !== el.id && ['frame','panel'].includes(e.type))
@@ -1759,13 +2045,17 @@ function buildParentBtns(el){
 function buildSheet(el){
   document.getElementById('psh-title').textContent=el.label+' · '+el.type;
   const b=document.getElementById('psh-body');
-  const hT=['button','label','checkbox','textbox','dropdown','panel'].includes(el.type);
-  const hB=['frame','button','textbox','dropdown','panel'].includes(el.type);
-  const hR=['frame','button','textbox','dropdown','panel'].includes(el.type);
-  const hS=['frame','button','panel'].includes(el.type);
+  const hT=['button','label','checkbox','textbox','dropdown','panel','roundbutton'].includes(el.type);
+  const hB=['frame','button','textbox','dropdown','panel','roundbutton'].includes(el.type);
+  const hR=['frame','button','textbox','dropdown','panel'].includes(el.type); // roundbutton excluded — always circular
+  const hS=['frame','button','panel','roundbutton'].includes(el.type);
   b.innerHTML=`
   <div class="ss"><div class="ss-hd">Identity</div>
     <div class="sr"><span class="sl">Label</span><input class="si" value="${escAttr(el.label)}" onchange="sp(${el.id},'label',this.value)"></div>
+    ${(proj().pages&&proj().pages.length>1)?`<div class="sr"><span class="sl">📄 Page</span>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;flex:1;">
+        ${proj().pages.map(pg=>`<div onclick="spPage(${el.id},${pg.id})" style="padding:4px 8px;border-radius:5px;border:1px solid ${(el.pageId||1)===pg.id?'var(--acc)':'var(--brd)'};background:${(el.pageId||1)===pg.id?'rgba(168,85,247,.15)':'var(--bg3)'};color:${(el.pageId||1)===pg.id?'var(--acc)':'var(--txt2)'};font-size:10px;font-family:Rajdhani,sans-serif;font-weight:700;cursor:pointer;">${pg.name}</div>`).join('')}
+      </div></div>`:''}
   </div>
   <div class="ss"><div class="ss-hd">☰ Layer Order</div>
     <div style="display:flex;gap:6px;margin-bottom:8px;">
@@ -1918,6 +2208,21 @@ function buildSheet(el){
       <span style="font-size:9px;color:var(--txt2);margin-left:6px">ImageColor3 tint</span>
     </div>
   </div>`:''}
+  ${el.type==='tabbar'?`<div class="ss"><div class="ss-hd">📑 TabBar — Pages</div>
+    <div style="font-size:9px;color:var(--txt2);margin-bottom:6px;line-height:1.6;">Each tab switches the active page in Roblox. Double-tap label to rename.</div>
+    ${(el.tabLinks||[]).map((lnk,i)=>`
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;">
+      <input class="si" value="${escAttr(lnk.label)}" oninput="spTabLabel(${el.id},${i},this.value)" style="flex:1">
+      <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;">→ ${(proj().pages||[]).find(p=>p.id===lnk.pageId)?'Page:'+((proj().pages||[]).find(p=>p.id===lnk.pageId)||{}).name:'?'}</div>
+    </div>`).join('')}
+    <div style="display:flex;gap:6px;margin-top:6px;">
+      <div class="btn btn2" onclick="spTabSync(${el.id})" style="flex:1;padding:6px;font-size:10px;cursor:pointer;">↺ Sync Pages</div>
+    </div>
+    <div style="margin-top:6px;">
+      <span class="sl">Active Color</span>
+      <input type="color" class="sc" value="${el.txcActive||'#a855f7'}" onchange="sp(${el.id},'txcActive',this.value)">
+    </div>
+  </div>`:''}
   ${el.type==='panel'?`<div class="ss"><div class="ss-hd">Panel</div>
     <div class="btn" onclick="togglePanel(${el.id})" style="width:100%;padding:9px;background:${el.collapsed?'var(--grn)':'var(--warn)'};color:#000;border-color:transparent;margin-bottom:4px;cursor:pointer;">
       ${el.collapsed?'🔽 Expand':'🔼 Collapse'}
@@ -1955,8 +2260,14 @@ function sp(id,key,val){
   if(!dom)return;
   if(key==='x')dom.style.left=val+'px';
   else if(key==='y')dom.style.top=val+'px';
-  else if(key==='w')dom.style.width=val+'px';
-  else if(key==='h')dom.style.height=val+'px';
+  else if(key==='w'){
+    dom.style.width=val+'px';
+    if(el.type==='roundbutton'){el.h=val;dom.style.height=val+'px';}
+  }
+  else if(key==='h'){
+    dom.style.height=val+'px';
+    if(el.type==='roundbutton'){el.w=val;dom.style.width=val+'px';}
+  }
   else if(key==='op')dom.style.opacity=val;
   else if(key==='rad')dom.style.borderRadius=val+'px';
   else if(key==='rot')dom.style.transform='rotate('+val+'deg)';
@@ -2065,7 +2376,7 @@ function openSc(id){
   const el=getEl(id);if(!el)return;
   scTarget=id;
   document.getElementById('sc-name').textContent=el.label+' ('+el.type+')';
-  const evMap={button:'MouseButton1Click',textbox:'FocusLost',checkbox:'MouseButton1Click',slider:'Changed',dropdown:'Changed',frame:'OnLoad',label:'OnLoad',panel:'OnLoad',imagebutton:'MouseButton1Click',image:'OnLoad'};
+  const evMap={button:'MouseButton1Click',textbox:'FocusLost',checkbox:'MouseButton1Click',slider:'Changed',dropdown:'Changed',frame:'OnLoad',label:'OnLoad',panel:'OnLoad',imagebutton:'MouseButton1Click',image:'OnLoad',roundbutton:'MouseButton1Click'};
   document.getElementById('sc-ev').textContent='-- Event: '+(evMap[el.type]||'OnLoad');
   const ta=document.getElementById('se');ta.value=el.script||'';
   setTimeout(onSEI,10);
@@ -2216,8 +2527,39 @@ function generateLua(){
   c+=`ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling\n`;
   c+=`ScreenGui.IgnoreGuiInset = true\n`;
   c+=`ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")\n\n`;
+  // Reference canvas size (same as LSM canvas)
+  c+=`-- LSM Reference canvas: ${Math.round(CW)}x${Math.round(CH)} px\n`;
+  c+=`-- Elements scale relative to this via UDim2 offset in pixels\n`;
+  c+=`-- To resize for your screen: change SCALE below (1 = match design)\n`;
+  c+=`local _REF_W = ${Math.round(CW)}  -- LSM canvas width\n`;
+  c+=`local _REF_H = ${Math.round(CH)}  -- LSM canvas height\n`;
+  c+=`local _vp = workspace.CurrentCamera.ViewportSize\n`;
+  c+=`local _scX = _vp.X / _REF_W  -- horizontal scale factor\n`;
+  c+=`local _scY = _vp.Y / _REF_H  -- vertical scale factor\n`;
+  c+=`local function px(x,y,w,h)\n`;
+  c+=`  return UDim2.new(0, math.round(x*_scX), 0, math.round(y*_scY)),\n`;
+  c+=`         UDim2.new(0, math.round(w*_scX), 0, math.round(h*_scY))\n`;
+  c+=`end\n\n`;
 
-  const tmap={frame:'Frame',button:'TextButton',textbox:'TextBox',label:'TextLabel',checkbox:'TextButton',slider:'Frame',dropdown:'Frame',separator:'Frame',panel:'Frame',image:'ImageLabel',imagebutton:'ImageButton'};
+  const tmap={frame:'Frame',button:'TextButton',textbox:'TextBox',label:'TextLabel',checkbox:'TextButton',slider:'Frame',dropdown:'Frame',separator:'Frame',panel:'Frame',image:'ImageLabel',imagebutton:'ImageButton',roundbutton:'TextButton',tabbar:'Frame'};
+
+  // ── Page Frames: one Frame per page, visible=false except first ──
+  const pages=p.pages&&p.pages.length?p.pages:[{id:1,name:'Main'}];
+  const pageFrameVars={};
+  if(pages.length>1){
+    c+=`-- ── Page Frames (one per page, TabBar switches Visible) ──\n`;
+    pages.forEach((pg,i)=>{
+      const pgVar=`PageFrame_${pg.name.replace(/[^A-Za-z0-9_]/g,'_')}`;
+      pageFrameVars[pg.id]=pgVar;
+      c+=`local ${pgVar}=Instance.new("Frame")\n`;
+      c+=`${pgVar}.Name="${pgVar}"\n`;
+      c+=`${pgVar}.Size=UDim2.new(1,0,1,0)\n`;
+      c+=`${pgVar}.Position=UDim2.new(0,0,0,0)\n`;
+      c+=`${pgVar}.BackgroundTransparency=1\n`;
+      c+=`${pgVar}.Visible=${i===0?'true':'false'}\n`;
+      c+=`${pgVar}.Parent=ScreenGui\n\n`;
+    });
+  }
 
   p.elements.forEach(el=>{
     const n=el.label.replace(/[^A-Za-z0-9_]/g,'_');
@@ -2225,14 +2567,10 @@ function generateLua(){
     c+=`-- [ ${el.type.toUpperCase()} ] ${n}\n`;
     c+=`local ${n} = Instance.new("${inst}")\n`;
     c+=`${n}.Name = "${n}"\n`;
-    // Convert LSM canvas pixels → Roblox UDim2 scale
-    // Canvas = CW×CH pixels. Scale = pos/canvas so it looks the same on any screen.
-    const scX=(el.x/CW).toFixed(4);
-    const scY=(el.y/CH).toFixed(4);
-    const scW=(el.w/CW).toFixed(4);
-    const scH=(el.h/CH).toFixed(4);
-    c+=`${n}.Size = UDim2.new(${scW}, 0, ${scH}, 0)\n`;
-    c+=`${n}.Position = UDim2.new(${scX}, 0, ${scY}, 0)\n`;
+    // Use px() helper which scales relative to viewport at runtime
+    c+=`local _pos_${n}, _sz_${n} = px(${Math.round(el.x)},${Math.round(el.y)},${Math.round(el.w)},${Math.round(el.h)})\n`;
+    c+=`${n}.Position = _pos_${n}\n`;
+    c+=`${n}.Size = _sz_${n}\n`;
     c+=`${n}.ZIndex = ${el.z||1}\n`;
     if(el.rot)c+=`${n}.Rotation = ${el.rot}\n`;
 
@@ -2246,7 +2584,7 @@ function generateLua(){
       }
     }
 
-    if(['button','label','textbox'].includes(el.type)){
+    if(['button','label','textbox','roundbutton'].includes(el.type)){
       const rawTxt = (el.txt||'');
       const hasNewlines = rawTxt.includes('\n');
       // Escape for Lua: backslash → \\, quote → \", newline → \n (Lua escape)
@@ -2263,7 +2601,7 @@ function generateLua(){
       c+=`${n}.Font = Enum.Font.${el.txf||'SourceSans'}\n`;
       c+=`${n}.TextXAlignment = Enum.TextXAlignment.${el.txalign||'Center'}\n`;
       c+=`${n}.TextYAlignment = Enum.TextYAlignment.${el.tyalign||'Center'}\n`;
-      if(el.type==='button')c+=`${n}.AutoButtonColor = false\n`;
+      if(el.type==='button'||el.type==='roundbutton')c+=`${n}.AutoButtonColor = false\n`;
       if(el.type==='textbox'){c+=`${n}.PlaceholderText = "Enter text..."\n${n}.ClearTextOnFocus = false\n`;}
     }
     if(el.type==='checkbox'){
@@ -2276,7 +2614,11 @@ function generateLua(){
       c+=`${n}.TextYAlignment = Enum.TextYAlignment.${el.tyalign||'Center'}\n`;
       c+=`${n}.AutoButtonColor = false\n`;
     }
-    if(el.rad>0){c+=`local Corner_${n}=Instance.new("UICorner")\nCorner_${n}.CornerRadius=UDim.new(0,${el.rad})\nCorner_${n}.Parent=${n}\n`;}
+    if(el.type==='roundbutton'){
+      c+=`local Corner_${n}=Instance.new("UICorner")\nCorner_${n}.CornerRadius=UDim.new(1,0)\nCorner_${n}.Parent=${n}\n`;
+    } else if(el.rad>0){
+      c+=`local Corner_${n}=Instance.new("UICorner")\nCorner_${n}.CornerRadius=UDim.new(0,${el.rad})\nCorner_${n}.Parent=${n}\n`;
+    }
 
     // Normal border stroke (only if NOT using gwbrd, to avoid double stroke)
     if(el.border&&!el.border.startsWith('t')&&!(el.gwav&&el.gwbrd)){
@@ -2301,36 +2643,41 @@ function generateLua(){
       const [r2,g2,b2] = h2rgb(el.gwc2||'#e879f9');
       const spd = el.gwspd || 3;
       const dir = el.gwdir || 'horizontal';
-      const rot = dir==='vertical' ? 90 : dir==='diagonal' ? 45 : 0;
+      const baseRot = dir==='vertical' ? 90 : dir==='diagonal' ? 45 : 0;
 
-      // Offset animation axis based on direction
-      let offsetLine;
-      if(dir==='vertical')      offsetLine = `Vector2.new(0, math.sin(_gwt_${n} * math.pi * 2) * 0.35)`;
-      else if(dir==='diagonal') offsetLine = `Vector2.new(math.sin(_gwt_${n} * math.pi * 2) * 0.35, math.sin(_gwt_${n} * math.pi * 2) * 0.35)`;
-      else                      offsetLine = `Vector2.new(math.sin(_gwt_${n} * math.pi * 2) * 0.35, 0)`;
-
-      // ── BG gradient: UIGradient + animated Offset (works on Frame/Button bg) ──
+      // ── BG gradient wave: rebuild ColorSequence each frame for true wave effect ──
       if(!el.bg.startsWith('t')){
         c+=`\n-- ✨ GradientWave BG: ${n}\n`;
         c+=`local Grad_${n} = Instance.new("UIGradient")\n`;
-        c+=`Grad_${n}.Color = ColorSequence.new({\n`;
-        c+=`  ColorSequenceKeypoint.new(0,    Color3.fromRGB(${c1rgb})),\n`;
-        c+=`  ColorSequenceKeypoint.new(0.33, Color3.fromRGB(${c2rgb})),\n`;
-        c+=`  ColorSequenceKeypoint.new(0.66, Color3.fromRGB(${c1rgb})),\n`;
-        c+=`  ColorSequenceKeypoint.new(1,    Color3.fromRGB(${c2rgb}))\n`;
-        c+=`})\n`;
-        c+=`Grad_${n}.Rotation = ${rot}\n`;
+        c+=`Grad_${n}.Rotation = ${baseRot}\n`;
         c+=`Grad_${n}.Parent = ${n}\n`;
         c+=`local _gwt_${n} = 0\n`;
+        c+=`local _c1_${n} = Color3.fromRGB(${c1rgb})\n`;
+        c+=`local _c2_${n} = Color3.fromRGB(${c2rgb})\n`;
+        c+=`local function _gwlerp_${n}(a,b,t)\n`;
+        c+=`  return Color3.new(a.R+(b.R-a.R)*t, a.G+(b.G-a.G)*t, a.B+(b.B-a.B)*t)\n`;
+        c+=`end\n`;
         c+=`RunService.Heartbeat:Connect(function(dt)\n`;
         c+=`  _gwt_${n} = (_gwt_${n} + dt / ${spd}) % 1\n`;
-        c+=`  Grad_${n}.Offset = ${offsetLine}\n`;
+        c+=`  local t = _gwt_${n}\n`;
+        c+=`  -- Rebuild ColorSequence each frame = true wave animation\n`;
+        c+=`  local f0 = math.abs(math.sin((t + 0.00) * math.pi))\n`;
+        c+=`  local f1 = math.abs(math.sin((t + 0.25) * math.pi))\n`;
+        c+=`  local f2 = math.abs(math.sin((t + 0.50) * math.pi))\n`;
+        c+=`  local f3 = math.abs(math.sin((t + 0.75) * math.pi))\n`;
+        c+=`  local f4 = math.abs(math.sin((t + 1.00) * math.pi))\n`;
+        c+=`  Grad_${n}.Color = ColorSequence.new({\n`;
+        c+=`    ColorSequenceKeypoint.new(0,    _gwlerp_${n}(_c1_${n},_c2_${n},f0)),\n`;
+        c+=`    ColorSequenceKeypoint.new(0.25, _gwlerp_${n}(_c1_${n},_c2_${n},f1)),\n`;
+        c+=`    ColorSequenceKeypoint.new(0.5,  _gwlerp_${n}(_c1_${n},_c2_${n},f2)),\n`;
+        c+=`    ColorSequenceKeypoint.new(0.75, _gwlerp_${n}(_c1_${n},_c2_${n},f3)),\n`;
+        c+=`    ColorSequenceKeypoint.new(1,    _gwlerp_${n}(_c1_${n},_c2_${n},f4)),\n`;
+        c+=`  })\n`;
         c+=`end)\n`;
       }
 
       // ── Text wave: lerp TextColor3 in Heartbeat ──
-      // (UIGradient does NOT affect text color — must use TextColor3 directly)
-      if(el.gwtxt && ['button','label','textbox','checkbox'].includes(el.type)){
+      if(el.gwtxt && ['button','label','textbox','checkbox','roundbutton'].includes(el.type)){
         c+=`\n-- ✨ GradientWave TEXT: ${n}\n`;
         c+=`local _gwtt_${n} = 0\n`;
         c+=`RunService.Heartbeat:Connect(function(dt)\n`;
@@ -2345,7 +2692,6 @@ function generateLua(){
       }
 
       // ── Border wave: animated UIStroke.Color lerp ──
-      // (UIStroke does NOT support UIGradient — must lerp Color in Heartbeat)
       if(el.gwbrd){
         c+=`\n-- ✨ GradientWave BORDER: ${n}\n`;
         c+=`local GWStroke_${n} = Instance.new("UIStroke")\n`;
@@ -2390,11 +2736,87 @@ function generateLua(){
       // Corner radius
       if(el.rad>0)c+=`local Corner_${n}=Instance.new("UICorner")\nCorner_${n}.CornerRadius=UDim.new(0,${el.rad})\nCorner_${n}.Parent=${n}\n`;
     }
+    if(el.type==='tabbar'){
+      // Generate TabBar: Frame + N TextButtons + UIListLayout + page switcher logic
+      const links=el.tabLinks&&el.tabLinks.length?el.tabLinks:(p.pages||[{id:1,name:'Main'}]).map(pg=>({pageId:pg.id,label:pg.name}));
+      const tc=h2r(el.txc)||'237, 232, 248';
+      const tcActive=h2r(el.txcActive||'#a855f7')||'168, 85, 247';
+      const bgActive=h2r(el.bg||'#16102a')||'22, 16, 42';
+
+      c+=`-- TabBar Layout\n`;
+      c+=`local UIList_${n}=Instance.new("UIListLayout")\n`;
+      c+=`UIList_${n}.FillDirection=Enum.FillDirection.Horizontal\n`;
+      c+=`UIList_${n}.SortOrder=Enum.SortOrder.LayoutOrder\n`;
+      c+=`UIList_${n}.Padding=UDim.new(0,3)\n`;
+      c+=`UIList_${n}.Parent=${n}\n`;
+      c+=`local UIPad_${n}=Instance.new("UIPadding")\n`;
+      c+=`UIPad_${n}.PaddingLeft=UDim.new(0,3)\nUIPad_${n}.PaddingRight=UDim.new(0,3)\n`;
+      c+=`UIPad_${n}.PaddingTop=UDim.new(0,3)\nUIPad_${n}.PaddingBottom=UDim.new(0,3)\n`;
+      c+=`UIPad_${n}.Parent=${n}\n`;
+      c+=`local tabBtns_${n}={}\n`;
+
+      // Generate all page Frame containers (one per page, only first visible)
+      const pageFrames={};
+      p.elements.forEach(pel=>{
+        const pgId=pel.pageId||1;
+        if(!pageFrames[pgId]){
+          const pg=(p.pages||[]).find(x=>x.id===pgId);
+          const pgName=pg?pg.name.replace(/[^A-Za-z0-9_]/g,'_'):'Page'+pgId;
+          pageFrames[pgId]=`PageFrame_${pgName}`;
+        }
+      });
+
+      links.forEach((lnk,i)=>{
+        const btnName=`${n}_Tab${i+1}`;
+        const tabLabel=lnk.label.replace(/"/g,'\\"');
+        c+=`\n-- Tab ${i+1}: ${tabLabel}\n`;
+        c+=`local ${btnName}=Instance.new("TextButton")\n`;
+        c+=`${btnName}.Name="${btnName}"\n`;
+        c+=`${btnName}.Size=UDim2.new(${(1/links.length).toFixed(4)},0,1,0)\n`;
+        c+=`${btnName}.BackgroundColor3=Color3.fromRGB(${bgActive})\n`;
+        c+=`${btnName}.BackgroundTransparency=${i===0?'0.7':'1'}\n`;
+        c+=`${btnName}.BorderSizePixel=0\n`;
+        c+=`${btnName}.Text="${tabLabel}"\n`;
+        c+=`${btnName}.TextColor3=Color3.fromRGB(${i===0?tcActive:tc})\n`;
+        c+=`${btnName}.TextSize=${el.txs||12}\n`;
+        c+=`${btnName}.Font=Enum.Font.${el.txf||'SourceSansBold'}\n`;
+        c+=`${btnName}.AutoButtonColor=false\n`;
+        c+=`${btnName}.LayoutOrder=${i+1}\n`;
+        if(el.rad>0){c+=`local Corner_${btnName}=Instance.new("UICorner")\nCorner_${btnName}.CornerRadius=UDim.new(0,${el.rad})\nCorner_${btnName}.Parent=${btnName}\n`;}
+        c+=`${btnName}.Parent=${n}\n`;
+        c+=`tabBtns_${n}[${i+1}]=${btnName}\n`;
+      });
+
+      // Click handlers — show/hide page frames
+      c+=`\n-- TabBar click logic\n`;
+      c+=`local function setActiveTab_${n}(idx)\n`;
+      c+=`  for i,btn in ipairs(tabBtns_${n}) do\n`;
+      c+=`    local isActive=(i==idx)\n`;
+      c+=`    btn.TextColor3=isActive and Color3.fromRGB(${tcActive}) or Color3.fromRGB(${tc})\n`;
+      c+=`    btn.BackgroundTransparency=isActive and 0.7 or 1\n`;
+      c+=`  end\n`;
+      // Show/hide page frames by their page names
+      links.forEach((lnk,i)=>{
+        const pg=(p.pages||[]).find(x=>x.id===lnk.pageId);
+        if(!pg)return;
+        const pgFrameName=`PageFrame_${pg.name.replace(/[^A-Za-z0-9_]/g,'_')}`;
+        c+=`  if ScreenGui:FindFirstChild("${pgFrameName}") then\n`;
+        c+=`    ScreenGui:FindFirstChild("${pgFrameName}").Visible=(${i}==idx-1)\n`;
+        c+=`  end\n`;
+      });
+      c+=`end\n`;
+
+      links.forEach((lnk,i)=>{
+        const btnName=`${n}_Tab${i+1}`;
+        c+=`${btnName}.MouseButton1Click:Connect(function() setActiveTab_${n}(${i+1}) end)\n`;
+      });
+      c+=`setActiveTab_${n}(1) -- Show first page by default\n`;
+    }
     if(el.type==='panel'){
       const pt=(el.txt||'Panel').replace(/"/g,'\\"');const ptc=h2r(el.txc)||'168, 85, 247';
       c+=`local PTitle_${n}=Instance.new("TextLabel")\nPTitle_${n}.Size=UDim2.new(1,0,0,28)\nPTitle_${n}.BackgroundTransparency=1\nPTitle_${n}.Text="${pt}"\nPTitle_${n}.TextColor3=Color3.fromRGB(${ptc})\nPTitle_${n}.TextSize=${el.txs||13}\nPTitle_${n}.Font=Enum.Font.${el.txf||'GothamBold'}\nPTitle_${n}.TextXAlignment=Enum.TextXAlignment.${el.txalign||'Left'}\nPTitle_${n}.Parent=${n}\n`;
       c+=`${n}.ClipsDescendants=true\n`;
-      if(el.collapsed)c+=`${n}.Size=UDim2.new(${(el.w/CW).toFixed(4)},0,0,28)\n`;
+      if(el.collapsed)c+=`${n}.Size=UDim2.new(0,math.round(${Math.round(el.w)}*_scX),0,28)\n`;
     }
     if(el.type==='dropdown'){
       c+=`local ${n}_items={${el.txt.split('\n').filter(Boolean).map(s=>'"'+s.replace(/"/g,'\\"')+'"').join(',')}}\nlocal ${n}_sel=1\n`;
@@ -2408,7 +2830,7 @@ function generateLua(){
       c+=`local UIS_${n}=game:GetService("UserInputService")\nlocal drag_${n}=false\n${n}_knob.MouseButton1Down:Connect(function()drag_${n}=true end)\nUIS_${n}.InputEnded:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then drag_${n}=false end end)\nRunService.Heartbeat:Connect(function()\nif not drag_${n} then return end\nlocal mp=UIS_${n}:GetMouseLocation()\nlocal abs=${n}_bar.AbsolutePosition\nlocal sz=${n}_bar.AbsoluteSize\nlocal pct=math.clamp((mp.X-abs.X)/sz.X,0,1)\n${n}_val=math.floor(pct*100)\n${n}_fill.Size=UDim2.new(pct,0,1,0)\n${n}_knob.Position=UDim2.new(pct,0,0.5,0)\nend)\n`;
     }
 
-    // Parent: use parentId if set, else ScreenGui
+    // Parent: use parentId → specific element, pageId → page frame, else ScreenGui
     if(el.parentId){
       const parentEl=getEl(el.parentId);
       if(parentEl){
@@ -2417,13 +2839,16 @@ function generateLua(){
       } else {
         c+=`${n}.Parent = ScreenGui\n`;
       }
+    } else if(pages.length>1&&el.type!=='tabbar'&&pageFrameVars[el.pageId||1]){
+      // Element belongs to a page → parent to that page's Frame
+      c+=`${n}.Parent = ${pageFrameVars[el.pageId||1]}\n`;
     } else {
       c+=`${n}.Parent = ScreenGui\n`;
     }
 
     const scriptLines=(el.script||'').split('\n').filter(l=>l.trim()&&!l.trim().startsWith('--'));
     if(scriptLines.length>0){
-      if(el.type==='button'||el.type==='imagebutton'){
+      if(el.type==='button'||el.type==='imagebutton'||el.type==='roundbutton'){
         c+=`\n${n}.MouseButton1Click:Connect(function()\n`;
         scriptLines.forEach(l=>c+=`  ${l}\n`);c+=`end)\n`;
       } else if(el.type==='checkbox'){
@@ -2438,12 +2863,12 @@ function generateLua(){
         c+=`\n${n}.MouseButton1Click:Connect(function()\n  ${n}_sel=${n}_sel%#${n}_items+1\n  ${n}_lbl.Text=${n}_items[${n}_sel]\n`;
         scriptLines.forEach(l=>c+=`  ${l}\n`);c+=`end)\n`;
       } else if(el.type==='panel'){
-        c+=`\nlocal panOpen_${n}=true\nPTitle_${n}.InputBegan:Connect(function(i)\n  if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then\n    panOpen_${n}=not panOpen_${n}\n    local ts=game:GetService("TweenService")\n    ts:Create(${n},TweenInfo.new(0.25),{Size=UDim2.new(0,${Math.round(el.w)},0,panOpen_${n} and ${Math.round(el.h)} or 28)}):Play()\n  end\nend)\n`;
+        c+=`\nlocal panOpen_${n}=true\nPTitle_${n}.InputBegan:Connect(function(i)\n  if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then\n    panOpen_${n}=not panOpen_${n}\n    local ts=game:GetService("TweenService")\n    ts:Create(${n},TweenInfo.new(0.25),{Size=UDim2.new(0,math.round(${Math.round(el.w)}*_scX),0,panOpen_${n} and math.round(${Math.round(el.h)}*_scY) or 28)}):Play()\n  end\nend)\n`;
         scriptLines.forEach(l=>c+=`${l}\n`);
       }
     }
 
-    if(el.rbw&&['button','label','textbox'].includes(el.type)){
+    if(el.rbw&&['button','label','textbox','roundbutton'].includes(el.type)){
       c+=`\nlocal _t_${n}=0\nRunService.Heartbeat:Connect(function(dt)\n  _t_${n}=(_t_${n}+dt*0.4)%1\n  ${n}.TextColor3=Color3.fromHSV(_t_${n},1,1)\nend)\n`;
     }
     c+='\n';
@@ -3611,7 +4036,6 @@ function mdlRenderList(){
 
 // ── Input: orbit + drag part ──
 function mdlSetupInput(cvs){
-  let mDown=false;
 
   cvs.addEventListener('touchstart',e=>{
     e.preventDefault();
@@ -3619,48 +4043,51 @@ function mdlSetupInput(cvs){
     _mdlDragX=e.touches[0].clientX;
     _mdlDragY=e.touches[0].clientY;
     if(e.touches.length===1 && _mdlMode==='select'){
-      // Raycast tap to select
       mdlRaycast(e.touches[0].clientX,e.touches[0].clientY,cvs);
     }
   },{passive:false});
 
   cvs.addEventListener('touchmove',e=>{
     e.preventDefault();
-    if(!_mdlDrag) return;
+    if(!_mdlDrag||!e.touches.length) return;
+
+    if(e.touches.length>=2){
+      // 2-finger orbit — use centroid
+      const cx=(e.touches[0].clientX+e.touches[1].clientX)/2;
+      const cy=(e.touches[0].clientY+e.touches[1].clientY)/2;
+      const dx=cx-_mdlDragX, dy=cy-_mdlDragY;
+      _mdlDragX=cx;_mdlDragY=cy;
+      _mdlCamTheta-=dx*0.008;
+      _mdlCamPhi=Math.max(-0.3,Math.min(0.7,_mdlCamPhi-dy*0.006));
+      mdlUpdateCam();
+      return;
+    }
+
     const dx=e.touches[0].clientX-_mdlDragX;
     const dy=e.touches[0].clientY-_mdlDragY;
     _mdlDragX=e.touches[0].clientX;
     _mdlDragY=e.touches[0].clientY;
 
-    if(e.touches.length===2){
-      // 2-finger orbit
-      const cx=(e.touches[0].clientX+e.touches[1].clientX)/2;
-      const cy=(e.touches[0].clientY+e.touches[1].clientY)/2;
-      _mdlCamTheta-=(cx-_mdlDragX)*0.008;
-      _mdlCamPhi=Math.max(-0.3,Math.min(0.7,_mdlCamPhi-(cy-_mdlDragY)*0.006));
-      _mdlDragX=cx;_mdlDragY=cy;
-      mdlUpdateCam(); return;
-    }
-
     if(_mdlSel!==null && _mdlMode!=='select'){
       mdlDragTransform(dx,dy);
     } else {
-      // Orbit
       _mdlCamTheta-=dx*0.009;
       _mdlCamPhi=Math.max(-0.3,Math.min(0.7,_mdlCamPhi-dy*0.006));
       mdlUpdateCam();
     }
   },{passive:false});
 
-  cvs.addEventListener('touchend',()=>{_mdlDrag=false;},{passive:true});
+  // Reset drag on BOTH touchend AND touchcancel
+  const _mdlEndDrag=()=>{_mdlDrag=false;};
+  cvs.addEventListener('touchend',_mdlEndDrag,{passive:true});
+  cvs.addEventListener('touchcancel',_mdlEndDrag,{passive:true});
 
-  // Mouse
-  cvs.addEventListener('mousedown',e=>{
-    mDown=true;_mdlDragX=e.clientX;_mdlDragY=e.clientY;
-    if(e.button===0 && _mdlMode==='select') mdlRaycast(e.clientX,e.clientY,cvs);
-  });
-  window.addEventListener('mousemove',e=>{
+  // Mouse — use named functions so they can be removed if needed
+  let mDown=false;
+  function _mdlMM(e){
     if(!mDown) return;
+    // Safety: if no buttons pressed, reset
+    if(e.buttons===0){mDown=false;return;}
     const dx=e.clientX-_mdlDragX,dy=e.clientY-_mdlDragY;
     _mdlDragX=e.clientX;_mdlDragY=e.clientY;
     if(e.buttons===1 && _mdlSel!==null && _mdlMode!=='select'){
@@ -3670,8 +4097,19 @@ function mdlSetupInput(cvs){
       _mdlCamPhi=Math.max(-0.3,Math.min(0.7,_mdlCamPhi-dy*0.006));
       mdlUpdateCam();
     }
+  }
+  function _mdlMU(){mDown=false;}
+  cvs.addEventListener('mousedown',e=>{
+    mDown=true;_mdlDragX=e.clientX;_mdlDragY=e.clientY;
+    if(e.button===0 && _mdlMode==='select') mdlRaycast(e.clientX,e.clientY,cvs);
   });
-  window.addEventListener('mouseup',()=>mDown=false);
+  // Remove old listeners first to prevent accumulation
+  window.removeEventListener('mousemove',window._mdlMM);
+  window.removeEventListener('mouseup',window._mdlMU);
+  window._mdlMM=_mdlMM;
+  window._mdlMU=_mdlMU;
+  window.addEventListener('mousemove',_mdlMM);
+  window.addEventListener('mouseup',_mdlMU);
   cvs.addEventListener('wheel',e=>{
     _mdlCamDist=Math.max(2,Math.min(14,_mdlCamDist+e.deltaY*0.009));
     mdlUpdateCam();e.preventDefault();
@@ -3819,6 +4257,546 @@ function mdlGenLua(){
 function mdlCopyLua(){
   if(!_mdlParts.length){toast('Add parts first');return;}
   copyText(mdlBuildLua(),()=>toast('Model Lua copied ✓'));
+}
+
+
+
+// ═══════════════════════════════════════════════════════════
+//  SA-MP SCRIPT MAKER
+// ═══════════════════════════════════════════════════════════
+let sampLib = 'moonloader'; // 'moonloader' | 'monetloader'
+let sampCmds = [];     // [{cmd, desc, code}]
+let sampHotkeys = [];  // [{key, vk, desc, code}]
+let sampMenuItems = [];// [{label, type, varName, code}]
+let sampCmdCnt = 0, sampHkCnt = 0, sampMenuCnt = 0;
+
+// Features list
+const SAMP_FEATURES = [
+  { id:'chat',    ic:'💬', name:'Chat Messages',     desc:'sendChatMessage / addChatMessage',  moon:true,  monet:true  },
+  { id:'imgui',   ic:'🖥️', name:'ImGui Window',      desc:'Menu with checkboxes, buttons',     moon:true,  monet:true  },
+  { id:'radar',   ic:'📡', name:'Radar / Minimap',   desc:'Show blips on minimap',             moon:true,  monet:false },
+  { id:'ped',     ic:'🚶', name:'Ped Control',       desc:'Spawn, freeze, move peds',          moon:true,  monet:false },
+  { id:'vehicle', ic:'🚗', name:'Vehicle Control',   desc:'Spawn, modify vehicles',            moon:true,  monet:true  },
+  { id:'weapon',  ic:'🔫', name:'Weapon Give',       desc:'Give weapons to player',            moon:true,  monet:true  },
+  { id:'health',  ic:'❤️', name:'Health / Armor',    desc:'Set HP and armor',                  moon:true,  monet:true  },
+  { id:'pos',     ic:'📍', name:'Position / TP',     desc:'Teleport, get/set position',        moon:true,  monet:true  },
+  { id:'money',   ic:'💰', name:'Money HUD',         desc:'Show money on screen',              moon:true,  monet:true  },
+  { id:'timer',   ic:'⏱️', name:'Timer / Loop',      desc:'Periodic callback every N ms',      moon:true,  monet:true  },
+  { id:'nametag', ic:'🏷️', name:'Custom Nametag',    desc:'Override player nametags',          moon:true,  monet:false },
+  { id:'esp',     ic:'👁️', name:'ESP / Boxes',       desc:'Draw boxes on players (ESP)',       moon:true,  monet:false },
+  { id:'otp',     ic:'📲', name:'On-Screen Text',    desc:'renderFontDrawText overlay',        moon:true,  monet:true  },
+  { id:'skins',   ic:'👗', name:'Skin Changer',      desc:'Change player skin via menu',       moon:true,  monet:true  },
+  { id:'anim',    ic:'🎭', name:'Animation Player',  desc:'Play animations on demand',         moon:true,  monet:true  },
+  { id:'spectate',ic:'🎥', name:'Spectate Player',   desc:'Spectate by ID',                    moon:true,  monet:false },
+];
+
+let sampActiveFeats = new Set(['chat','imgui','health','pos']);
+
+// VK key list for hotkeys
+const VK_KEYS = [
+  ['F1',0x70],['F2',0x71],['F3',0x72],['F4',0x73],['F5',0x74],['F6',0x75],['F7',0x76],['F8',0x77],
+  ['F9',0x78],['F10',0x79],['F11',0x7A],['F12',0x7B],
+  ['INSERT',0x2D],['DELETE',0x2E],['HOME',0x24],['END',0x23],
+  ['NUMPAD0',0x60],['NUMPAD1',0x61],['NUMPAD2',0x62],['NUMPAD3',0x63],['NUMPAD4',0x64],
+  ['NUMPAD5',0x65],['NUMPAD6',0x66],['NUMPAD7',0x67],['NUMPAD8',0x68],['NUMPAD9',0x69],
+  ['Z',0x5A],['X',0x58],['C',0x43],['V',0x56],['B',0x42],['N',0x4E],['M',0x4D],
+];
+
+// ── Init SAMP tab ──
+function initSampTab(){
+  sampRenderFeatures();
+  sampRenderCmds();
+  sampRenderHotkeys();
+  sampRenderMenu();
+}
+
+function sampSetLib(lib){
+  sampLib = lib;
+  ['moon','monet'].forEach(id=>{
+    document.getElementById('samp-lib-'+id).classList.toggle('active-lib', id===lib.replace('loader',''));
+  });
+  sampRenderFeatures(); // some features are lib-specific
+  toast(lib==='moonloader'?'🌙 MoonLoader (PC)':'📱 MonetLoader (Mobile)');
+}
+
+// ── Features ──
+function sampRenderFeatures(){
+  const el=document.getElementById('samp-features');
+  if(!el) return;
+  el.innerHTML = SAMP_FEATURES
+    .filter(f=>sampLib==='moonloader'?f.moon:f.monet)
+    .map(f=>{
+      const active=sampActiveFeats.has(f.id);
+      return `<div class="samp-feat-row${active?' active-feat':''}" onclick="sampToggleFeat('${f.id}')">
+        <span class="samp-feat-ic">${f.ic}</span>
+        <div style="flex:1"><div class="samp-feat-name">${f.name}</div><div class="samp-feat-desc">${f.desc}</div></div>
+        <div class="samp-check">${active?'✓':''}</div>
+      </div>`;
+    }).join('');
+}
+
+function sampToggleFeat(id){
+  if(sampActiveFeats.has(id)) sampActiveFeats.delete(id);
+  else sampActiveFeats.add(id);
+  sampRenderFeatures();
+}
+
+// ── Commands ──
+function sampAddCmd(){
+  const id=++sampCmdCnt;
+  sampCmds.push({id,cmd:'mycmd',desc:'My command',code:'sampAddChatMessage("Command used!", -1)'});
+  sampRenderCmds();
+}
+function sampDelCmd(id){ sampCmds=sampCmds.filter(c=>c.id!==id); sampRenderCmds(); }
+function sampRenderCmds(){
+  const el=document.getElementById('samp-cmds-list');
+  if(!el) return;
+  if(!sampCmds.length){
+    el.innerHTML='<div style="font-size:10px;color:var(--txt2);padding:6px 0;">No commands. Tap + ADD.</div>';
+    return;
+  }
+  el.innerHTML=sampCmds.map(c=>`
+    <div class="samp-item-row">
+      <div style="color:var(--warn);font-size:11px;font-family:\'JetBrains Mono\',monospace;flex-shrink:0;">/</div>
+      <input class="si" value="${c.cmd}" oninput="sampCmds.find(x=>x.id===${c.id}).cmd=this.value" style="width:70px;padding:4px 6px;font-size:10px;">
+      <input class="si" value="${c.desc}" oninput="sampCmds.find(x=>x.id===${c.id}).desc=this.value" style="flex:1;padding:4px 6px;font-size:10px;" placeholder="description">
+      <div onclick="sampEditCmdCode(${c.id})" style="padding:3px 7px;border:1px solid var(--brd);border-radius:5px;font-size:9px;color:var(--acc);cursor:pointer;font-family:\'Rajdhani\',sans-serif;font-weight:700;">CODE</div>
+      <div onclick="sampDelCmd(${c.id})" style="color:var(--red);font-size:14px;cursor:pointer;padding:2px 4px;">✕</div>
+    </div>`).join('');
+}
+function sampEditCmdCode(id){
+  const cmd=sampCmds.find(c=>c.id===id);
+  if(!cmd) return;
+  // Reuse existing script editor for code editing
+  document.getElementById('sc-name').textContent='/'+cmd.cmd+' code';
+  document.getElementById('sc-ev').textContent='-- Called when player types /'+cmd.cmd;
+  document.getElementById('se').value=cmd.code||'';
+  onSEI();
+  document.getElementById('sc-modal').classList.add('open');
+  // Override save to write back to cmd
+  const origSave=window._sampCmdSaveTarget;
+  window._sampCmdSaveTarget={type:'cmd',id};
+}
+
+// ── Hotkeys ──
+function sampAddHotkey(){
+  const id=++sampHkCnt;
+  sampHotkeys.push({id,key:'F5',vk:0x74,desc:'Toggle menu',code:'showSampMenu=not showSampMenu'});
+  sampRenderHotkeys();
+}
+function sampDelHotkey(id){ sampHotkeys=sampHotkeys.filter(h=>h.id!==id); sampRenderHotkeys(); }
+function sampRenderHotkeys(){
+  const el=document.getElementById('samp-hotkeys-list');
+  if(!el) return;
+  if(!sampHotkeys.length){
+    el.innerHTML='<div style="font-size:10px;color:var(--txt2);padding:6px 0;">No hotkeys. Tap + ADD.</div>';
+    return;
+  }
+  el.innerHTML=sampHotkeys.map(h=>`
+    <div class="samp-item-row">
+      <select class="si" style="width:80px;padding:4px 5px;font-size:10px;" onchange="sampHkKey(${h.id},this.value)">
+        ${VK_KEYS.map(([k,v])=>`<option value="${v}" ${h.vk===v?'selected':''}>${k}</option>`).join('')}
+      </select>
+      <input class="si" value="${h.desc}" oninput="sampHotkeys.find(x=>x.id===${h.id}).desc=this.value" style="flex:1;padding:4px 6px;font-size:10px;" placeholder="description">
+      <div onclick="sampEditHkCode(${h.id})" style="padding:3px 7px;border:1px solid var(--brd);border-radius:5px;font-size:9px;color:var(--acc);cursor:pointer;font-family:\'Rajdhani\',sans-serif;font-weight:700;">CODE</div>
+      <div onclick="sampDelHotkey(${h.id})" style="color:var(--red);font-size:14px;cursor:pointer;padding:2px 4px;">✕</div>
+    </div>`).join('');
+}
+function sampHkKey(id,vk){
+  const hk=sampHotkeys.find(h=>h.id===id);
+  if(hk){ hk.vk=+vk; hk.key=VK_KEYS.find(([k,v])=>v===+vk)?.[0]||'?'; }
+}
+function sampEditHkCode(id){
+  const hk=sampHotkeys.find(h=>h.id===id);
+  if(!hk) return;
+  document.getElementById('sc-name').textContent='Hotkey: '+hk.key;
+  document.getElementById('sc-ev').textContent='-- Called when player presses '+hk.key;
+  document.getElementById('se').value=hk.code||'';
+  onSEI();
+  document.getElementById('sc-modal').classList.add('open');
+  window._sampCmdSaveTarget={type:'hk',id};
+}
+
+// ── Menu items ──
+function sampAddMenuItem(){
+  const id=++sampMenuCnt;
+  sampMenuItems.push({id,label:'Option '+id,type:'checkbox',varName:'opt'+id,code:''});
+  sampRenderMenu();
+}
+function sampDelMenuItem(id){ sampMenuItems=sampMenuItems.filter(m=>m.id!==id); sampRenderMenu(); }
+function sampRenderMenu(){
+  const el=document.getElementById('samp-menu-list');
+  if(!el) return;
+  if(!sampMenuItems.length){
+    el.innerHTML='<div style="font-size:10px;color:var(--txt2);padding:6px 0;">No menu items. Tap + ADD.</div>';
+    return;
+  }
+  el.innerHTML=sampMenuItems.map(m=>`
+    <div class="samp-item-row">
+      <select class="si" style="width:80px;padding:4px 5px;font-size:10px;" onchange="sampMenuItems.find(x=>x.id===${m.id}).type=this.value">
+        ${['checkbox','button','slider','text'].map(t=>`<option value="${t}" ${m.type===t?'selected':''}>${t}</option>`).join('')}
+      </select>
+      <input class="si" value="${m.label}" oninput="sampMenuItems.find(x=>x.id===${m.id}).label=this.value" style="flex:1;padding:4px 6px;font-size:10px;" placeholder="label">
+      <input class="si" value="${m.varName}" oninput="sampMenuItems.find(x=>x.id===${m.id}).varName=this.value" style="width:60px;padding:4px 6px;font-size:9px;font-family:\'JetBrains Mono\',monospace;" placeholder="varName">
+      <div onclick="sampDelMenuItem(${m.id})" style="color:var(--red);font-size:14px;cursor:pointer;padding:2px 4px;">✕</div>
+    </div>`).join('');
+}
+
+// ── Intercept script editor save for SAMP targets ──
+const _origSaveSc = null;
+function saveSc(){
+  const target=window._sampCmdSaveTarget;
+  const code=document.getElementById('se').value.trim();
+  if(target){
+    if(target.type==='cmd'){
+      const cmd=sampCmds.find(c=>c.id===target.id);
+      if(cmd) cmd.code=code;
+    } else if(target.type==='hk'){
+      const hk=sampHotkeys.find(h=>h.id===target.id);
+      if(hk) hk.code=code;
+    }
+    window._sampCmdSaveTarget=null;
+    toast('SAMP code saved ✓');
+  } else {
+    // Normal element script save
+    if(scTarget===null){closeSc();return;}
+    const el=getEl(scTarget);
+    if(el){el.script=code;buildSheet(el);toast('Script saved ✓');}
+  }
+  closeSc();
+}
+
+// ── Code generator ──
+function sampBuildLua(){
+  const name=(document.getElementById('samp-name').value||'MyScript').replace(/[^A-Za-z0-9_]/g,'_');
+  const ver=document.getElementById('samp-ver').value||'1.0';
+  const author=document.getElementById('samp-author').value||'Author';
+  const desc=document.getElementById('samp-desc').value||'';
+  const custom=(document.getElementById('samp-custom').value||'').trim();
+  const isMoon=sampLib==='moonloader';
+  const isMonet=sampLib==='monetloader';
+  const feats=sampActiveFeats;
+
+  let c='';
+  c+='-- ============================================================\n';
+  c+=`-- Script: ${name} v${ver}\n`;
+  c+=`-- Author: ${author}\n`;
+  if(desc) c+=`-- Description: ${desc}\n`;
+  c+=`-- Library: ${isMoon?'MoonLoader (PC)':'MonetLoader (Mobile)'}\n`;
+  c+=`-- Generated by LSM (Lua Script Maker)\n`;
+  c+='-- ============================================================\n\n';
+
+  if(isMoon){
+    // MoonLoader header
+    c+='local moonloader = require("moonloader")\n';
+    c+='local sampev = require("lib.samp.events")\n';
+    c+='local ffi = require("ffi")\n';
+    c+='local imgui = require("mimgui")\n\n';
+    c+='-- Script info\n';
+    c+=`script_name("${name}")\n`;
+    c+=`script_version("${ver}")\n`;
+    c+=`script_author("${author}")\n\n`;
+  } else {
+    // MonetLoader header
+    c+='import("android.widget.Toast")\n';
+    c+='local gg = gg or {}\n';
+    c+='local samp = samp or require("samp")\n\n';
+    c+=`-- Script: ${name} v${ver} by ${author}\n\n`;
+  }
+
+  // ── Variables ──
+  c+='-- ─── Variables ───────────────────────────────────────\n';
+  if(feats.has('imgui'))  c+=`local showMenu = ${isMoon?'imgui.new.bool(false)':'false'}\n`;
+  if(feats.has('health')) c+=`local autoHP = false\nlocal targetHP = 100.0\n`;
+  if(feats.has('weapon')) c+=`local selectedWeapon = 24\nlocal ammo = 999\n`;
+  if(feats.has('pos'))    c+=`local savedPos = {x=0,y=0,z=0}\n`;
+  if(feats.has('esp'))    c+=`local espEnabled = false\nlocal espDistance = 100.0\n`;
+  if(feats.has('timer'))  c+=`local timerMs = 1000\n`;
+  if(feats.has('nametag'))c+=`local customTag = ""\n`;
+  if(feats.has('vehicle'))c+=`local vehicleID = 411\n`;
+  if(feats.has('skins'))  c+=`local selectedSkin = 0\n`;
+  if(feats.has('spectate'))c+=`local spectateID = -1\n`;
+  sampMenuItems.forEach(m=>{
+    if(m.type==='checkbox') c+=`local ${m.varName} = ${isMoon?'imgui.new.bool(false)':'false'}\n`;
+    else if(m.type==='slider') c+=`local ${m.varName} = ${isMoon?'imgui.new.int(0)':'0'}\n`;
+    else if(m.type==='text') c+=`local ${m.varName}Buf = ${isMoon?'imgui.new.char[256]("")':'"" '}\n`;
+  });
+  c+='\n';
+
+  // ── Commands ──
+  if(sampCmds.length){
+    c+='-- ─── Commands ────────────────────────────────────────\n';
+    if(isMoon){
+      sampCmds.forEach(cmd=>{
+        c+=`-- /${cmd.cmd}: ${cmd.desc}\n`;
+        c+=`function onSendCommandHook(text)\n`;
+        c+=`  if text:find("^/${cmd.cmd}") then\n`;
+        c+=`    ${cmd.code||'sampAddChatMessage("/${cmd.cmd} called!", -1)'}\n`;
+        c+=`    return false\n`;
+        c+=`  end\n`;
+        c+=`end\n\n`;
+      });
+      c+=`sampev.onSendCommand = function(text)\n`;
+      sampCmds.forEach(cmd=>{
+        c+=`  if text:lower():find("^/${cmd.cmd}") then\n`;
+        c+=`    ${cmd.code||'sampAddChatMessage("Command: /${cmd.cmd}", -1)'}\n`;
+        c+=`    return false\n`;
+        c+=`  end\n`;
+      });
+      c+=`end\n\n`;
+    } else {
+      sampCmds.forEach(cmd=>{
+        c+=`-- /${cmd.cmd}: ${cmd.desc}\n`;
+        c+=`function on_${cmd.cmd}_command()\n`;
+        c+=`  ${cmd.code||'sampAddChatMessage("/${cmd.cmd} called!", -1)'}\n`;
+        c+=`end\n\n`;
+      });
+      c+=`-- Register commands\n`;
+      sampCmds.forEach(cmd=>{
+        c+=`samp.registerCommand("${cmd.cmd}", on_${cmd.cmd}_command)\n`;
+      });
+      c+='\n';
+    }
+  }
+
+  // ── Hotkeys ──
+  if(sampHotkeys.length && isMoon){
+    c+='-- ─── Hotkeys ──────────────────────────────────────────\n';
+    c+='local function checkHotkeys()\n';
+    sampHotkeys.forEach(hk=>{
+      c+=`  if wasKeyPressed(${hk.vk}) then -- ${hk.key}: ${hk.desc}\n`;
+      c+=`    ${hk.code||'sampAddChatMessage("Hotkey '+(hk.key)+' pressed!", -1)'}\n`;
+      c+=`  end\n`;
+    });
+    c+='end\n\n';
+  }
+
+  // ── ImGui menu ──
+  if(feats.has('imgui') && isMoon && sampMenuItems.length){
+    c+='-- ─── ImGui Menu ───────────────────────────────────────\n';
+    c+='imgui.OnFrame(function() return showMenu[0] end, function(player)\n';
+    c+=`  imgui.SetNextWindowSize(imgui.ImVec2(280, ${Math.max(120, sampMenuItems.length*40+80)}), imgui.Cond.FirstUseEver)\n`;
+    c+=`  imgui.Begin("${name}", showMenu, imgui.WindowFlags.NoCollapse)\n`;
+    c+=`  imgui.Text("${name} v${ver} by ${author}")\n`;
+    c+='  imgui.Separator()\n';
+    sampMenuItems.forEach(m=>{
+      const lbl=m.label.replace(/"/g,'\\"');
+      if(m.type==='checkbox'){
+        c+=`  if imgui.Checkbox("${lbl}", ${m.varName}) then end\n`;
+      } else if(m.type==='button'){
+        c+=`  if imgui.Button("${lbl}", imgui.ImVec2(-1,0)) then\n`;
+        c+=`    -- TODO: ${lbl} action\n  end\n`;
+      } else if(m.type==='slider'){
+        c+=`  imgui.SliderInt("${lbl}", ${m.varName}, 0, 100)\n`;
+      } else if(m.type==='text'){
+        c+=`  imgui.InputText("${lbl}", ${m.varName}Buf, 256)\n`;
+      }
+    });
+    c+='  imgui.End()\n';
+    c+='end)\n\n';
+  }
+
+  // ── Mobile menu (MonetLoader) ──
+  if(feats.has('imgui') && isMonet && sampMenuItems.length){
+    c+='-- ─── Mobile Menu (MonetLoader) ────────────────────────\n';
+    c+='local menuVisible = false\n';
+    c+=`local menuItems = {\n`;
+    sampMenuItems.forEach(m=>{
+      c+=`  {label="${m.label}", type="${m.type}", value=${m.type==='checkbox'?'false':'0'}},\n`;
+    });
+    c+='}\n';
+    c+=`function showMobileMenu()\n`;
+    c+=`  -- MonetLoader touch UI\n`;
+    c+=`  local menu = Menu.new("${name}")\n`;
+    sampMenuItems.forEach(m=>{
+      if(m.type==='checkbox')  c+=`  menu:addToggle("${m.label}", false, function(v) ${m.varName}=v end)\n`;
+      else if(m.type==='button') c+=`  menu:addButton("${m.label}", function() end)\n`;
+      else if(m.type==='slider') c+=`  menu:addSlider("${m.label}", 0, 100, 0, function(v) ${m.varName}=v end)\n`;
+    });
+    c+=`  menu:show()\n`;
+    c+=`end\n\n`;
+  }
+
+  // ── Main function / loop ──
+  c+='-- ─── Main ─────────────────────────────────────────────\n';
+  if(isMoon){
+    c+='function main()\n';
+    c+='  while not isSampAvailable() do wait(100) end\n\n';
+    c+='  sampAddChatMessage("{FFAA00}['+name+'] {FFFFFF}Script loaded! v'+ver+'", -1)\n\n';
+
+    if(sampHotkeys.length){
+      c+='  while true do\n';
+      c+='    wait(0)\n';
+      if(sampHotkeys.length) c+='    checkHotkeys()\n';
+
+      if(feats.has('health')){
+        c+='    if autoHP then\n';
+        c+='      local ped = playerPed\n';
+        c+='      if getCharHealth(ped) < targetHP then\n';
+        c+='        setCharHealth(ped, targetHP)\n';
+        c+='      end\n';
+        c+='    end\n';
+      }
+      if(feats.has('esp') && feats.has('radar')){
+        c+='    if espEnabled then\n';
+        c+='      -- ESP: iterate all players\n';
+        c+='      for i=0,sampGetMaxPlayerId() do\n';
+        c+='        if sampIsPlayerConnected(i) and i~=select(2,sampGetPlayerIdByCharHandle(playerPed)) then\n';
+        c+='          local res,ped=sampGetCharHandleBySampPlayerId(i)\n';
+        c+='          if res then\n';
+        c+='            local rx,ry,rz=getCharCoordinates(ped)\n';
+        c+='            -- draw box or distance check here\n';
+        c+='          end\n';
+        c+='        end\n';
+        c+='      end\n';
+        c+='    end\n';
+      }
+      if(custom) c+='    -- Custom code:\n'+custom.split('\n').map(l=>'    '+l).join('\n')+'\n';
+      c+='  end\n';
+    } else {
+      c+='  -- Main loop\n';
+      c+='  while true do\n';
+      c+='    wait(0)\n';
+      if(feats.has('health')){
+        c+='    if autoHP and getCharHealth(playerPed)<targetHP then\n';
+        c+='      setCharHealth(playerPed,targetHP)\n';
+        c+='    end\n';
+      }
+      if(custom) c+='    '+custom.split('\n').join('\n    ')+'\n';
+      c+='  end\n';
+    }
+
+    c+='end\n\n';
+
+    // Feature-specific extras
+    if(feats.has('pos')){
+      c+='-- Position helpers\n';
+      c+='function savePos()\n';
+      c+='  savedPos.x,savedPos.y,savedPos.z=getCharCoordinates(playerPed)\n';
+      c+='  sampAddChatMessage("{FFFF00}Position saved!",  -1)\n';
+      c+='end\n';
+      c+='function tpToSaved()\n';
+      c+='  setCharCoordinates(playerPed,savedPos.x,savedPos.y,savedPos.z)\n';
+      c+='end\n\n';
+    }
+    if(feats.has('weapon')){
+      c+='-- Weapon helpers\n';
+      c+='function giveWeapon()\n';
+      c+='  giveWeaponToChar(playerPed, selectedWeapon, ammo)\n';
+      c+='  sampAddChatMessage("{00FF00}Weapon given: "..selectedWeapon, -1)\n';
+      c+='end\n\n';
+    }
+    if(feats.has('vehicle')){
+      c+='-- Vehicle spawn\n';
+      c+='function spawnVehicle()\n';
+      c+='  local x,y,z=getCharCoordinates(playerPed)\n';
+      c+='  local car=createCar(vehicleID,x+3,y,z)\n';
+      c+='  warpCharIntoCar(playerPed,car)\n';
+      c+='  sampAddChatMessage("{00FFFF}Vehicle spawned: "..vehicleID, -1)\n';
+      c+='end\n\n';
+    }
+    if(feats.has('spectate')){
+      c+='-- Spectate\n';
+      c+='function startSpectate(id)\n';
+      c+='  spectateID=id\n';
+      c+='  sampSendChat("/sp "..id)\n';
+      c+='end\n';
+      c+='function stopSpectate()\n';
+      c+='  spectateID=-1\n';
+      c+='  sampSendChat("/sp")\n';
+      c+='end\n\n';
+    }
+    if(feats.has('anim')){
+      c+='-- Animation helpers\n';
+      c+='function playAnim(animName, ifp)\n';
+      c+='  requestAnims(ifp)\n';
+      c+='  while not hasAnimsLoaded(ifp) do wait(50) end\n';
+      c+='  taskPlayAnim(playerPed, animName, ifp, 4.0, false, false, false, false, -1)\n';
+      c+='end\n\n';
+    }
+    if(feats.has('skins')){
+      c+='-- Skin changer\n';
+      c+='function changeSkin(id)\n';
+      c+='  selectedSkin=id\n';
+      c+='  setCharModel(playerPed,id)\n';
+      c+='  recreatePlayer()\n';
+      c+='  sampAddChatMessage("{FF8800}Skin changed to "..id, -1)\n';
+      c+='end\n\n';
+    }
+    if(feats.has('money')){
+      c+='-- Money HUD\n';
+      c+='sampev.onSetPlayerMoney = function(money)\n';
+      c+='  sampAddChatMessage("{FFFF00}$ "..money, -1)\n';
+      c+='  return true\n';
+      c+='end\n\n';
+    }
+    if(feats.has('nametag')){
+      c+='-- Custom nametag\n';
+      c+='sampev.onDrawNameTag = function(playerid)\n';
+      c+='  if customTag~="" then\n';
+      c+='    sampSetPlayerName(playerid, customTag)\n';
+      c+='  end\n';
+      c+='end\n\n';
+    }
+
+  } else {
+    // MonetLoader main
+    c+=`-- MonetLoader: use events/callbacks\n`;
+    c+=`function onScriptLoad()\n`;
+    c+=`  print("[${name}] Script loaded v${ver}")\n`;
+    if(sampMenuItems.length) c+=`  -- showMobileMenu() -- uncomment to show on load\n`;
+    c+=`end\n\n`;
+    c+=`function onScriptUnload()\n`;
+    c+=`  print("[${name}] Script unloaded")\n`;
+    c+=`end\n\n`;
+    if(feats.has('health')){
+      c+=`function onTick()\n`;
+      c+=`  if autoHP then\n`;
+      c+=`    local hp=ped.getHealth()\n`;
+      c+=`    if hp < targetHP then ped.setHealth(targetHP) end\n`;
+      c+=`  end\n`;
+      if(custom) c+=`  ${custom.split('\n').join('\n  ')}\n`;
+      c+=`end\n\n`;
+    }
+    if(feats.has('pos')){
+      c+=`-- Teleport helpers\n`;
+      c+=`function saveCurrentPos()\n`;
+      c+=`  savedPos.x,savedPos.y,savedPos.z=ped.getPos()\n`;
+      c+=`end\n`;
+      c+=`function teleportToSaved()\n`;
+      c+=`  ped.setPos(savedPos.x,savedPos.y,savedPos.z)\n`;
+      c+=`end\n\n`;
+    }
+    if(feats.has('weapon')){
+      c+=`function giveWeapon(id,ammoCount)\n`;
+      c+=`  ped.giveWeapon(id,ammoCount or 999)\n`;
+      c+=`end\n\n`;
+    }
+    if(feats.has('vehicle')){
+      c+=`function spawnCar(modelId)\n`;
+      c+=`  local x,y,z=ped.getPos()\n`;
+      c+=`  car.create(modelId,x+3,y,z)\n`;
+      c+=`end\n\n`;
+    }
+  }
+
+  return c;
+}
+
+function sampGenerate(){
+  const code=sampBuildLua();
+  const name=(document.getElementById('samp-name').value||'MyScript').replace(/[^A-Za-z0-9_]/g,'_');
+  document.getElementById('anim-code-fn').textContent=name+'.lua';
+  document.getElementById('anim-code-stats').innerHTML=
+    `🎮 <b style="color:var(--warn)">SA-MP</b> &nbsp;·&nbsp;`+
+    `📚 <b style="color:var(--acc)">${sampLib==='moonloader'?'MoonLoader':'MonetLoader'}</b> &nbsp;·&nbsp;`+
+    `📄 <b style="color:var(--grn)">${code.split('\n').length}</b> lines`;
+  document.getElementById('anim-cdisplay').textContent=code;
+  document.getElementById('anim-code-modal').classList.add('open');
+}
+
+function sampCopy(){
+  copyText(sampBuildLua(),()=>toast('SAMP script copied ✓'));
 }
 
 </script>
