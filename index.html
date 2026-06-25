@@ -145,6 +145,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .t-button{background:#2a1f42;border:1px solid #5a3a80;display:flex;align-items:center;justify-content:center;}
 .t-roundbutton{background:#2a1f42;border:1px solid #5a3a80;display:flex;align-items:center;justify-content:center;border-radius:50%!important;}
 .t-tabbar{background:#16102a;border:1px solid #4a2d7a;}
+.t-toggle{background:#1a1028;border:1px solid #3d2860;border-radius:999px;display:flex;align-items:center;cursor:pointer;position:relative;overflow:hidden;}
+.toggle-track{position:absolute;inset:0;border-radius:999px;transition:background .2s;}
+.toggle-knob{position:absolute;top:50%;transform:translateY(-50%);border-radius:50%;transition:left .2s, background .2s;box-shadow:0 1px 4px rgba(0,0,0,.5);}
 .t-textbox{background:rgba(0,0,0,.55);border:1px solid #3d2860;}
 .t-label{background:transparent;border:none;display:flex;align-items:center;}
 .t-checkbox{background:transparent;border:none;display:flex;align-items:center;gap:8px;}
@@ -849,6 +852,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
       <div class="pi" ontouchstart="dragFrom(event,'image','🖼️ Image')" onclick="addElAndClose('image')"><span class="pi-ic">🖼️</span><span class="pi-nm">Image</span></div>
       <div class="pi" ontouchstart="dragFrom(event,'imagebutton','🖱️ ImageButton')" onclick="addElAndClose('imagebutton')"><span class="pi-ic">🖱️</span><span class="pi-nm">ImageButton</span></div>
       <div class="pi" ontouchstart="dragFrom(event,'roundbutton','⭕ RoundButton')" onclick="addElAndClose('roundbutton')"><span class="pi-ic">⭕</span><span class="pi-nm">RoundButton</span></div>
+      <div class="pi" ontouchstart="dragFrom(event,'toggle','🔵 Toggle')" onclick="addElAndClose('toggle')"><span class="pi-ic">🔵</span><span class="pi-nm">Toggle</span></div>
       <div class="pi" ontouchstart="dragFrom(event,'tabbar','📑 TabBar')" onclick="addElAndClose('tabbar')"><span class="pi-ic">📑</span><span class="pi-nm">TabBar</span></div>
       <div class="cat">Snippets</div>
       <div class="pi" onclick="openSnipEd('notify');closeDrawer()"><span class="pi-ic">🔔</span><span class="pi-nm">Notify</span></div>
@@ -1058,7 +1062,7 @@ function closeLayers(){
 const LAYER_ICONS={
   frame:'⬛',button:'🔲',textbox:'✏️',label:'🏷️',checkbox:'☑️',
   slider:'🎚️',dropdown:'🔽',separator:'─',panel:'🗂️',
-  image:'🖼️',imagebutton:'🖱️'
+  image:'🖼️',imagebutton:'🖱️',toggle:'🔵',roundbutton:'⭕',tabbar:'📑'
 };
 
 function renderLayersList(){
@@ -1605,6 +1609,7 @@ function addEl(type,x,y){
     imagebutton:{w:120,h:120,bg:'#0a0812',border:'#3d2860',op:1,rad:6,rot:0,sh:0,neon:'none',imgId:'',imgUrl:'',imgScale:'Fit',imgTint:'#ffffff',txt:'',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
     roundbutton:{w:56,h:56, bg:'#2a1f42',border:'#7c3aed',op:1,rad:999,rot:0,sh:4,neon:'none',txt:'+',txc:'#ede8f8',txs:20,txf:'SourceSansBold',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal'},
     tabbar:   {w:300,h:44, bg:'#16102a',border:'#4a2d7a',op:1,rad:8,rot:0,sh:0,neon:'none',txt:'',txc:'#ede8f8',txcActive:'#a855f7',txs:12,txf:'SourceSansBold',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal',tabLinks:[]},
+    toggle:   {w:60, h:30, bg:'#1a1028',bgOn:'#a855f7',border:'#3d2860',borderOn:'#a855f7',op:1,rad:999,rot:0,sh:0,neon:'none',txt:'',knobColor:'#ffffff',knobColorOn:'#ffffff',txc:'#ede8f8',txs:14,txf:'SourceSans',txalign:'Center',tyalign:'Center',rbw:false,txwrap:false,parentId:null,gwav:false,gwtxt:false,gwbrd:false,gwc1:'#a855f7',gwc2:'#e879f9',gwspd:3,gwdir:'horizontal',togOn:false},
   };
   const d=D[type]||D.frame;
   const lbl=type.charAt(0).toUpperCase()+type.slice(1)+'_'+id;
@@ -1850,6 +1855,26 @@ function applyStyle(el){
       dom.appendChild(btn);
     });
     if(el.gwbrd&&el.gwav)applyGWBorder(dom,el.gwc1||'#a855f7',el.gwc2||'#e879f9',el.gwdir,el.gwspd,el.rad);
+  } else if(el.type==='toggle'){
+    // Toggle switch: rounded track + knob
+    const isOn = el.togOn||false;
+    const trackBg = isOn ? (el.bgOn||'#a855f7') : (el.bg||'#1a1028');
+    const knobColor = isOn ? (el.knobColorOn||'#ffffff') : (el.knobColor||'#ffffff');
+    const knobSize = Math.round(el.h * 0.76);
+    const knobOff = Math.round((el.h - knobSize)/2);
+    const knobOnLeft = Math.round(el.w - knobSize - knobOff);
+    const borderCol = isOn ? (el.borderOn||'#a855f7') : (el.border||'#3d2860');
+    dom.style.cssText += `background:${trackBg};border:1.5px solid ${borderCol};border-radius:${el.h}px;cursor:pointer;overflow:hidden;transition:background .2s,border-color .2s;`;
+    // Knob
+    const knob = document.createElement('div');
+    knob.style.cssText = `position:absolute;width:${knobSize}px;height:${knobSize}px;border-radius:50%;background:${knobColor};top:${knobOff}px;left:${isOn?knobOnLeft:knobOff}px;transition:left .2s,background .2s;box-shadow:0 1px 4px rgba(0,0,0,.4);pointer-events:none;`;
+    dom.appendChild(knob);
+    // Click to toggle preview state
+    dom.onclick=(ev)=>{
+      ev.stopPropagation();
+      const el2=getEl(el.id);
+      if(el2){el2.togOn=!el2.togOn;applyStyle(el2);}
+    };
   } else if(el.type==='separator'){
     if(el.gwav&&el.gwbrd){
       dom.style.height='2px';
@@ -2208,6 +2233,36 @@ function buildSheet(el){
       <span style="font-size:9px;color:var(--txt2);margin-left:6px">ImageColor3 tint</span>
     </div>
   </div>`:''}
+  ${el.type==='toggle'?`<div class="ss"><div class="ss-hd">🔵 Toggle</div>
+    <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center;">
+      <div onclick="sp(${el.id},'togOn',!el.togOn)" style="flex:1;padding:10px;border-radius:10px;border:2px solid ${el.togOn?'var(--grn)':'var(--brd)'};background:${el.togOn?'rgba(16,185,129,.15)':'var(--bg3)'};cursor:pointer;text-align:center;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;color:${el.togOn?'var(--grn)':'var(--txt2)'};">
+        ${el.togOn?'🟢 ON':'⚫ OFF'}
+      </div>
+      <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;">Preview state<br>(tap to toggle)</div>
+    </div>
+    <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-bottom:5px;">OFF STATE</div>
+    <div class="sr">
+      <span class="sl">Track color</span>
+      <input class="sc" type="color" value="${el.bg||'#1a1028'}" onchange="sp(${el.id},'bg',this.value)">
+      <span class="sl" style="margin-left:8px">Border</span>
+      <input class="sc" type="color" value="${el.border||'#3d2860'}" onchange="sp(${el.id},'border',this.value)">
+    </div>
+    <div class="sr">
+      <span class="sl">Knob color</span>
+      <input class="sc" type="color" value="${el.knobColor||'#ffffff'}" onchange="sp(${el.id},'knobColor',this.value)">
+    </div>
+    <div style="font-size:9px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;margin-bottom:5px;margin-top:8px;">ON STATE (active colors)</div>
+    <div class="sr">
+      <span class="sl">Track color</span>
+      <input class="sc" type="color" value="${el.bgOn||'#a855f7'}" onchange="sp(${el.id},'bgOn',this.value)">
+      <span class="sl" style="margin-left:8px">Border</span>
+      <input class="sc" type="color" value="${el.borderOn||'#a855f7'}" onchange="sp(${el.id},'borderOn',this.value)">
+    </div>
+    <div class="sr">
+      <span class="sl">Knob color</span>
+      <input class="sc" type="color" value="${el.knobColorOn||'#ffffff'}" onchange="sp(${el.id},'knobColorOn',this.value)">
+    </div>
+  </div>`:''}
   ${el.type==='tabbar'?`<div class="ss"><div class="ss-hd">📑 TabBar — Pages</div>
     <div style="font-size:9px;color:var(--txt2);margin-bottom:6px;line-height:1.6;">Each tab switches the active page in Roblox. Double-tap label to rename.</div>
     ${(el.tabLinks||[]).map((lnk,i)=>`
@@ -2273,7 +2328,7 @@ function sp(id,key,val){
   else if(key==='rot')dom.style.transform='rotate('+val+'deg)';
   else applyStyle(el);
   // These keys need full re-render + sheet rebuild
-  if(['gwc1','gwc2','gwspd','gwdir','txf','txs','txalign','tyalign','txwrap','imgId','imgUrl','imgScale','imgTint','parentId'].includes(key)){
+  if(['gwc1','gwc2','gwspd','gwdir','txf','txs','txalign','tyalign','txwrap','imgId','imgUrl','imgScale','imgTint','parentId','bgOn','borderOn','knobColor','knobColorOn','togOn','txcActive'].includes(key)){
     applyStyle(el);
     buildSheet(el);
   }
@@ -2376,7 +2431,7 @@ function openSc(id){
   const el=getEl(id);if(!el)return;
   scTarget=id;
   document.getElementById('sc-name').textContent=el.label+' ('+el.type+')';
-  const evMap={button:'MouseButton1Click',textbox:'FocusLost',checkbox:'MouseButton1Click',slider:'Changed',dropdown:'Changed',frame:'OnLoad',label:'OnLoad',panel:'OnLoad',imagebutton:'MouseButton1Click',image:'OnLoad',roundbutton:'MouseButton1Click'};
+  const evMap={button:'MouseButton1Click',textbox:'FocusLost',checkbox:'MouseButton1Click',slider:'Changed',dropdown:'Changed',frame:'OnLoad',label:'OnLoad',panel:'OnLoad',imagebutton:'MouseButton1Click',image:'OnLoad',roundbutton:'MouseButton1Click',toggle:'MouseButton1Click'};
   document.getElementById('sc-ev').textContent='-- Event: '+(evMap[el.type]||'OnLoad');
   const ta=document.getElementById('se');ta.value=el.script||'';
   setTimeout(onSEI,10);
@@ -2541,7 +2596,7 @@ function generateLua(){
   c+=`         UDim2.new(0, math.round(w*_scX), 0, math.round(h*_scY))\n`;
   c+=`end\n\n`;
 
-  const tmap={frame:'Frame',button:'TextButton',textbox:'TextBox',label:'TextLabel',checkbox:'TextButton',slider:'Frame',dropdown:'Frame',separator:'Frame',panel:'Frame',image:'ImageLabel',imagebutton:'ImageButton',roundbutton:'TextButton',tabbar:'Frame'};
+  const tmap={frame:'Frame',button:'TextButton',textbox:'TextBox',label:'TextLabel',checkbox:'TextButton',slider:'Frame',dropdown:'Frame',separator:'Frame',panel:'Frame',image:'ImageLabel',imagebutton:'ImageButton',roundbutton:'TextButton',tabbar:'Frame',toggle:'Frame'};
 
   // ── Page Frames: one Frame per page, visible=false except first ──
   const pages=p.pages&&p.pages.length?p.pages:[{id:1,name:'Main'}];
@@ -2735,6 +2790,81 @@ function generateLua(){
       c+=`${n}.ScaleType = Enum.ScaleType.${scRblx[el.imgScale||'Fit']||'Fit'}\n`;
       // Corner radius
       if(el.rad>0)c+=`local Corner_${n}=Instance.new("UICorner")\nCorner_${n}.CornerRadius=UDim.new(0,${el.rad})\nCorner_${n}.Parent=${n}\n`;
+    }
+    if(el.type==='toggle'){
+      // Toggle: Frame (track) + Frame (knob) + TweenService animation
+      const trackBgOff = h2r(el.bg||'#1a1028')||'26, 16, 40';
+      const trackBgOn  = h2r(el.bgOn||'#a855f7')||'168, 85, 247';
+      const brdOff     = h2r(el.border||'#3d2860')||'61, 40, 96';
+      const brdOn      = h2r(el.borderOn||'#a855f7')||'168, 85, 247';
+      const knobOff    = h2r(el.knobColor||'#ffffff')||'255, 255, 255';
+      const knobOn     = h2r(el.knobColorOn||'#ffffff')||'255, 255, 255';
+      const initState  = el.togOn ? 'true' : 'false';
+
+      c+=`-- Toggle: track bg + knob + TweenService\n`;
+      c+=`${n}.BackgroundColor3 = Color3.fromRGB(${initState==='true'?trackBgOn:trackBgOff})\n`;
+      c+=`${n}.ClipsDescendants = true\n`;
+
+      // Knob child frame
+      c+=`local ${n}_Knob = Instance.new("Frame")\n`;
+      c+=`${n}_Knob.Name = "Knob"\n`;
+      c+=`${n}_Knob.AnchorPoint = Vector2.new(0, 0.5)\n`;
+      // Knob size = 76% of height, positioned at off/on sides
+      c+=`local _kSize_${n} = math.round(_sz_${n}.Y.Offset * 0.76)\n`;
+      c+=`local _kPad_${n}  = math.round((_sz_${n}.Y.Offset - _kSize_${n}) / 2)\n`;
+      c+=`${n}_Knob.Size = UDim2.new(0, _kSize_${n}, 0, _kSize_${n})\n`;
+      c+=`${n}_Knob.Position = UDim2.new(0, ${initState==='true'?`_sz_${n}.X.Offset - _kSize_${n} - _kPad_${n}`:`_kPad_${n}`}, 0.5, 0)\n`;
+      c+=`${n}_Knob.BackgroundColor3 = Color3.fromRGB(${initState==='true'?knobOn:knobOff})\n`;
+      c+=`${n}_Knob.BorderSizePixel = 0\n`;
+      c+=`Instance.new("UICorner", ${n}_Knob).CornerRadius = UDim.new(1, 0)\n`;
+      c+=`${n}_Knob.Parent = ${n}\n`;
+
+      // UIStroke for track border
+      c+=`local ${n}_Stroke = Instance.new("UIStroke")\n`;
+      c+=`${n}_Stroke.Color = Color3.fromRGB(${initState==='true'?brdOn:brdOff})\n`;
+      c+=`${n}_Stroke.Thickness = 1.5\n`;
+      c+=`${n}_Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border\n`;
+      c+=`${n}_Stroke.Parent = ${n}\n`;
+
+      // UICorner for track
+      c+=`Instance.new("UICorner", ${n}).CornerRadius = UDim.new(1, 0)\n`;
+
+      // Toggle state variable + click handler
+      c+=`local ${n}_state = ${initState}\n`;
+      c+=`local TS_${n} = game:GetService("TweenService")\n`;
+      c+=`local function toggle_${n}()\n`;
+      c+=`  ${n}_state = not ${n}_state\n`;
+      c+=`  local dur = 0.18\n`;
+      c+=`  local ti = TweenInfo.new(dur, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)\n`;
+      c+=`  -- Animate track color\n`;
+      c+=`  TS_${n}:Create(${n}, ti, {\n`;
+      c+=`    BackgroundColor3 = ${n}_state and Color3.fromRGB(${trackBgOn}) or Color3.fromRGB(${trackBgOff})\n`;
+      c+=`  }):Play()\n`;
+      c+=`  -- Animate stroke color\n`;
+      c+=`  TS_${n}:Create(${n}_Stroke, ti, {\n`;
+      c+=`    Color = ${n}_state and Color3.fromRGB(${brdOn}) or Color3.fromRGB(${brdOff})\n`;
+      c+=`  }):Play()\n`;
+      c+=`  -- Animate knob position + color\n`;
+      c+=`  local knobOnPos  = UDim2.new(0, _sz_${n}.X.Offset - _kSize_${n} - _kPad_${n}, 0.5, 0)\n`;
+      c+=`  local knobOffPos = UDim2.new(0, _kPad_${n}, 0.5, 0)\n`;
+      c+=`  TS_${n}:Create(${n}_Knob, ti, {\n`;
+      c+=`    Position = ${n}_state and knobOnPos or knobOffPos,\n`;
+      c+=`    BackgroundColor3 = ${n}_state and Color3.fromRGB(${knobOn}) or Color3.fromRGB(${knobOff})\n`;
+      c+=`  }):Play()\n`;
+      // User script runs on toggle
+      const tScriptLines=(el.script||'').split('\n').filter(l=>l.trim()&&!l.trim().startsWith('--'));
+      if(tScriptLines.length){
+        c+=`  -- Custom script on toggle:\n`;
+        tScriptLines.forEach(l=>c+=`  ${l}\n`);
+      }
+      c+=`end\n`;
+      c+=`-- Make toggle clickable (Frame doesn't have MouseButton1Click — use InputBegan)\n`;
+      c+=`${n}.InputBegan:Connect(function(inp)\n`;
+      c+=`  if inp.UserInputType == Enum.UserInputType.MouseButton1\n`;
+      c+=`  or inp.UserInputType == Enum.UserInputType.Touch then\n`;
+      c+=`    toggle_${n}()\n`;
+      c+=`  end\n`;
+      c+=`end)\n`;
     }
     if(el.type==='tabbar'){
       // Generate TabBar: Frame + N TextButtons + UIListLayout + page switcher logic
